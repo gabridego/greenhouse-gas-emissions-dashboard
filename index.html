@@ -1,49 +1,66 @@
 <!DOCTYPE html>
 <html class="h-100" lang="en">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <head>
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    	<title>Challenge OpenData</title>
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    	<link rel="stylesheet" href="styles/index.css">
 
-		<title>Challenge OpenData</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-		<link rel="stylesheet" href="styles/index.css">
-	</head>
-	<body class="d-flex flex-column h-100">
-		<header>
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-				<a class="navbar-brand" href="#">COD</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="#">
-								Application
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="rapport.html">Rapport</a>
-						</li>
-					</ul>
-				</div>
-			</nav>
-		</header>
-		<main role="main">
-			<div class="container">
-				<h1>Challenge Open Data</h1>
-			</div>
-		</main>
-		<footer class="footer mt-auto py-3">
-			<div class="container">
-				<span class="text-muted">
-					2020 - Kinene Eddine ZARGA, Antonino Concetto PRIVITERA, Anir EL KABIRI, Gabriele DEGOLA, Rebeca CARAMEZ SARAIVA SANTOS, Michel LECORSIER
-				</span>
-			</div>
-		</footer>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-	</body>
+    	<!-- Add icon library -->
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body class="d-flex flex-column h-100">
+    	<header>
+    		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    			<a class="navbar-brand" href="#">COD</a>
+    			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    				<span class="navbar-toggler-icon"></span>
+    			</button>
+
+    			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    				<ul class="navbar-nav mr-auto">
+    					<li class="nav-item active">
+    						<a class="nav-link" href="#">
+    							Application
+    						</a>
+    					</li>
+    					<li class="nav-item">
+    						<a class="nav-link" href="rapport.html">Rapport</a>
+    					</li>
+    				</ul>
+    			</div>
+    		</nav>
+    	</header>
+    	<main role="main">
+    		<div class="container-fluid">
+    			<h1>Challenge Open Data</h1
+    			<div class="slidecontainer">
+    				<table style="width:100%">
+    					<tr>
+    					  <th></th>
+    					  <th></th>
+    					  <th></th>
+    					</tr>
+    					<tr>
+    					  <td><button id="btnPlayStop" class="btn"><i class="fa fa-play"></i></button></td>
+    					  <td style="width:90%"><input type="range" min="0" max="46" value="0" class="slider" id="timeline"></td>
+    					  <td><span id="year"></span></td>
+    					</tr>
+    				</table>
+    			</div>
+    		</div>
+    	</main>
+    	<footer class="footer mt-auto py-3">
+    		<div class="container">
+    			<span class="text-muted">
+    				2020 - Kinene Eddine ZARGA, Antonino Concetto PRIVITERA, Anir EL KABIRI, Gabriele DEGOLA, Rebeca CARAMEZ SARAIVA SANTOS, Michel LECORSIER
+    			</span>
+    		</div>
+    	</footer>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    	<script src="scripts/controller.js"></script>
+    </body>
 </html>
