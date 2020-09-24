@@ -3,9 +3,15 @@
 let slider = document.getElementById("timeline");
 let output = document.getElementById("year");
 let btnPlayStop = document.getElementById("btnPlayStop");
+let iconPlayStop = document.getElementById("iconPlayStop");
 let firstYearTimeline = 1970;
+let intervalTimeline;
+let isPlaying = false;
+
 output.innerHTML = firstYearTimeline +  +slider.value; // Display the default slider value
-btnPlayStop.addEventListener("click", PlayStop);
+btnPlayStop.addEventListener("mousedown", playStop);
+// contrôle du bouton lecture en pressant la touche "Espace"
+window.addEventListener("keypress", spacePlay);
 
 
 
@@ -17,25 +23,28 @@ slider.oninput = function() {
     UpdateCharts(output.innerHTML);
 }
 
-
-var intervalTimeline;
-var isPlaying = false;
-function PlayStop() {
+function playStop() {
+    console.log(isPlaying)
     if (!isPlaying) {
-        btnPlayStop.innerHTML = '<i class="fa fa-pause"></i>';
+        iconPlayStop.className = "fa fa-pause text-white";
         intervalTimeline = setInterval(function() {
             slider.value ++;
             output.innerHTML = firstYearTimeline +  +slider.value;
             UpdateCharts(output.innerHTML);
         }, 1000);
     } else {
-        btnPlayStop.innerHTML = '<i class="fa fa-play"></i>';
+        iconPlayStop.className = "fa fa-play text-white";
         clearInterval(intervalTimeline);
     }
 
     isPlaying = !isPlaying;
 }
 
+function spacePlay(event) {
+    console.log(isPlaying)
+    if (event.which === 32)
+        playStop()
+}
 
 //FUNCTIONS
 
