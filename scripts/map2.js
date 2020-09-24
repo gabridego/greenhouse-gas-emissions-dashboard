@@ -91,14 +91,19 @@ Promise.all(promises).then(function(values) {
     world = values[0];
 
         cGroup = g.append("g")
-            .attr("fill", "#444")
             .attr("cursor", "pointer")
             .selectAll("path")
             .data(world.features)
             .join("path")
             .on("click", clicked)
             .attr("d", path)
-            .attr("id", d => "code" + d.id);
+            .attr("id", d => "code" + d.id)
+            .attr("fill", function(d) { 
+                console.log(d);
+                //if (d.id == countryCode) { 
+                    return colors[Math.floor(Math.random() * Math.floor(colors.length))];
+                //} 
+            });
 
         cGroup.append("title")
             .text(d => d.properties.name);
