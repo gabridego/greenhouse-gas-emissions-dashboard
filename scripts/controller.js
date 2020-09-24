@@ -9,14 +9,11 @@ btnPlayStop.addEventListener("click", PlayStop);
 
 
 
-
-
-
 //EVENTS
 
 //Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-    output.innerHTML = firstYearTimeline +  +this.value;
+    output.innerHTML = firstYearTimeline + +this.value;
     UpdateCharts(output.innerHTML);
 }
 
@@ -24,18 +21,14 @@ slider.oninput = function() {
 var intervalTimeline;
 var isPlaying = false;
 function PlayStop() {
-    
-    if(isPlaying)
-    {
+    if (!isPlaying) {
         btnPlayStop.innerHTML = '<i class="fa fa-pause"></i>';
         intervalTimeline = setInterval(function() {
             slider.value ++;
             output.innerHTML = firstYearTimeline +  +slider.value;
             UpdateCharts(output.innerHTML);
         }, 1000);
-    }
-    else
-    {
+    } else {
         btnPlayStop.innerHTML = '<i class="fa fa-play"></i>';
         clearInterval(intervalTimeline);
     }
