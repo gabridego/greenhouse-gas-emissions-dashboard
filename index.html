@@ -35,12 +35,16 @@
     	</header>
     	<main role="main">
     		<div class="container">
-				<h1>Challenge Open Data</h1>
-				<h2>Émissions de gaz à effet de serre dans le monde</h2>
-				<div id="container" class="container">
-					<div id="map"></div>
-				</div>
-    			<div class="slidecontainer">
+					<h1>Challenge Open Data</h1>
+					<h2>Émissions de gaz à effet de serre dans le monde</h2>
+					<div id="container" class="container">
+						<div id="map"></div>
+					</div>
+          <div class="piecontainer">
+          <h4>Émissions de GHG selon les secteurs et par continent</h4>
+            <div id="piechart"></div>
+          </div>
+          <div class="slidecontainer">
     				<table style="width:100%">
     					<tr>
     					  <th></th>
@@ -67,10 +71,17 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 		<script src="https://d3js.org/d3.v6.min.js"></script>
+    <!-- for the multi level pie chart -->
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <!--  -->
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 		<script src="scripts/map.js"></script>
+		<script src="scripts/pieChart.js"></script>
+		<script src="scripts/controller.js"></script>
 		<script type="text/javascript">
 			create_map("container", "map", "https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json")
+      init_pie()
 		</script>
-    	<script src="scripts/controller.js"></script>
+
     </body>
 </html>
