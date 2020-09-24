@@ -117,7 +117,7 @@ Promise.all(promises).then(function(values) {
 svg.call(zoom);
 
 function reset() {
-    cGroup.transition().style("fill", null);
+    cGroup.transition().style("stroke", null);
     svg.transition().duration(750).call(
     zoom.transform,
     d3.zoomIdentity,
