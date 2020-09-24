@@ -84,7 +84,7 @@ const path = d3.geoPath()
 
 // Dessin de la carte
 var promises = [];
-promises.push(d3.json("https://gist.githubusercontent.com/mbostock/4090846/raw/d534aba169207548a8a3d670c9c2cc719ff05c47/world-50m.json"));
+promises.push(d3.json("https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json"));
 
 Promise.all(promises).then(function(values) {
     console.log(values);
@@ -94,20 +94,21 @@ Promise.all(promises).then(function(values) {
             .attr("fill", "#444")
             .attr("cursor", "pointer")
             .selectAll("path")
-            .data(topojson.feature(world, world.objects.countries).features)
+            .data(world.features)
             .join("path")
             .on("click", clicked)
-            .attr("d", path);
+            .attr("d", path)
+            .attr("id", d => "code" + d.id);
 
         cGroup.append("title")
             .text(d => d.properties.name);
 
+        //maybe can we delete it?
         g.append("path")
             .attr("fill", "none")
             .attr("stroke", "white")
             .attr("stroke-linejoin", "round")
-            .attr("d", path(topojson.mesh(world, world.objects.countries, (a, b) => a !== b)));
-            console.log("2");
+            .attr("d", path(topojson.mesh(world, world.features, (a, b) => a !== b)));
 
 }, (error) => {
     console.log(error); // erreur
@@ -127,8 +128,8 @@ function reset() {
 function clicked(event, d) {
     const [[x0, y0], [x1, y1]] = path.bounds(d);
     event.stopPropagation();
-    cGroup.transition().style("fill", null);
-    d3.select(this).transition().style("fill", "red");
+    cGroup.transition().style("stroke", null);
+    d3.select(this).transition().style("stroke", "red");
     svg.transition().duration(750).call(
     zoom.transform,
     d3.zoomIdentity
