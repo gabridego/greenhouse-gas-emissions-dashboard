@@ -4,7 +4,7 @@ let slider = document.getElementById("timeline");
 let output = document.getElementById("year");
 let btnPlayStop = document.getElementById("btnPlayStop");
 let iconPlayStop = document.getElementById("iconPlayStop");
-let firstYearTimeline = 1970;
+let firstYearTimeline = 1990;
 let intervalTimeline;
 let isPlaying = false;
 
@@ -53,4 +53,5 @@ function UpdateCharts(year)
     //ADD FUNCTION CHARTS HERE
     //chart1(year);
     //chart2(year);
+    update_map(year);
 }

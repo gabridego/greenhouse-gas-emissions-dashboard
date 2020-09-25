@@ -301,9 +301,17 @@ function update_map(year) {
   // TODO change countries colors according to gas emission.
   Object.keys(gas_complete_data).forEach(c_code => {
     let idCode = "#code" + c_code;
-    console.log(d3.select(idCode));
+
+    //console.log(d3.select(idCode));
+    var color = "#999";
+    if (gas_complete_data[c_code] && gas_complete_data[c_code][year] && gas_complete_data[c_code][year].total_ghg)
+    {
+        console.log(gas_complete_data[c_code][year]);
+        color = colors[Math.floor(colors.length * (gas_complete_data[c_code][year].total_ghg - gas_complete_data["global"].total_ghg_min)/(gas_complete_data["global"].total_ghg_max - gas_complete_data["global"].total_ghg_min))];
+    }
+
     d3.select(idCode)
-          .attr("fill", "blue");
+          .attr("fill", color);
   })
 }
 
