@@ -56,18 +56,22 @@ function getBarChartData(country, year) {
 		{
 			sector: "Waste",
 			frequency: retrieved["Waste (GHG)"]
+		},
+		{
+		 	sector: "Transport",
+		 	frequency: retrieved["Transport (GHG)"]
+		},
+		{
+			sector: "Other fuel combustion",
+			frequency: retrieved["Other Fuel Combustion (GHG)"]
 		}
-		// {
-		// 	sector: "Transport",
-		// 	frequency: retrieved["Transport (GHG)"]
-		// }
 	]
 	return data;
 }
 
 function drawBarChart(country, year) {
 		// Get the bar char data
-		var data = getBarChartData("FR", "1990");
+		var data = getBarChartData(country, "2010");
 		var	ddd = data;
 
 
@@ -150,19 +154,19 @@ function drawBarChart(country, year) {
           .attr("y", function(d) { return y(d.frequency); })
           .attr("height", function(d) { return height - y(d.frequency); });
 
-					sortItems = function (a, b) {
-						return b.frequency - a.frequency;
-					};
-					svg.selectAll("rect")
-			        .sort(sortItems)
-			        .transition()
-			        .delay(function (d, i) {
-			        return i * 50;
-			    })
-			        .duration(1000)
-			        .attr("x", function (d, i) {
-			        return xScale(i);
-			    });
+					// sortItems = function (a, b) {
+					// 	return b.frequency - a.frequency;
+					// };
+					// svg.selectAll("rect")
+			    //     .sort(sortItems)
+			    //     .transition()
+			    //     .delay(function (d, i) {
+			    //     return i * 50;
+			    // })
+			    //     .duration(1000)
+			    //     .attr("x", function (d, i) {
+			    //     return xScale(i);
+			    // });
 
 
 
@@ -188,7 +192,8 @@ function drawBarChart(country, year) {
 }
 
 
-drawBarChart();
+drawBarChart("FR");
+drawBarChart("AF");
 
 </script>
 
