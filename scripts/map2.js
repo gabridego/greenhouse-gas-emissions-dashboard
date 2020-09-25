@@ -6,7 +6,6 @@
  * 2020 - Notre super équipe :-)
  */
 
-
 const zoom = d3.zoom()
     .scaleExtent([1, 8])
     .on("zoom", zoomed);
@@ -197,6 +196,8 @@ function init_map() {
         .text("(source : Hannah Ritchie & Max Roser 2017 - CO₂ and Greenhouse Gas Emissions)");
 
     svg.call(zoom);
+
+    init_legend();
 }
 
 
@@ -237,42 +238,22 @@ function zoomed(event) {
     g.attr("stroke-width", 1 / transform.k);
 }
 
-function update_legend(year) {
-    // update legend with new data
-
-    // Compute min/max values for the legend scale
-    var min, max;
-    var first = 0;
-
+/**
+ * Init legend
+ */
+function init_legend() {
     const svg = d3.select("#svg_zone");
 
-    Object.keys(gas_complete_data).forEach(function(key) {
-        if (first == 0) {
-            if (gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg) {
-                min = max = gas_complete_data[key][year].total_ghg;
-                first++;
-            }
-        }
-        else {
-            if (gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg) {
-                if (+gas_complete_data[key][year].total_ghg < +min) {
-                    min = +gas_complete_data[key][year].total_ghg;
-                }
-
-                if (+gas_complete_data[key][year].total_ghg > +max) {
-                    max =  +gas_complete_data[key][year].total_ghg;
-                }
-            }
-        }
-    });
-    // console.log(min, max);
-
-    // Draw legend
-    // Dessin de la légende
-    // TODO: Choisir coorrectement les couleurs de la légende
+    // translation to set the legend on the outside
+    // of the drawn map
     var legend = svg.append('g')
-        .attr('transform', 'translate(40, 250)');
-
+        .attr('transform', 'translate(40, 250)')
+        .attr("id", "legend");
+    
+    legend.append("g")
+        .attr("id", "legendAxis")
+    
+    // draw legend
     legend.selectAll()
         .data(d3.range(colors.length))
         .enter().append('svg:rect')
@@ -281,14 +262,8 @@ function update_legend(year) {
             .attr('x', 5)
             .attr('y', d => d * legendCellSize)
             .style("fill", d => colors[d]);
-
-    let legendScale = d3.scaleLinear().domain([min, max])
-        .range([0, colors.length * legendCellSize]);
-
-    let legendAxis = legend.append("g")
-        .attr("class", "axis")
-        .call(d3.axisLeft(legendScale));
-
+    
+    // add "données non connues" legend
     legend.append('svg:rect')
         .attr('y', legendCellSize + colors.length * legendCellSize)
         .attr('height', legendCellSize + 'px')
@@ -320,6 +295,52 @@ function update_map(year) {
 
 function short_name_country(name) {
     return name.replace("Democratic", "Dem.").replace("Republic", "Rep.");
+}
+
+/**
+ * Update legend (compute min/max by year and adapt the legend)
+ * @param {*} year 
+ */
+function update_legend(year) {
+    // Compute min/max values for the legend scale
+    var min, max;
+    var first = 0;
+
+    console.log(gas_complete_data)
+    // TODO
+    Object.keys(gas_complete_data).forEach(function(key, index) {
+        if (first == 0) {
+            if (gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg) {
+                min = max = gas_complete_data[key][year].total_ghg;
+                first++;
+            }
+        } else {
+            if (gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg) {
+                if (gas_complete_data[key][year].total_ghg < min) {
+                    min = gas_complete_data[key][year].total_ghg;
+                }
+
+                if (gas_complete_data[key][year].total_ghg > max) {
+                    max = gas_complete_data[key][year].total_ghg;
+                }
+            }
+        }
+        console.log(min, max);
+    });
+    
+
+    // Draw legend
+    // TODO: Choisir coorrectement les couleurs de la légende
+    
+    const legendAxis = d3.select("#legendAxis");
+    legendAxis.empty();
+    
+
+    let legendScale = d3.scaleLinear().domain([min, max])
+        .range([0, colors.length * legendCellSize]);
+    console.log("test")
+    legendAxis.attr("class", "axis")
+        .call(d3.axisLeft(legendScale));
 }
 
 function setcolorcountry(year, id) {
