@@ -69818,7 +69818,7 @@ let gas_complete_data = {
       "Transport (GHG)": "4.4"
     }
   },
-  "": {
+  "NA": {
     "country": "Namibia",
     "iso_code": "NAM",
     "continent": "Africa",
