@@ -208,7 +208,10 @@ function reset() {
     const svg = d3.select("#svg_zone");
     const cGroup = d3.select("#cGroup");
     console.log(cGroup)
-    cGroup.transition().style("stroke", null);
+    if (lastCountryClicked !== undefined) {
+        // remove the border of the previously selected country
+        lastCountryClicked.transition().style("stroke", null);
+    }
     svg.transition().duration(750).call(
         zoom.transform,
         d3.zoomIdentity,
