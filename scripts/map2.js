@@ -11,11 +11,20 @@ const svg = d3.select("#map").append("svg")
     .attr("viewBox", [0, 0, width, height])
     .on("click", reset);
 
+svg.append("svg:rect")
+    .attr("fill", "#1aa1d6")
+    .attr('height', height)
+    .attr('width', width);
+
 const g = svg.append("g");
 
 var cGroup = g.append("g");
 
-
+svg.append("svg:rect")
+    .attr("fill", "none")
+    .attr('height', height)
+    .attr('width', width)
+    .attr("stroke", "black");
 
     // Ajout du titre
     svg.append("text")
@@ -90,6 +99,37 @@ Promise.all(promises).then(function(values) {
     console.log(values);
     world = values[0];
 
+        //
+        var year = 2005;
+        var min, max;
+        var first = 0;
+        Object.keys(gas_complete_data).forEach(function(key,index) {
+            if(first == 0)
+            {
+                if(gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg)
+                {
+                    min = max = gas_complete_data[key][year].total_ghg;
+                    first++;
+                }
+            }
+            else
+            {
+                if(gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg)
+                {
+                    
+                    if(+gas_complete_data[key][year].total_ghg< +min)
+                    {min = +gas_complete_data[key][year].total_ghg;}
+                        
+                    
+                    
+                    if(+gas_complete_data[key][year].total_ghg> +max)
+                    {max =  +gas_complete_data[key][year].total_ghg;}
+                }
+            }
+        });
+        console.log(min, max);
+        
+
         cGroup = g.append("g")
             .attr("cursor", "pointer")
             .selectAll("path")
@@ -97,23 +137,30 @@ Promise.all(promises).then(function(values) {
             .join("path")
             .on("click", clicked)
             .attr("d", path)
-            .attr("id", d => "code" + d.id)
+            .attr("id", d => d.id)
             .attr("fill", function(d) { 
-                console.log(d);
-                //if (d.id == countryCode) { 
-                    return colors[Math.floor(Math.random() * Math.floor(colors.length))];
-                //} 
+
+                //
+                if(gas_complete_data[d.id] && gas_complete_data[d.id][year] && gas_complete_data[d.id][year].total_ghg)
+                {
+                    console.log(gas_complete_data[d.id][year]);
+                    return colors[Math.floor(colors.length * gas_complete_data[d.id][year].total_ghg/(max-min))];
+                }
+                else //no data for this country or year
+                {
+                    return "#999";
+                }
             });
 
         cGroup.append("title")
             .text(d => d.properties.name);
 
         //maybe can we delete it?
-        g.append("path")
+        /*g.append("path")
             .attr("fill", "none")
             .attr("stroke", "white")
             .attr("stroke-linejoin", "round")
-            .attr("d", path(topojson.mesh(world, world.features, (a, b) => a !== b)));
+            .attr("d", path(topojson.mesh(world, world.features, (a, b) => a !== b)));*/
 
 }, (error) => {
     console.log(error); // erreur
@@ -149,4 +196,12 @@ function zoomed(event) {
     const {transform} = event;
     g.attr("transform", transform);
     g.attr("stroke-width", 1 / transform.k);
+}
+
+function updatemap(year) {
+
+}
+
+function setcolorcountry(year, id) {
+    
 }
