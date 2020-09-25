@@ -18,6 +18,9 @@ const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a'
 // bounds of the map (for clipping)
 const boundsMap = [70, 60]
 
+// Last country clicked (= selected) on the map
+var lastCountryClicked = undefined;
+
 // Map projection parameters
 const projection = d3.geoNaturalEarth1()
     .scale(180)
@@ -219,8 +222,16 @@ function clicked(event, d) {
     const [[x0, y0], [x1, y1]] = path.bounds(d);
 
     event.stopPropagation();
-    cGroup.transition().style("stroke", null);
-    d3.select(this).transition().style("stroke", "red");
+
+    if (lastCountryClicked !== undefined) {
+        // remove the border of the previously selected country
+        lastCountryClicked.transition().style("stroke", null);
+    }
+    
+    // lastCountryClicked becomes the current clicked country
+    lastCountryClicked = d3.select(this)
+    // we set a red border to the current selected country
+    lastCountryClicked.transition().style("stroke", "red");
     svg.transition().duration(750).call(
         zoom.transform,
         d3.zoomIdentity
