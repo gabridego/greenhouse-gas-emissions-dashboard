@@ -29,12 +29,52 @@
 <body>
 
 <script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="data_ghg.js"></script>
+<script src="min_data.js"></script>
 <script>
 
 
 
+function getBarChartData(country, year) {
+	var retrieved = gas_complete_data[country][year];
+	var data = [
+		{
+			sector: "Agriculture",
+			frequency: retrieved["Agriculture (GHG)"]
+		},
+		{
+			sector: "Bunker fuels",
+			frequency: retrieved["Bunker Fuels (GHG)"]
+		},
+		{
+			sector: "Energy",
+			frequency: retrieved["Energy (GHG)"]
+		},
+		{
+			sector: "Industry",
+			frequency: retrieved["Industry (GHG)"]
+		},
+		{
+			sector: "Waste",
+			frequency: retrieved["Waste (GHG)"]
+		},
+		{
+		 	sector: "Transport",
+		 	frequency: retrieved["Transport (GHG)"]
+		},
+		{
+			sector: "Other fuel combustion",
+			frequency: retrieved["Other Fuel Combustion (GHG)"]
+		}
+	]
+	return data;
+}
+
 function drawBarChart(country, year) {
+		// Get the bar char data
+		var data = getBarChartData(country, "2010");
+		var	ddd = data;
+
+
     // set the dimensions of the canvas
     var margin = {top: 20, right: 20, bottom: 70, left: 40},
         width = 600 - margin.left - margin.right,
@@ -42,7 +82,8 @@ function drawBarChart(country, year) {
 
 
     // set the ranges
-    var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+    var x = d3.scale.ordinal().domain(d3.range(ddd.length)).rangeRoundBands([0, width], 0.05);
+    var xScale = d3.scale.ordinal().domain(d3.range(ddd.length)).rangeRoundBands([0, width], 0.05);
 
     var y = d3.scale.linear().range([height, 0]);
 
@@ -67,58 +108,19 @@ function drawBarChart(country, year) {
               "translate(" + margin.left + "," + margin.top + ")");
 
 
-    // load the data
-    var dataa = {
-        Agriculture: data_ghg[0]["Agriculture (GHG)"]
-        Transport: data_dhd[""]
-    };
-
-
-    var ddd = [
-    {
-    	"Sector": "A",
-    	"Freq": 20
-    },
-    {
-    	"Sector" : "B",
-    	"Freq": 12
-    },
-    {
-    	"Sector" : "C",
-    	"Freq": 47
-    },
-    {
-    	"Sector" : "D",
-    	"Freq": 34
-    },
-    {
-    	"Sector" : "E",
-    	"Freq" : 54
-    },
-    {
-    	"Sector" : "F",
-    	"Freq" : 21
-    },
-    {
-    	"Sector" : "G",
-    	"Freq" : 57
-    },
-    ]
-
     //var json = require('./data.json');
-
 
 
     d3.json(ddd, function(error, data) {
 
         ddd.forEach(function(d) {
-            d.Sector = d.Sector;
-            d.Freq = +d.Freq;
+            d.sector = d.sector;
+            d.frequency = +d.frequency;
         });
 
       // scale the range of the data
-      x.domain(ddd.map(function(d) { return d.Sector; }));
-      y.domain([0, d3.max(ddd, function(d) { return d.Freq; })]);
+      x.domain(ddd.map(function(d) { return d.sector; }));
+      y.domain([0, d3.max(ddd, function(d) { return d.frequency; })]);
 
       // add axis
       svg.append("g")
@@ -147,16 +149,51 @@ function drawBarChart(country, year) {
           .data(ddd)
         .enter().append("rect")
           .attr("class", "bar")
-          .attr("x", function(d) { return x(d.Sector); })
+          .attr("x", function(d) { return x(d.sector); })
           .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.Freq); })
-          .attr("height", function(d) { return height - y(d.Freq); });
+          .attr("y", function(d) { return y(d.frequency); })
+          .attr("height", function(d) { return height - y(d.frequency); });
+
+					// sortItems = function (a, b) {
+					// 	return b.frequency - a.frequency;
+					// };
+					// svg.selectAll("rect")
+			    //     .sort(sortItems)
+			    //     .transition()
+			    //     .delay(function (d, i) {
+			    //     return i * 50;
+			    // })
+			    //     .duration(1000)
+			    //     .attr("x", function (d, i) {
+			    //     return xScale(i);
+			    // });
+
+
+
+					svg.selectAll("textvaleur")
+					   .data(ddd)
+					   .enter()
+					   .append("text")
+					   .text(function(d) {
+							return d.frequency;
+					   })
+					   .attr("text-anchor", "middle")
+					   .attr("x", function(d, i) {
+							return xScale(i) + x.rangeBand() / 2;
+					   })
+					   .attr("y", function(d) {
+							return height - 10;
+					   })
+					   .attr("font-family", "sans-serif")
+					   .attr("font-size", "11px")
+					   .attr("fill", "black");
 
     });
 }
 
 
-drawBarChart();
+drawBarChart("FR");
+drawBarChart("AF");
 
 </script>
 

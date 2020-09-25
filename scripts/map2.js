@@ -11,11 +11,24 @@ const svg = d3.select("#map").append("svg")
     .attr("viewBox", [0, 0, width, height])
     .on("click", reset);
 
+//start new code
+svg.append("svg:rect")
+    .attr("fill", "#1aa1d6")
+    .attr('height', height)
+    .attr('width', width);
+//end new code
+
 const g = svg.append("g");
 
 var cGroup = g.append("g");
 
-
+//start new code
+svg.append("svg:rect")
+    .attr("fill", "none")
+    .attr('height', height)
+    .attr('width', width)
+    .attr("stroke", "black");
+//end new code
 
     // Ajout du titre
     svg.append("text")
@@ -90,6 +103,38 @@ Promise.all(promises).then(function(values) {
     console.log(values);
     world = values[0];
 
+        //start new code
+        //compute min and max just for test. we will remove this part when we have these values in a js file
+        var year = 2005;
+        var min, max;
+        var first = 0;
+        Object.keys(gas_complete_data).forEach(function(key,index) {
+            if(first == 0)
+            {
+                if(gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg)
+                {
+                    min = max = gas_complete_data[key][year].total_ghg;
+                    first++;
+                }
+            }
+            else
+            {
+                if(gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg)
+                {
+                    
+                    if(+gas_complete_data[key][year].total_ghg< +min)
+                    {min = +gas_complete_data[key][year].total_ghg;}
+                        
+                    
+                    
+                    if(+gas_complete_data[key][year].total_ghg> +max)
+                    {max =  +gas_complete_data[key][year].total_ghg;}
+                }
+            }
+        });
+        console.log(min, max);
+        //end new code
+
         cGroup = g.append("g")
             .attr("cursor", "pointer")
             .selectAll("path")
@@ -97,23 +142,31 @@ Promise.all(promises).then(function(values) {
             .join("path")
             .on("click", clicked)
             .attr("d", path)
-            .attr("id", d => "code" + d.id)
+            .attr("id", d => d.id)
             .attr("fill", function(d) { 
-                console.log(d);
-                //if (d.id == countryCode) { 
-                    return colors[Math.floor(Math.random() * Math.floor(colors.length))];
-                //} 
+
+                //start new code
+                if(gas_complete_data[d.id] && gas_complete_data[d.id][year] && gas_complete_data[d.id][year].total_ghg)
+                {
+                    console.log(gas_complete_data[d.id][year]);
+                    return colors[Math.floor(colors.length * gas_complete_data[d.id][year].total_ghg/(max-min))];
+                }
+                else //no data for this country or year
+                {
+                    return "#999";
+                }
+                //end new code
             });
 
         cGroup.append("title")
             .text(d => d.properties.name);
 
         //maybe can we delete it?
-        g.append("path")
+        /*g.append("path")
             .attr("fill", "none")
             .attr("stroke", "white")
             .attr("stroke-linejoin", "round")
-            .attr("d", path(topojson.mesh(world, world.features, (a, b) => a !== b)));
+            .attr("d", path(topojson.mesh(world, world.features, (a, b) => a !== b)));*/
 
 }, (error) => {
     console.log(error); // erreur
@@ -150,3 +203,14 @@ function zoomed(event) {
     g.attr("transform", transform);
     g.attr("stroke-width", 1 / transform.k);
 }
+
+
+//start new code
+function updatemap(year) {
+
+}
+
+function setcolorcountry(year, id) {
+    
+}
+//end new code
