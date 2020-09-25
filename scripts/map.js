@@ -8,7 +8,7 @@
 
 function create_map(id_container, id_map, url_geojson) {
     const width = document.getElementById(id_container).offsetWidth * 0.95,
-    height = 500,
+    height = 676,
     legendCellSize = 20,
     colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815'];
 
