@@ -6,11 +6,6 @@
  * 2020 - Rebeca CARAMEZ
  */
 
- // Load google charts
- function init_pie() {
- google.charts.load('current', {'packages':['corechart']});
- google.charts.setOnLoadCallback(create_pie);
-}
  // Draw the chart and set the chart values
  function create_pie() {
    var topProductsChart = new FusionCharts({
