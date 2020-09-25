@@ -2,9 +2,10 @@
  * Module permettant de générer une carte choroplèthe
  * des émissions de gaz à effet de serre en fonction des
  * pays considérés.
- * 
+ *
  * 2020 - Notre super équipe :-)
  */
+
 
 const zoom = d3.zoom()
     .scaleExtent([1, 8])
@@ -29,9 +30,9 @@ const path = d3.geoPath()
 
 /**
   * Init the map container with a legend, titles and countries drawn.
-  * @param {*} id_container 
-  * @param {*} id_map 
-  * @param {*} url_geojson 
+  * @param {*} id_container
+  * @param {*} id_map
+  * @param {*} url_geojson
   */
 function init_map() {
     // Create root svg element
@@ -46,7 +47,7 @@ function init_map() {
         .attr('height', height)
         .attr('width', width);
 
-    
+
     var g = svg.append("g")
                 .attr("id", "g");
 
@@ -63,7 +64,7 @@ function init_map() {
     Promise.all(promises).then(function(values) {
         // console.log(values);
         world = values[0];
-        
+
         // Draw countries
         cGroup.append("g")
             .attr("cursor", "pointer")
@@ -137,7 +138,7 @@ function reset() {
         d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
     );
 }
-    
+
 function clicked(event, d) {
     const svg = d3.select("#svg_zone");
     const cGroup = d3.select("#cGroup");
@@ -155,7 +156,7 @@ function clicked(event, d) {
         d3.pointer(event, svg.node())
     );
 }
-    
+
 function zoomed(event) {
     const {transform} = event;
     const g = d3.select("#g");
@@ -184,7 +185,7 @@ function update_legend(year) {
                 if (+gas_complete_data[key][year].total_ghg < +min) {
                     min = +gas_complete_data[key][year].total_ghg;
                 }
-                
+
                 if (+gas_complete_data[key][year].total_ghg > +max) {
                     max =  +gas_complete_data[key][year].total_ghg;
                 }
@@ -210,7 +211,7 @@ function update_legend(year) {
 
     let legendScale = d3.scaleLinear().domain([min, max])
         .range([0, colors.length * legendCellSize]);
-                
+
     let legendAxis = legend.append("g")
         .attr("class", "axis")
         .call(d3.axisLeft(legendScale));
@@ -230,24 +231,7 @@ function update_legend(year) {
         .style("fill", "#000000")
         .text("données non connues");
 }
-    
-//start new code
-// function update_data_map(year) {
-//     // call update_legend
-
-//     //start new code
-//     if (gas_complete_data[d.id] && gas_complete_data[d.id][year] && gas_complete_data[d.id][year].total_ghg)
-//     {
-//         console.log(gas_complete_data[d.id][year]);
-//         return colors[Math.floor(colors.length * gas_complete_data[d.id][year].total_ghg/(max-min))];
-//     } else {
-//         //no data for this country or year
-//         return "#999";
-//     }
-//     //end new code
-// }
 
 function setcolorcountry(year, id) {
-    
+
 }
-//end new code
