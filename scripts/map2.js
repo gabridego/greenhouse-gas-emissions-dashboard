@@ -28,6 +28,61 @@ const path = d3.geoPath()
     .pointRadius(2)
     .projection(projection);
 
+    /**
+      * Init tooltip to show pop-up for each country's own data.
+      * @param {*} location
+      */
+function init_tooltip(location) {
+    var tooltip = location.append("g") // Group for the whole tooltip
+        .attr("id", "tooltip")
+        .style("display", "none");
+
+    tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
+        .attr("points","0,0 210,0 210,60 0,60 0,0")
+        .style("fill", "#222b1d")
+        .style("stroke","black")
+        .style("opacity","0.9")
+        .style("stroke-width","1")
+        .style("padding", "1em");
+
+    tooltip.append("line") // A line inserted between country name and score
+        .attr("x1", 40)
+        .attr("y1", 25)
+        .attr("x2", 160)
+        .attr("y2", 25)
+        .style("stroke","#929292")
+        .style("stroke-width","0.5")
+        .attr("transform", "translate(0, 5)");
+
+    var text = tooltip.append("text") // Text that will contain all tspan (used for multilines)
+        .style("font-size", "13px")
+        .style("fill", "#c1d3b8")
+        .attr("transform", "translate(0, 20)");
+
+    text.append("tspan") // Country name udpated by its id
+        .attr("x", 105) // ie, tooltip width / 2
+        .attr("y", 0)
+        .attr("id", "tooltip-country")
+        .attr("text-anchor", "middle")
+        .style("font-weight", "600")
+        .style("font-size", "16px");
+
+    text.append("tspan") // Fixed text
+        .attr("x", 105) // ie, tooltip width / 2
+        .attr("y", 30)
+        .attr("text-anchor", "middle")
+        .style("fill", "929292")
+        .text("Émissions de CO₂ : ");
+
+    text.append("tspan") // CO2 emission udpated by its id
+        .attr("id", "tooltip-gas-emission")
+        .style("fill","#c1d3b8")
+        .style("font-weight", "bold");
+
+    // TODO Create init graph on the tooltip
+
+    return tooltip;
+}
 /**
   * Init the map container with a legend, titles and countries drawn.
   * @param {*} id_container
@@ -74,9 +129,27 @@ function init_map() {
             .on("click", clicked)
             .attr("d", path)
             .attr("id", d => "code" + d.id)
-            .attr("fill", "gray")
-            .append("title")
-            .text(d => d.properties.name);
+            .attr("fill", "gray");
+
+        var tooltip = init_tooltip(svg);
+
+        Object.keys(gas_complete_data).forEach(countryCode => {
+          // console.log(countryCode);
+          var countryPath = d3.select("#code"+countryCode);
+          countryPath.on("mouseover", function(d) {
+            tooltip.style("display", null);
+            tooltip.select("#tooltip-country")
+                  .text(short_name_country(gas_complete_data[countryCode].country));
+          })
+          .on("mouseout", function() {
+            tooltip.style("display", "none");
+          })
+          .on("mousemove", function() {
+            var mouse = d3.pointer(event);
+            tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75) + ")");
+          });
+        })
+
     }, (error) => {
         console.log(error); // erreur
     });
@@ -230,6 +303,23 @@ function update_legend(year) {
         .style("color", "#000000")
         .style("fill", "#000000")
         .text("données non connues");
+}
+/**
+  * Updates map data according to the year.
+  * @param {*} year
+  */
+function update_map(year) {
+  // TODO change countries colors according to gas emission.
+  Object.keys(gas_complete_data).forEach(c_code => {
+    let idCode = "#code" + c_code;
+    console.log(d3.select(idCode));
+    d3.select(idCode)
+          .attr("fill", "blue");
+  })
+}
+
+function short_name_country(name) {
+    return name.replace("Democratic", "Dem.").replace("Republic", "Rep.");
 }
 
 function setcolorcountry(year, id) {
