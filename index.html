@@ -10,7 +10,7 @@
     	<!-- Add icon library -->
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    
+
 	<body class="d-flex flex-column h-100">
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
@@ -43,6 +43,7 @@
 				<div class="piecontainer">
 				<div id="piechart"></div>
 				</div>
+                <div id="chart"></div>
 				<div class="slidecontainer">
     				<table style="width:100%">
     					<tr>
@@ -75,15 +76,17 @@
 		<script src="https://d3js.org/topojson.v2.min.js"></script>
    		<script src="min_data.js"></script>
         <script src="min_data_continent.js"></script>
-    	
+
 		<script src="scripts/map2.js"></script>
   		<script src="scripts/pieChart.js"></script>
+        <script src="scripts/barChart.js"></script>
 		<script type="text/javascript">
 			init_map().then((val) => {
 				update_legend(1990);
 				update_map(1990);
 			});
 			create_pie(1990);
+            drawBarChart("FR", "2005");
 		</script>
 		<script src="scripts/controller.js"></script>
     </body>
