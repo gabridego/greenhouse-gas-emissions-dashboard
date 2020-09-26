@@ -92,115 +92,121 @@ function init_tooltip(location) {
   * @param {*} url_geojson
   */
 function init_map() {
-    // Create root svg element
-    const svg = d3.select("#map").append("svg")
-        .attr("id", "svg_zone")
-        .attr("viewBox", [0, 0, width, height])
-        .on("click", reset);
 
-    // Blue background (for sea?)
-    svg.append("svg:rect")
-        .attr("fill", "#1aa1d6")
-        .attr('height', height)
-        .attr('width', width);
+    return new Promise((resolve) => {
+
+        // Create root svg element
+        const svg = d3.select("#map").append("svg")
+            .attr("id", "svg_zone")
+            .attr("viewBox", [0, 0, width, height])
+            .on("click", reset);
+
+        // Blue background (for sea?)
+        svg.append("svg:rect")
+            .attr("fill", "#1aa1d6")
+            .attr('height', height)
+            .attr('width', width);
 
 
-    var g = svg.append("g")
-                .attr("id", "g");
+        var g = svg.append("g")
+                    .attr("id", "g");
 
-    // cGroup = countries group
-    var cGroup = g.append("g")
-                    .attr("id", "cGroup");
+        // cGroup = countries group
+        var cGroup = g.append("g")
+                        .attr("id", "cGroup");
 
-    // Drawing the map
+        // Drawing the map
 
-    // load geojson data
-    var promises = [];
-    promises.push(d3.json("https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json"));
+        // load geojson data
+        var promises = [];
+        promises.push(d3.json("https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json"));
 
-    Promise.all(promises).then(function(values) {
-        // console.log(values);
-        world = values[0];
+        Promise.all(promises).then(function(values) {
+            // console.log(values);
+            world = values[0];
 
-        // Draw countries
-        cGroup.append("g")
-            .attr("cursor", "pointer")
-            .selectAll("path")
-            .data(world.features)
-            .join("path")
-            .on("click", clicked)
-            .attr("d", path)
-            .attr("id", d => "code" + d.id)
-            .attr("fill", "gray");
+            // Draw countries
+            cGroup.append("g")
+                .attr("cursor", "pointer")
+                .selectAll("path")
+                .data(world.features)
+                .join("path")
+                .on("click", clicked)
+                .attr("d", path)
+                .attr("id", d => "code" + d.id)
+                .attr("fill", "gray");
 
-        var tooltip = init_tooltip(svg);
+            var tooltip = init_tooltip(svg);
 
-        Object.keys(gas_complete_data).forEach(countryCode => {
-          // console.log(countryCode);
-          var countryPath = d3.select("#code"+countryCode);
-          countryPath.on("mouseover", function(d) {
-            tooltip.style("display", null);
-            tooltip.select("#tooltip-country")
-                  .text(short_name_country(gas_complete_data[countryCode].country));
-          })
-          .on("mouseout", function() {
-            tooltip.style("display", "none");
-          })
-          .on("mousemove", function() {
-            var mouse = d3.pointer(event);
-            tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75) + ")");
-          });
-        })
+            Object.keys(gas_complete_data).forEach(countryCode => {
+                // console.log(countryCode);
+                var countryPath = d3.select("#code"+countryCode);
+                countryPath.on("mouseover", function(d) {
+                    tooltip.style("display", null);
+                    tooltip.select("#tooltip-country")
+                        .text(short_name_country(gas_complete_data[countryCode].country));
+                })
+                .on("mouseout", function() {
+                    tooltip.style("display", "none");
+                })
+                .on("mousemove", function() {
+                    var mouse = d3.pointer(event);
+                    tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75) + ")");
+                });
+            })
 
-    }, (error) => {
-        console.log(error); // erreur
+            resolve("init completed");
+
+        }, (error) => {
+            console.log(error); // erreur
+        });
+
+        // Draw clip rectangles
+        const clipRectangles = svg.append("g");
+        clipRectangles.append('svg:rect')
+            .attr('height', height + "px")
+            .attr('width', boundsMap[0] + 'px')
+            .attr('x', 0)
+            .attr('y', 0)
+            .style("fill", "#FFFFFF");
+
+        clipRectangles.append('svg:rect')
+            .attr('height', boundsMap[1] + "px")
+            .attr('width',  (width + 10) + 'px')
+            .attr('x', 0)
+            .attr('y', 0)
+            .style("fill", "#FFFFFF");
+
+        clipRectangles.append('svg:rect')
+            .attr('height', 10 + legendCellSize)
+            .attr('width',  (width + 10) + 'px')
+            .attr('x', 0)
+            .attr('y', height - (5 + legendCellSize))
+            .style("fill", "#FFFFFF");
+
+        // Ajout du titre
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 25)
+            .attr("text-anchor", "middle")
+            .style("fill", "#000000")
+            .style("font-weight", "300")
+            .style("font-size", "16px")
+            .text("Émissions de gaz à effet de serre dans le monde.");
+
+        svg.append("text")
+            .attr("x", (width / 2))
+            .attr("y", 50)
+            .attr("text-anchor", "middle")
+            .style("fill", "#000000")
+            .style("font-weight", "200")
+            .style("font-size", "12px")
+            .text("(source : Hannah Ritchie & Max Roser 2017 - CO₂ and Greenhouse Gas Emissions)");
+
+        svg.call(zoom);
+
+        init_legend();
     });
-
-    // Draw clip rectangles
-    const clipRectangles = svg.append("g");
-    clipRectangles.append('svg:rect')
-        .attr('height', height + "px")
-        .attr('width', boundsMap[0] + 'px')
-        .attr('x', 0)
-        .attr('y', 0)
-        .style("fill", "#FFFFFF");
-
-    clipRectangles.append('svg:rect')
-        .attr('height', boundsMap[1] + "px")
-        .attr('width',  (width + 10) + 'px')
-        .attr('x', 0)
-        .attr('y', 0)
-        .style("fill", "#FFFFFF");
-
-    clipRectangles.append('svg:rect')
-        .attr('height', 10 + legendCellSize)
-        .attr('width',  (width + 10) + 'px')
-        .attr('x', 0)
-        .attr('y', height - (5 + legendCellSize))
-        .style("fill", "#FFFFFF");
-
-    // Ajout du titre
-    svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 25)
-        .attr("text-anchor", "middle")
-        .style("fill", "#000000")
-        .style("font-weight", "300")
-        .style("font-size", "16px")
-        .text("Émissions de gaz à effet de serre dans le monde.");
-
-    svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 50)
-        .attr("text-anchor", "middle")
-        .style("fill", "#000000")
-        .style("font-weight", "200")
-        .style("font-size", "12px")
-        .text("(source : Hannah Ritchie & Max Roser 2017 - CO₂ and Greenhouse Gas Emissions)");
-
-    svg.call(zoom);
-
-    init_legend();
 }
 
 
