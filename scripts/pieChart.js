@@ -15,10 +15,251 @@
  var total_construction = 0.0;
  var total_buildings = 0.0;
 
+ function get_data(year) {
+   return {
+    "chart": {
+      "caption": "Émissions de GHG selon les secteurs et les continents",
+      "subcaption": "Year : "+ year.toString(),
+      "showPlotBorder": "1",
+      "piefillalpha": "60",
+      "pieborderthickness": "2",
+      "piebordercolor": "#FFFFFF",
+      "hoverfillcolor": "#CCCCCC",
+      "numberprefix": "$",
+      "plottooltext": "$label, $$valueK, $percentValue",
+      "theme": "fusion"
+    },
+    "category": [{
+      "label": "Secteurs",
+      "color": "#ffffff",
+      "value": "100",
+      "category": [{
+        "label": "Agriculture",
+        "color": "#f8bd19",
+        "value": total_agriculture,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "#f8bd19",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Agriculture"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "#f8bd19",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Agriculture"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "#f8bd19",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Agriculture"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "#f8bd19",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Agriculture"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "#f8bd19",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Agriculture"]["Oceania"]
+        }]
+      }, {
+        "label": "Énergie",
+        "color": "#33ccff",
+        "value": total_energy,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "#33ccff",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Energy"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "#33ccff",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Energy"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "#33ccff",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Energy"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "#33ccff",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Energy"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "#33ccff",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Energy"]["Oceania"]
+        }]
+      }, {
+        "label": "Industrie",
+        "color": "#FF69B4",
+        "value": total_industry,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "#FF69B4",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Industry"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "#FF69B4",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Industry"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "#FF69B4",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Industry"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "#FF69B4",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Industry"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "#FF69B4",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Industry"]["Oceania"]
+        }]
+      }, {
+        "label": "Chaleur & {br}Electricité",
+        "color": "##696969",
+        "value": total_heat,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "##696969",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Electricity & Heat"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "##696969",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Electricity & Heat"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "##696969",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Electricity & Heat"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "##696969",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Electricity & Heat"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "##696969",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Electricity & Heat"]["Oceania"]
+        }]
+      }, {
+        "label": "Énergie de {br}Construction",
+        "color": "##FF0000",
+        "value": total_construction,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "##FF0000",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Manufacturing/Construction energy"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "##FF0000",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Manufacturing/Construction energy"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "##FF0000",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Manufacturing/Construction energy"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "##FF0000",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Manufacturing/Construction energy"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "##FF0000",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Manufacturing/Construction energy"]["Oceania"]
+        }]
+      }, {
+        "label": "Transport",
+        "color": "##800080",
+        "value": total_transport,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "##800080",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Transport"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "##800080",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Transport"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "##800080",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Transport"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "##800080",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Transport"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "##800080",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Transport"]["Oceania"]
+        }]
+      }, {
+        "label": "Batiments",
+        "color": "#006400",
+        "value": total_buildings,
+        "tooltext": "$$valueK, $percentValue",
+        "category": [{
+          "label": "EU",
+          "color": "#006400",
+          //TO DO :Replace AF for the European continent. "AF" is just to test !
+          "value": gas_camembert[year]["Buildings"]["Europe"]
+        }, {
+          "label": "AF",
+          "color": "#006400",
+          //TO DO :Replace GW for the African continent. "GW" is just to test !
+          "value": gas_camembert[year]["Buildings"]["Africa"]
+        }, {
+          "label": "AS",
+          "color": "#006400",
+          //TO DO :Replace GY for the Asian continent. "GY" is just to test !
+          "value": gas_camembert[year]["Buildings"]["Asia"]
+        }, {
+          "label": "NA/SA",
+          "color": "#006400",
+          //TO DO :Replace HT for the American continent. "HT" is just to test !
+          "value": gas_camembert[year]["Buildings"]["Americas"]
+        }, {
+          "label": "OC",
+          "color": "#006400",
+          //TO DO :Replace HN for the Oceania. "HN" is just to test !
+          "value": gas_camembert[year]["Buildings"]["Oceania"]
+        }]
+      }]
+    }]}
+ }
+
  // Draw the chart and set the chart values
  function create_pie(year) {
    set_totals(year);
    console.log(total_agriculture);
+   var data = get_data(year)
+
    var topProductsChart = new FusionCharts({
     type: 'multilevelpie',
     renderAt: 'piechart',
@@ -26,245 +267,17 @@
     width: '700',
     height: '700',
     dataFormat: 'json',
-    dataSource: {
-      "chart": {
-        "caption": "Émissions de GHG selon les secteurs et les continents",
-        "subcaption": "Year : "+ year.toString(),
-        "showPlotBorder": "1",
-        "piefillalpha": "60",
-        "pieborderthickness": "2",
-        "piebordercolor": "#FFFFFF",
-        "hoverfillcolor": "#CCCCCC",
-        "numberprefix": "$",
-        "plottooltext": "$label, $$valueK, $percentValue",
-        "theme": "fusion"
-      },
-      "category": [{
-        "label": "Secteurs",
-        "color": "#ffffff",
-        "value": "100",
-        "category": [{
-          "label": "Agriculture",
-          "color": "#f8bd19",
-          "value": total_agriculture,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "#f8bd19",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Agriculture"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "#f8bd19",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Agriculture"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "#f8bd19",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Agriculture"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "#f8bd19",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Agriculture"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "#f8bd19",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Agriculture"]["Oceania"]
-          }]
-        }, {
-          "label": "Énergie",
-          "color": "#33ccff",
-          "value": total_energy,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "#33ccff",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Energy"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "#33ccff",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Energy"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "#33ccff",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Energy"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "#33ccff",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Energy"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "#33ccff",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Energy"]["Oceania"]
-          }]
-        }, {
-          "label": "Industrie",
-          "color": "#FF69B4",
-          "value": total_industry,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "#FF69B4",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Industry"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "#FF69B4",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Industry"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "#FF69B4",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Industry"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "#FF69B4",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Industry"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "#FF69B4",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Industry"]["Oceania"]
-          }]
-        }, {
-          "label": "Chaleur & {br}Electricité",
-          "color": "##696969",
-          "value": total_heat,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "##696969",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Electricity & Heat"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "##696969",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Electricity & Heat"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "##696969",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Electricity & Heat"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "##696969",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Electricity & Heat"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "##696969",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Electricity & Heat"]["Oceania"]
-          }]
-        }, {
-          "label": "Énergie de {br}Construction",
-          "color": "##FF0000",
-          "value": total_construction,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "##FF0000",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Manufacturing/Construction energy"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "##FF0000",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Manufacturing/Construction energy"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "##FF0000",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Manufacturing/Construction energy"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "##FF0000",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Manufacturing/Construction energy"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "##FF0000",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Manufacturing/Construction energy"]["Oceania"]
-          }]
-        }, {
-          "label": "Transport",
-          "color": "##800080",
-          "value": total_transport,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "##800080",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Transport"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "##800080",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Transport"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "##800080",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Transport"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "##800080",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Transport"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "##800080",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Transport"]["Oceania"]
-          }]
-        }, {
-          "label": "Batiments",
-          "color": "#006400",
-          "value": total_buildings,
-          "tooltext": "$$valueK, $percentValue",
-          "category": [{
-            "label": "EU",
-            "color": "#006400",
-            //TO DO :Replace AF for the European continent. "AF" is just to test !
-            "value": gas_camembert[year]["Buildings"]["Europe"]
-          }, {
-            "label": "AF",
-            "color": "#006400",
-            //TO DO :Replace GW for the African continent. "GW" is just to test !
-            "value": gas_camembert[year]["Buildings"]["Africa"]
-          }, {
-            "label": "AS",
-            "color": "#006400",
-            //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-            "value": gas_camembert[year]["Buildings"]["Asia"]
-          }, {
-            "label": "NA/SA",
-            "color": "#006400",
-            //TO DO :Replace HT for the American continent. "HT" is just to test !
-            "value": gas_camembert[year]["Buildings"]["Americas"]
-          }, {
-            "label": "OC",
-            "color": "#006400",
-            //TO DO :Replace HN for the Oceania. "HN" is just to test !
-            "value": gas_camembert[year]["Buildings"]["Oceania"]
-          }]
-        }]
-      }]
-    }
+    dataSource: data
   });
   topProductsChart.render();
+
+  return topProductsChart;
+}
+
+// updates the data of the piechart
+function update_piechart(chart, year) {
+  data = get_data(year)
+  chart.setJSONData(data)
 }
 
 function set_totals(year) {
