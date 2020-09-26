@@ -14,28 +14,41 @@ btnPlayStop.addEventListener("mousedown", playStop);
 window.addEventListener("keypress", spacePlay);
 
 
-
+	
 //EVENTS
 
 //Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
     output.innerHTML = firstYearTimeline + +this.value;
+
     UpdateCharts(output.innerHTML);
+
 }
 
 function playStop() {
+
     console.log(isPlaying)
     if (!isPlaying) {
         iconPlayStop.className = "fa fa-pause text-white";
         intervalTimeline = setInterval(function() {
             slider.value ++;
             output.innerHTML = firstYearTimeline +  +slider.value;
-            UpdateCharts(output.innerHTML);
+			
+
+			UpdateCharts(output.innerHTML);
+			
+			// Added Event dispatcher for data updating on the map (Event listener on update_map())
+			
+			d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
+			
+			// TODO : We need to add event listeners on other graphs following the same syntaxe
+ 
         }, 1000);
     } else {
         iconPlayStop.className = "fa fa-play text-white";
         clearInterval(intervalTimeline);
     }
+
 
     isPlaying = !isPlaying;
 }

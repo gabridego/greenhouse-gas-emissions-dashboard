@@ -35,6 +35,7 @@ const path = d3.geoPath()
       * @param {*} location
       */
 function init_tooltip(location) {
+	
     var tooltip = location.append("g") // Group for the whole tooltip
         .attr("id", "tooltip")
         .style("display", "none");
@@ -72,9 +73,10 @@ function init_tooltip(location) {
     text.append("tspan") // Fixed text
         .attr("x", 105) // ie, tooltip width / 2
         .attr("y", 30)
+		.attr("id", "text_emission")
         .attr("text-anchor", "middle")
         .style("fill", "929292")
-        .text("Émissions de CO₂ : ");
+        .text("CO₂ : ");
 
     text.append("tspan") // CO2 emission udpated by its id
         .attr("id", "tooltip-gas-emission")
@@ -85,6 +87,60 @@ function init_tooltip(location) {
 
     return tooltip;
 }
+
+/**
+  * Resize the tooltip to container's transformations.
+  * @param {*} resize_factor
+  * @param {*} tooltip
+  */
+  
+function resize_tooltip(resize_factor, tooltip){
+
+	
+    tooltip.select("polyline")
+        .attr("points","0,0 "+210/resize_factor+",0 "+210/resize_factor+","+60/resize_factor+" 0,"+60/resize_factor+" 0,0")
+		.style("stroke-width",1/resize_factor);
+		
+    tooltip.select("line") 
+        .attr("x1", 40/resize_factor)
+        .attr("y1", 25/resize_factor)
+        .attr("x2", 160/resize_factor)
+        .attr("y2", 25/resize_factor)
+        .attr("transform", "translate(0, "+5/resize_factor+")")
+		.style("stroke-width",0.5/resize_factor);
+
+    tooltip.select("text") // Text that will contain all tspan (used for multilines)
+        .style("font-size", 13/resize_factor+"px")
+        .attr("transform", "translate(0, "+20/resize_factor+")");
+	
+    d3.select("#tooltip-country") // Country name udpated by its id
+        .attr("x", 105/resize_factor) // ie, tooltip width / 2
+        .attr("y", 0)
+        .style("font-size", 16/resize_factor+"px");
+
+    d3.select("#text_emission") // Fixed text
+        .attr("x", 105/resize_factor) // ie, tooltip width / 2
+        .attr("y", 30/resize_factor);
+	Object.keys(gas_complete_data).forEach(countryCode => {
+	// console.log(countryCode);
+	var countryPath = d3.select("#code"+countryCode);
+	countryPath.on("mouseover", function(d) {
+		tooltip.style("display", null);
+		tooltip.select("#tooltip-country")
+			.text(short_name_country(gas_complete_data[countryCode].country));
+		})
+			.on("mouseout", function() {
+				tooltip.style("display", "none");
+		})
+			.on("mousemove", function() {
+				var mouse = d3.pointer(event);
+				tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75/resize_factor) + ")");
+		});
+	})
+	
+	
+}
+
 /**
   * Init the map container with a legend, titles and countries drawn.
   * @param {*} id_container
@@ -136,21 +192,25 @@ function init_map() {
                 .attr("id", d => "code" + d.id)
                 .attr("fill", "gray");
 
-            var tooltip = init_tooltip(svg);
-
+            var tooltip = init_tooltip(g);
+	
             Object.keys(gas_complete_data).forEach(countryCode => {
                 // console.log(countryCode);
+
                 var countryPath = d3.select("#code"+countryCode);
-                countryPath.on("mouseover", function(d) {
+                countryPath.on("mouseover", function() {
+					
                     tooltip.style("display", null);
                     tooltip.select("#tooltip-country")
                         .text(short_name_country(gas_complete_data[countryCode].country));
+					
                 })
                 .on("mouseout", function() {
                     tooltip.style("display", "none");
                 })
                 .on("mousemove", function() {
                     var mouse = d3.pointer(event);
+					
                     tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75) + ")");
                 });
             })
@@ -206,14 +266,17 @@ function init_map() {
         svg.call(zoom);
 
         init_legend();
+		
+
     });
+	
 }
 
 
 function reset() {
     const svg = d3.select("#svg_zone");
     const cGroup = d3.select("#cGroup");
-    console.log(cGroup)
+    
     if (lastCountryClicked !== undefined) {
         // remove the border of the previously selected country
         lastCountryClicked.transition().style("stroke", null);
@@ -251,12 +314,20 @@ function clicked(event, d) {
     );
 }
 
+
 function zoomed(event) {
     const {transform} = event;
     const g = d3.select("#g");
     g.attr("transform", transform);
+
     g.attr("stroke-width", 1 / transform.k);
-}
+	// zooming the tooltip 
+	console.log("k "+transform.k);
+	const tooltip_zoomed = d3.select("#tooltip");
+
+	resize_tooltip(transform.k, tooltip_zoomed);
+
+	}
 
 /**
  * Init legend
@@ -303,22 +374,43 @@ function init_legend() {
   * Updates map data according to the year.
   * @param {*} year
   */
+  
+  // Fixed Tooltip for map interactions
 function update_map(year) {
   // TODO change countries colors according to gas emission.
+  
+  
+  var tooltip = d3.select("#tooltip");
+  
   Object.keys(gas_complete_data).forEach(c_code => {
-    let idCode = "#code" + c_code;
-
+	
+	let idCode = "#code" + c_code;
     //console.log(d3.select(idCode));
     var color = "#999";
     if (gas_complete_data[c_code] && gas_complete_data[c_code][year] && gas_complete_data[c_code][year].total_ghg)
     {
-        console.log(gas_complete_data[c_code][year]);
         color = colors[Math.floor(colors.length * (gas_complete_data[c_code][year].total_ghg - gas_complete_data["global"].total_ghg_min)/(gas_complete_data["global"].total_ghg_max - gas_complete_data["global"].total_ghg_min))];
     }
-
     d3.select(idCode)
           .attr("fill", color);
+    var country_path = d3.select(idCode)
+    country_path.attr("fill", color)
+		.on("mouseover",function() {
+			tooltip.style("display", null);
+			tooltip.select("#tooltip-country")
+				.text(short_name_country(gas_complete_data[c_code].country));
+			tooltip.select("#tooltip-gas-emission")	
+					.text(Math.round(gas_complete_data[c_code][year].co2*100)/100);
+			//Event listener	
+			var toolgazemi = tooltip.select("#tooltip-gas-emission");
+			toolgazemi.on('dataUpdateEvent', function(e){	
+			document.getElementById("tooltip-gas-emission").innerHTML = Math.round(gas_complete_data[c_code][e.detail].co2*100)/100;
+
+			});
+
+   });
   })
+
 }
 
 function short_name_country(name) {
@@ -334,7 +426,7 @@ function update_legend(year) {
     var min, max;
     var first = 0;
 
-    console.log(gas_complete_data)
+
     // TODO
     Object.keys(gas_complete_data).forEach(function(key, index) {
         if (first == 0) {
@@ -353,7 +445,7 @@ function update_legend(year) {
                 }
             }
         }
-        console.log(min, max);
+
     });
     
 
@@ -366,7 +458,7 @@ function update_legend(year) {
 
     let legendScale = d3.scaleLinear().domain([min, max])
         .range([0, colors.length * legendCellSize]);
-    console.log("test")
+
     legendAxis.attr("class", "axis")
         .call(d3.axisLeft(legendScale));
 }
