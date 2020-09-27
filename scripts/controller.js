@@ -1,5 +1,4 @@
 //INIT
-
 let slider = document.getElementById("timeline");
 let output = document.getElementById("year");
 let btnPlayStop = document.getElementById("btnPlayStop");
@@ -7,6 +6,13 @@ let iconPlayStop = document.getElementById("iconPlayStop");
 let firstYearTimeline = 1990;
 let intervalTimeline;
 let isPlaying = false;
+
+
+//global parameters for charts and map
+let currentFilter = "total_ghg";
+let currentYear = 1990;
+
+
 
 output.innerHTML = firstYearTimeline +  +slider.value; // Display the default slider value
 btnPlayStop.addEventListener("mousedown", playStop);

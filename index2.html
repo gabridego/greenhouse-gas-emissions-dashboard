@@ -332,24 +332,19 @@
 	<script src="min_data.js"></script>
 	<script src="full_data.js"></script>
 	<script src="min_data_continent.js"></script>
-	<script src="scripts/filters.js"></script>
 	<script src="scripts/map2.js"></script>
 	<script src="scripts/pieChart.js"></script>
 	<script src="scripts/barChart.js"></script>
 	<script src="scripts/sankeyDiag.js"></script>
+	<script src="scripts/controller.js"></script>
 	<script type="text/javascript">
-		let currentFilter = "total_ghg";
-		let currentYear = 1990;
-
 		init_map().then((val) => {
-			update_legend(1990);
-			update_map(1990, currentFilter);
+			update_legend(currentYear);
+			update_map(currentYear, currentFilter);
 		});
-		piechart = create_pie(1990);
+		piechart = create_pie(currentYear);
 		drawBarChart("FR", "2005");
 	</script>
-	<script src="scripts/controller.js"></script>
-
 </body>
 
 </html>
