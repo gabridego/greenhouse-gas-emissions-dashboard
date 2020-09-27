@@ -12,8 +12,8 @@ function init_sankey() {
       color = d3.scale.category20();
    
   // append the svg canvas to the page
-  var svg = d3.select("#chart").append("svg")
-      .attr("id", "sankey_zone")
+  var svg = d3.select("#sankey_chart").append("svg")
+      .attr("id", "sankey_svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -32,7 +32,7 @@ function init_sankey() {
 function draw_sankey(year, data) {
   var graph = jsonClone(data)
 	// clear previous graphs
-	d3.selectAll("#sankey_zone > g > *").remove();
+	d3.selectAll("#sankey_svg > g > *").remove();
  
   var nodeMap = {};
   graph.nodes.forEach(function(x) { nodeMap[x.name] = x; });
@@ -50,7 +50,7 @@ function draw_sankey(year, data) {
       .layout(32);
  
 // add in the links
-  var svg = d3.select("#sankey_zone");
+  var svg = d3.select("#sankey_svg");
   var link = svg.append("g").selectAll(".link")
       .data(graph.links)
     .enter().append("path")
