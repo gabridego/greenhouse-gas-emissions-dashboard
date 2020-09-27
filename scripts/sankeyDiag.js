@@ -1,11 +1,11 @@
-let sankey, path, formatNumber, width, height;
+let sankey, sankey_path, formatNumber, s_width, s_height;
 const units = "billion t";
 
 function init_sankey() {
   		 
   var margin = {top: 10, right: 10, bottom: 10, left: 10};
-  width = 1200 - margin.left - margin.right;
-  height = 740 - margin.top - margin.bottom;
+  s_width = 1200 - margin.left - margin.right;
+  s_height = 740 - margin.top - margin.bottom;
    
   formatNumber = d3.format(",.0f"),    // zero decimal places
       format = function(d) { return formatNumber(d) + " " + units; },
@@ -14,8 +14,8 @@ function init_sankey() {
   // append the svg canvas to the page
   var svg = d3.select("#sankey_chart").append("svg")
       .attr("id", "sankey_svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .attr("width", s_width + margin.left + margin.right)
+      .attr("height", s_height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", 
             "translate(" + margin.left + "," + margin.top + ")");
@@ -24,9 +24,9 @@ function init_sankey() {
   sankey = d3.sankey()
       .nodeWidth(36)
       .nodePadding(10)
-      .size([width, height]);
+      .size([s_width, s_height]);
 
-  path = sankey.link();
+  sankey_path = sankey.link();
 }
 
 function draw_sankey(year, data) {
@@ -55,7 +55,7 @@ function draw_sankey(year, data) {
       .data(graph.links)
     .enter().append("path")
       .attr("class", "link")
-      .attr("d", path)
+      .attr("d", sankey_path)
       .style("stroke-width", function(d) { return Math.max(1, d.dy); })
       .sort(function(a, b) { return b.dy - a.dy; });
  
@@ -98,7 +98,7 @@ function draw_sankey(year, data) {
       .attr("text-anchor", "end")
       .attr("transform", null)
       .text(function(d) { return d.name; })
-    .filter(function(d) { return d.x < width / 2; })
+    .filter(function(d) { return d.x < s_width / 2; })
       .attr("x", 6 + sankey.nodeWidth())
       .attr("text-anchor", "start");
  
@@ -106,12 +106,12 @@ function draw_sankey(year, data) {
   function dragmove(d) {
     d3.select(this).attr("transform", 
         "translate(" + (
-        		d.x = Math.max(0, Math.min(width - d.dx, d3.event.x))
+        		d.x = Math.max(0, Math.min(s_width - d.dx, d3.event.x))
         	) + "," + (
-                d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+                d.y = Math.max(0, Math.min(s_height - d.dy, d3.event.y))
             ) + ")");
     sankey.relayout();
-    link.attr("d", path);
+    link.attr("d", sankey_path);
   }
 };
 
