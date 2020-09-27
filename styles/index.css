@@ -23,7 +23,7 @@ main > .container {
   background-color: rgb(42, 61, 73);
   border-radius: 10px;
   padding: 5px;
-  
+
   left: 5%;
   bottom: 10px;
 }
@@ -105,6 +105,24 @@ main > .container {
 }
 
 
+
+.BarChartTooltip {
+    position: absolute;
+    opacity:0.8;
+    z-index:1000;
+    text-align:left;
+    border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    padding:8px;
+    color:#fff;
+    background-color:#000;
+    font: 12px sans-serif;
+    max-width: 300px;
+}
+
+
+
 /*responsive svg*/
 .svg-container {
   display: inline-block;
@@ -128,18 +146,18 @@ main > .container {
   fill-opacity: .9;
   shape-rendering: crispEdges;
 }
- 
+
 .node text {
   pointer-events: none;
   text-shadow: 0 1px 0 #fff;
 }
- 
+
 .link {
   fill: none;
   stroke: #000;
   stroke-opacity: .2;
 }
- 
+
 .link:hover {
   stroke-opacity: .5;
 }

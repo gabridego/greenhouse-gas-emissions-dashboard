@@ -49,9 +49,16 @@ function drawBarChart(sectorCode, year) {
     var data = getBarChartData(sectorCode, year);
 
 
-    const margin = {top: 20, right: 20, bottom: 90, left: 120},
-        width = 800 - margin.left - margin.right,
-        height = 400 - margin.top - margin.bottom;
+
+	var elem = document.getElementById("chart");
+	if(elem) {
+	  var rect = elem.getBoundingClientRect();
+	  console.log("height: " + rect.height);
+	}
+
+    const margin = {top: 20, right: 20, bottom: 150, left: 50},
+        width = rect.width - margin.left - margin.right ,
+        height = rect.height - margin.top - margin.bottom;
 
     const x = d3.scaleBand()
         .range([0, width])
@@ -63,12 +70,13 @@ function drawBarChart(sectorCode, year) {
     const svg = d3.select("#chart").append("svg")
         .attr("id", "svg")
         .attr("width", width + margin.left + margin.right)
+		.attr("max-width", 80)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     const div = d3.select("body").append("div")
-        .attr("class", "tooltip")
+        .attr("class", "BarChartTooltip")
         .style("opacity", 0);
 
 
@@ -99,7 +107,7 @@ function drawBarChart(sectorCode, year) {
     // La largeur de la barre est déterminée par la fonction x
     // La hauteur par la fonction y en tenant compte de la frequency
     // La gestion des events de la souris pour le popup
-    svg.selectAll("bar")
+	svg.selectAll("bar")
         .data(data)
     .enter().append("rect")
         .attr("class", "bar")
@@ -107,14 +115,14 @@ function drawBarChart(sectorCode, year) {
         .attr("width", x.bandwidth())
         .attr("y", d => y(parseFloat(d.frequency)))
         .attr("height", d => height - y(parseFloat(d.frequency)))
-        .on("mouseover", function(d) {
-            console.log(d);
+        .on("mouseover", function(d, e) {
+            console.log(d, e);
             div.transition()
                 .duration(200)
-                .style("opacity", .9);
-            div.html("frequency : " + parseFloat(d.frequency))
-                .style("left", (d3.event.pageX + 10) + "px")
-                .style("top", (d3.event.pageY - 50) + "px");
+                .style("opacity", .9)
+				.style("left", d.pageX  + "px")
+				.style("top", d.pageY + "px");
+            div.html("frequency : " + parseFloat(e.frequency))
         })
         .on("mouseout", function(d) {
             div.transition()
