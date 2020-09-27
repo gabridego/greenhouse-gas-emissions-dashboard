@@ -41,27 +41,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "#f8bd19",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Agriculture"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Agriculture"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "#f8bd19",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Agriculture"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Agriculture"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "#f8bd19",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Agriculture"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Agriculture"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "#f8bd19",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Agriculture"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Agriculture"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "#f8bd19",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Agriculture"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Agriculture"]["Oceania"]
                 }]
             }, {
                 "label": "Énergie",
@@ -72,27 +72,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "#33ccff",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Energy"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Energy"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "#33ccff",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Energy"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Energy"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "#33ccff",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Energy"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Energy"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "#33ccff",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Energy"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Energy"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "#33ccff",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Energy"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Energy"]["Oceania"]
                 }]
             }, {
                 "label": "Industrie",
@@ -103,27 +103,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "#FF69B4",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Industry"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Industry"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "#FF69B4",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Industry"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Industry"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "#FF69B4",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Industry"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Industry"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "#FF69B4",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Industry"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Industry"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "#FF69B4",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Industry"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Industry"]["Oceania"]
                 }]
             }, {
                 "label": "Chaleur & {br}Electricité",
@@ -134,27 +134,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "##696969",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Electricity & Heat"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Electricity & Heat"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "##696969",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Electricity & Heat"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Electricity & Heat"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "##696969",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Electricity & Heat"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Electricity & Heat"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "##696969",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Electricity & Heat"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Electricity & Heat"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "##696969",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Electricity & Heat"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Electricity & Heat"]["Oceania"]
                 }]
             }, {
                 "label": "Énergie de {br}Construction",
@@ -165,27 +165,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "##FF0000",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Manufacturing/Construction energy"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Manufacturing/Construction energy"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "##FF0000",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Manufacturing/Construction energy"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Manufacturing/Construction energy"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "##FF0000",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Manufacturing/Construction energy"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Manufacturing/Construction energy"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "##FF0000",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Manufacturing/Construction energy"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Manufacturing/Construction energy"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "##FF0000",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Manufacturing/Construction energy"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Manufacturing/Construction energy"]["Oceania"]
                 }]
             }, {
                 "label": "Transport",
@@ -196,27 +196,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "##800080",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Transport"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Transport"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "##800080",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Transport"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Transport"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "##800080",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Transport"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Transport"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "##800080",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Transport"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Transport"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "##800080",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Transport"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Transport"]["Oceania"]
                 }]
             }, {
                 "label": "Batiments",
@@ -227,27 +227,27 @@ function get_data(year) {
                     "label": "EU",
                     "color": "#006400",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": gas_camembert[year]["Buildings"]["Europe"]
+                    "value": full_camembert[year]['GHG']["Buildings"]["Europe"]
                 }, {
                     "label": "AF",
                     "color": "#006400",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": gas_camembert[year]["Buildings"]["Africa"]
+                    "value": full_camembert[year]['GHG']["Buildings"]["Africa"]
                 }, {
                     "label": "AS",
                     "color": "#006400",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": gas_camembert[year]["Buildings"]["Asia"]
+                    "value": full_camembert[year]['GHG']["Buildings"]["Asia"]
                 }, {
                     "label": "NA/SA",
                     "color": "#006400",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": gas_camembert[year]["Buildings"]["Americas"]
+                    "value": full_camembert[year]['GHG']["Buildings"]["Americas"]
                 }, {
                     "label": "OC",
                     "color": "#006400",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": gas_camembert[year]["Buildings"]["Oceania"]
+                    "value": full_camembert[year]['GHG']["Buildings"]["Oceania"]
                 }]
             }]
         }]}
@@ -281,49 +281,49 @@ function get_data(year) {
     
     function set_totals(year) {
         /*
-        total_agriculture = parseFloat(gas_camembert["AF"][year]["Agriculture (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Agriculture (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Agriculture (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Agriculture (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Agriculture (GHG)"]);
+        total_agriculture = parseFloat(full_camembert["AF"][year]['GHG']["Agriculture (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Agriculture (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Agriculture (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Agriculture (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Agriculture (GHG)"]);
         
-        total_energy = parseFloat(gas_camembert["AF"][year]["Energy (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Energy (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Energy (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Energy (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Energy (GHG)"]);
+        total_energy = parseFloat(full_camembert["AF"][year]['GHG']["Energy (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Energy (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Energy (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Energy (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Energy (GHG)"]);
         
-        var total_industry = parseFloat(gas_camembert["AF"][year]["Industry (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Industry (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Industry (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Industry (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Industry (GHG)"]);
+        var total_industry = parseFloat(full_camembert["AF"][year]['GHG']["Industry (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Industry (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Industry (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Industry (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Industry (GHG)"]);
         
-        var total_transport = parseFloat(gas_camembert["AF"][year]["Transport (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Transport (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Transport (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Transport (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Transport (GHG)"]);
+        var total_transport = parseFloat(full_camembert["AF"][year]['GHG']["Transport (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Transport (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Transport (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Transport (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Transport (GHG)"]);
         
-        var total_heat = parseFloat(gas_camembert["AF"][year]["Electricity & Heat (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Electricity & Heat (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Electricity & Heat (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Electricity & Heat (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Electricity & Heat (GHG)"]);
+        var total_heat = parseFloat(full_camembert["AF"][year]['GHG']["Electricity & Heat (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Electricity & Heat (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Electricity & Heat (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Electricity & Heat (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Electricity & Heat (GHG)"]);
         
-        var total_construction = parseFloat(gas_camembert["AF"][year]["Manufacturing/Construction energy (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Manufacturing/Construction energy (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Manufacturing/Construction energy (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Manufacturing/Construction energy (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Manufacturing/Construction energy (GHG)"]);
+        var total_construction = parseFloat(full_camembert["AF"][year]['GHG']["Manufacturing/Construction energy (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Manufacturing/Construction energy (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Manufacturing/Construction energy (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Manufacturing/Construction energy (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Manufacturing/Construction energy (GHG)"]);
         
-        var total_buildings = parseFloat(gas_camembert["AF"][year]["Buildings (GHG)"])
-        + parseFloat(gas_camembert["GW"][year]["Buildings (GHG)"])
-        + parseFloat(gas_camembert["GY"][year]["Buildings (GHG)"])
-        + parseFloat(gas_camembert["HT"][year]["Buildings (GHG)"])
-        + parseFloat(gas_camembert["HN"][year]["Buildings (GHG)"]);
+        var total_buildings = parseFloat(full_camembert["AF"][year]['GHG']["Buildings (GHG)"])
+        + parseFloat(full_camembert["GW"][year]['GHG']["Buildings (GHG)"])
+        + parseFloat(full_camembert["GY"][year]['GHG']["Buildings (GHG)"])
+        + parseFloat(full_camembert["HT"][year]['GHG']["Buildings (GHG)"])
+        + parseFloat(full_camembert["HN"][year]['GHG']["Buildings (GHG)"]);
         */
-        data_year = gas_camembert[year];
+        data_year = full_camembert[year]['GHG'];
         
         for(let [key,value] of Object.entries(data_year.Agriculture))
         total_agriculture += value;
