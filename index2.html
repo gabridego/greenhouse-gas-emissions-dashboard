@@ -338,9 +338,12 @@
 	<script src="scripts/barChart.js"></script>
 	<script src="scripts/sankeyDiag.js"></script>
 	<script type="text/javascript">
+		let currentFilter = "total_ghg";
+		let currentYear = 1990;
+
 		init_map().then((val) => {
 			update_legend(1990);
-			update_map(1990);
+			update_map(1990, currentFilter);
 		});
 		piechart = create_pie(1990);
 		drawBarChart("FR", "2005");

@@ -347,7 +347,7 @@ function reset() {
         */
         
         // Fixed Tooltip for map interactions
-        function update_map(year) {
+        function update_map(year, currentFilter) {
             // TODO change countries colors according to gas emission.
             
             

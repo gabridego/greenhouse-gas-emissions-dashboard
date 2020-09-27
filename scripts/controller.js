@@ -7,7 +7,6 @@ let iconPlayStop = document.getElementById("iconPlayStop");
 let firstYearTimeline = 1990;
 let intervalTimeline;
 let isPlaying = false;
-let currentYear = firstYearTimeline;
 
 output.innerHTML = firstYearTimeline +  +slider.value; // Display the default slider value
 btnPlayStop.addEventListener("mousedown", playStop);
@@ -64,5 +63,16 @@ function UpdateCharts()
     //ADD FUNCTION CHARTS HERE
     //chart1(year);
     //chart2(year);
-    update_map(currentYear);
+    update_map(currentYear, currentFilter);
 }
+
+
+
+
+//filters
+$('#filters').on('click','a', function(){
+    $(this).addClass('active').siblings().removeClass('active');
+    currentFilter = $(this).attr("name");
+    console.log(currentFilter);
+    UpdateCharts();
+ });
