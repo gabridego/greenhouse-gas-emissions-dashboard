@@ -7,6 +7,7 @@ let iconPlayStop = document.getElementById("iconPlayStop");
 let firstYearTimeline = 1990;
 let intervalTimeline;
 let isPlaying = false;
+let currentYear = firstYearTimeline;
 
 output.innerHTML = firstYearTimeline +  +slider.value; // Display the default slider value
 btnPlayStop.addEventListener("mousedown", playStop);
@@ -17,9 +18,9 @@ window.addEventListener("keypress", spacePlay);
 
 //Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
-    output.innerHTML = firstYearTimeline + +this.value;
+    currentYear = output.innerHTML = firstYearTimeline + +this.value;
     
-    UpdateCharts(output.innerHTML);
+    UpdateCharts();
     
 }
 
@@ -29,10 +30,10 @@ function playStop() {
         iconPlayStop.className = "fa fa-pause text-white";
         intervalTimeline = setInterval(function() {
             slider.value ++;
-            output.innerHTML = firstYearTimeline +  +slider.value;
+            currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
             
             
-            UpdateCharts(output.innerHTML);
+            UpdateCharts();
             
             // Added Event dispatcher for data updating on the map (Event listener on update_map())
             
@@ -58,10 +59,10 @@ function spacePlay(event) {
 
 //FUNCTIONS
 
-function UpdateCharts(year)
+function UpdateCharts()
 {
     //ADD FUNCTION CHARTS HERE
     //chart1(year);
     //chart2(year);
-    update_map(year);
+    update_map(currentYear);
 }

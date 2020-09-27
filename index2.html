@@ -66,13 +66,15 @@
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
 					aria-expanded="true" aria-controls="collapseTwo">
 					<i class="fas fa-fw fa-cog"></i>
-					<span>Components</span>
+					<span>Filters</span>
 				</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Filters:</h6>
-						<a class="collapse-item" href="buttons.html">CO2</a>
-						<a class="collapse-item" href="cards.html">GHG</a>
+					<div class="bg-white py-2 collapse-inner rounded" id="filters">
+						<h6 class="collapse-header">Emissions:</h6>
+						<a class="collapse-item active" href="#" name="total_ghg">all</a>
+						<a class="collapse-item" href="#" name="co2">CO2</a>
+						<a class="collapse-item" href="#" name="methane">CH4</a>
+						<a class="collapse-item" href="#" name="nitrous_oxide">N2O</a>
 					</div>
 				</div>
 			</li>
@@ -328,7 +330,9 @@
 	<script src="https://d3js.org/d3.v6.min.js"></script>
 	<script src="https://d3js.org/topojson.v2.min.js"></script>
 	<script src="min_data.js"></script>
+	<script src="full_data.js"></script>
 	<script src="min_data_continent.js"></script>
+	<script src="scripts/filters.js"></script>
 	<script src="scripts/map2.js"></script>
 	<script src="scripts/pieChart.js"></script>
 	<script src="scripts/barChart.js"></script>

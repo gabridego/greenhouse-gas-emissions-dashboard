@@ -121,13 +121,13 @@ function resize_tooltip(resize_factor, tooltip){
     d3.select("#text_emission") // Fixed text
     .attr("x", 105/resize_factor) // ie, tooltip width / 2
     .attr("y", 30/resize_factor);
-    Object.keys(gas_complete_data).forEach(countryCode => {
+    Object.keys(full_data).forEach(countryCode => {
         // console.log(countryCode);
         var countryPath = d3.select("#code"+countryCode);
         countryPath.on("mouseover", function(d) {
             tooltip.style("display", null);
             tooltip.select("#tooltip-country")
-            .text(short_name_country(gas_complete_data[countryCode].country));
+            .text(short_name_country(full_data[countryCode].country));
         })
         .on("mouseout", function() {
             tooltip.style("display", "none");
@@ -191,7 +191,7 @@ function init_map() {
             
             var tooltip = init_tooltip(g);
             
-            Object.keys(gas_complete_data).forEach(countryCode => {
+            Object.keys(full_data).forEach(countryCode => {
                 // console.log(countryCode);
                 
                 var countryPath = d3.select("#code"+countryCode);
@@ -199,7 +199,7 @@ function init_map() {
                     
                     tooltip.style("display", null);
                     tooltip.select("#tooltip-country")
-                    .text(short_name_country(gas_complete_data[countryCode].country));
+                    .text(short_name_country(full_data[countryCode].country));
                     
                 })
                 .on("mouseout", function() {
@@ -353,14 +353,14 @@ function reset() {
             
             var tooltip = d3.select("#tooltip");
             
-            Object.keys(gas_complete_data).forEach(c_code => {
+            Object.keys(full_data).forEach(c_code => {
                 
                 let idCode = "#code" + c_code;
                 //console.log(d3.select(idCode));
                 var color = "#999";
-                if (gas_complete_data[c_code] && gas_complete_data[c_code][year] && gas_complete_data[c_code][year].total_ghg)
+                if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year].total_ghg)
                 {
-                    color = colors[Math.floor(colors.length * (gas_complete_data[c_code][year].total_ghg - gas_complete_data["global"].total_ghg_min)/(gas_complete_data["global"].total_ghg_max - gas_complete_data["global"].total_ghg_min))];
+                    color = colors[Math.floor(colors.length * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"]))];
                 }
                 d3.select(idCode)
                 .attr("fill", color);
@@ -369,13 +369,13 @@ function reset() {
                 .on("mouseover",function() {
                     tooltip.style("display", null);
                     tooltip.select("#tooltip-country")
-                    .text(short_name_country(gas_complete_data[c_code].country));
+                    .text(short_name_country(full_data[c_code].country));
                     tooltip.select("#tooltip-gas-emission")	
-                    .text(Math.round(gas_complete_data[c_code][year].co2*100)/100);
+                    .text(Math.round(full_data[c_code][year].co2*100)/100);
                     //Event listener	
                     var toolgazemi = tooltip.select("#tooltip-gas-emission");
                     toolgazemi.on('dataUpdateEvent', function(e){	
-                        document.getElementById("tooltip-gas-emission").innerHTML = Math.round(gas_complete_data[c_code][e.detail].co2*100)/100;
+                        document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail].co2*100)/100;
                         
                     });
                     
@@ -399,20 +399,20 @@ function reset() {
             
             
             // TODO
-            Object.keys(gas_complete_data).forEach(function(key, index) {
+            Object.keys(full_data).forEach(function(key, index) {
                 if (first == 0) {
-                    if (gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg) {
-                        min = max = gas_complete_data[key][year].total_ghg;
+                    if (full_data[key][year] && full_data[key][year].total_ghg) {
+                        min = max = full_data[key][year].total_ghg;
                         first++;
                     }
                 } else {
-                    if (gas_complete_data[key][year] && gas_complete_data[key][year].total_ghg) {
-                        if (gas_complete_data[key][year].total_ghg < min) {
-                            min = gas_complete_data[key][year].total_ghg;
+                    if (full_data[key][year] && full_data[key][year].total_ghg) {
+                        if (full_data[key][year].total_ghg < min) {
+                            min = full_data[key][year].total_ghg;
                         }
                         
-                        if (gas_complete_data[key][year].total_ghg > max) {
-                            max = gas_complete_data[key][year].total_ghg;
+                        if (full_data[key][year].total_ghg > max) {
+                            max = full_data[key][year].total_ghg;
                         }
                     }
                 }
