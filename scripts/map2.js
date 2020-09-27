@@ -155,13 +155,10 @@ function init_map() {
         const svg = d3.select("#map").append("svg")
         .attr("id", "svg_zone")
         .attr("viewBox", [0, 0, width, height])
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .classed("svg-content", true)
         .on("click", reset);
-        
-        // Blue background (for sea?)
-        svg.append("svg:rect")
-        .attr("fill", "#1aa1d6")
-        .attr('height', height)
-        .attr('width', width);
         
         
         var g = svg.append("g")
@@ -231,37 +228,11 @@ function init_map() {
         .style("fill", "#FFFFFF");
         
         clipRectangles.append('svg:rect')
-        .attr('height', boundsMap[1] + "px")
-        .attr('width',  (width + 10) + 'px')
-        .attr('x', 0)
-        .attr('y', 0)
-        .style("fill", "#FFFFFF");
-        
-        clipRectangles.append('svg:rect')
         .attr('height', 10 + legendCellSize)
         .attr('width',  (width + 10) + 'px')
         .attr('x', 0)
         .attr('y', height - (5 + legendCellSize))
         .style("fill", "#FFFFFF");
-        
-        // Ajout du titre
-        svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 25)
-        .attr("text-anchor", "middle")
-        .style("fill", "#000000")
-        .style("font-weight", "300")
-        .style("font-size", "16px")
-        .text("Émissions de gaz à effet de serre dans le monde.");
-        
-        svg.append("text")
-        .attr("x", (width / 2))
-        .attr("y", 50)
-        .attr("text-anchor", "middle")
-        .style("fill", "#000000")
-        .style("font-weight", "200")
-        .style("font-size", "12px")
-        .text("(source : Hannah Ritchie & Max Roser 2017 - CO₂ and Greenhouse Gas Emissions)");
         
         svg.call(zoom);
         

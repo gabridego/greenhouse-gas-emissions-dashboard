@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Dashboard - Challenge OpenData</title>
+
+	<!-- Custom fonts for this template-->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"
+		type="text/css">
+	<link
+		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+		rel="stylesheet">
+
+	<!-- Custom styles for this template-->
+	<link href="styles/sb-admin-2.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="styles/index.css">
+
+
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+			<!-- Sidebar - Brand -->
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+				<div class="sidebar-brand-icon">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_ENSIMAG_2008.svg/1200px-Logo_ENSIMAG_2008.svg.png"
+						width="50%"></img>
+				</div>
+				<div class="sidebar-brand-text mx-3">COD</div>
+			</a>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider my-0">
+
+			<!-- Nav Item - Dashboard -->
+			<li class="nav-item active">
+				<a class="nav-link" href="index.html">
+					<i class="fas fa-fw fa-tachometer-alt"></i>
+					<span>Dashboard</span></a>
+			</li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">
+				Interface
+			</div>
+
+			<!-- Nav Item - Pages Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+					aria-expanded="true" aria-controls="collapseTwo">
+					<i class="fas fa-fw fa-cog"></i>
+					<span>Components</span>
+				</a>
+				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Filters:</h6>
+						<a class="collapse-item" href="buttons.html">CO2</a>
+						<a class="collapse-item" href="cards.html">GHG</a>
+					</div>
+				</div>
+			</li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider">
+
+			<!-- Heading -->
+			<div class="sidebar-heading">
+				Addons
+			</div>
+
+			<!-- Nav Item - Pages Collapse Menu -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+					aria-expanded="true" aria-controls="collapsePages">
+					<i class="fas fa-fw fa-folder"></i>
+					<span>Pages</span>
+				</a>
+				<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+					<div class="bg-white py-2 collapse-inner rounded">
+						<h6 class="collapse-header">Info Pages:</h6>
+						<a class="collapse-item" href="index.html">Application</a>
+						<a class="collapse-item" href="rapport.html">Rapport</a>
+						<div class="collapse-divider"></div>
+						<h6 class="collapse-header">Test Pages:</h6>
+						<a class="collapse-item" href="test_histog.html">Histog</a>
+						<a class="collapse-item" href="test_sankey.html">Sankey</a>
+					</div>
+				</div>
+			</li>
+
+			<!-- Divider -->
+			<hr class="sidebar-divider d-none d-md-block">
+
+			<!-- Sidebar Toggler (Sidebar) -->
+			<div class="text-center d-none d-md-inline">
+				<button class="rounded-circle border-0" id="sidebarToggle"></button>
+			</div>
+
+		</ul>
+		<!-- End of Sidebar -->
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+					<!-- Sidebar Toggle (Topbar) -->
+					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+						<i class="fa fa-bars"></i>
+					</button>
+
+					<!-- Topbar Navbar -->
+					<ul class="navbar-nav ml-auto">
+
+						<li class="nav-item active">
+							<a class="nav-link text-dark" href="#">
+								Application
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" href="rapport.html">Rapport</a>
+						</li>
+
+					</ul>
+
+				</nav>
+				<!-- End of Topbar -->
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- Page Heading -->
+					<div class="d-sm-flex align-items-center justify-content-between mb-4">
+						<h1 class="h3 mb-0 text-gray-800">Challenge Open Data</h1>
+					</div>
+
+					<!-- Content Row -->
+
+					<div class="row">
+
+						<!-- Area Chart -->
+						<div class="col-xl-8 col-lg-7">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">Émissions de gaz à effet de serre dans
+										le monde</h6>
+									<div class="dropdown no-arrow">
+										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+											aria-labelledby="dropdownMenuLink">
+											<div class="dropdown-header">Dropdown Header:</div>
+											<a class="dropdown-item" href="#">Action</a>
+											<a class="dropdown-item" href="#">Another action</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</div>
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-area">
+										<div id="map" class="svg-container" style="background-color: #1aa1d6"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Pie Chart -->
+						<div class="col-xl-4 col-lg-5">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">Émissions de GHG selon les secteurs et
+										les continents</h6>
+									<div class="dropdown no-arrow">
+										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+											aria-labelledby="dropdownMenuLink">
+											<div class="dropdown-header">Dropdown Header:</div>
+											<a class="dropdown-item" href="#">Action</a>
+											<a class="dropdown-item" href="#">Another action</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</div>
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-pie pt-4 pb-2">
+										<div id="piechart" class="svg-container"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Content Row -->
+					<div class="row">
+
+						<!-- Content Column -->
+						<div class="col-xl-8 col-lg-7">
+							<div class="card shadow mb-4">
+								<!-- Card Header - Dropdown -->
+								<div
+									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+									<h6 class="m-0 font-weight-bold text-primary">Émissions de GHG selon les secteurs et
+										les continents</h6>
+									<div class="dropdown no-arrow">
+										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+										</a>
+										<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+											aria-labelledby="dropdownMenuLink">
+											<div class="dropdown-header">Dropdown Header:</div>
+											<a class="dropdown-item" href="#">Action</a>
+											<a class="dropdown-item" href="#">Another action</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#">Something else here</a>
+										</div>
+									</div>
+								</div>
+								<!-- Card Body -->
+								<div class="card-body">
+									<div class="chart-area">
+										<div id="chart" class="svg-container"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6 mb-4">
+
+							<!-- Illustrations -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Chart3</h6>
+								</div>
+								<div class="card-body">
+									<div class="text-center">
+										<img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+											src="img/undraw_posting_photo.svg" alt="">
+									</div>
+									<p>Add some quality, svg illustrations to your project courtesy of <a
+											target="_blank" rel="nofollow" href="https://undraw.co/">unDraw</a>, a
+										constantly updated collection of beautiful svg images that you can use
+										completely free and without attribution!</p>
+									<a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
+										unDraw &rarr;</a>
+								</div>
+							</div>
+
+							<!-- Approach -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+								</div>
+								<div class="card-body">
+									<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+										CSS bloat and poor page performance. Custom CSS classes are used to create
+										custom components and custom utility classes.</p>
+									<p class="mb-0">Before working with this theme, you should become familiar with the
+										Bootstrap framework, especially the utility classes.</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<!-- /.container-fluid -->
+
+
+				<div class="slidecontainer">
+					<table style="width:100%">
+						<tr>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+						<tr>
+							<td><button id="btnPlayStop" class="btn"><i id="iconPlayStop"
+										class="fa fa-play text-white"></i></button></td>
+							<td style="width:90%"><input type="range" min="0" max="26" value="0" class="slider"
+									id="timeline"></td>
+							<td><span id="year"></span></td>
+						</tr>
+					</table>
+				</div>
+
+
+			</div>
+			<!-- End of Main Content -->
+
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>2020 - Kinene Eddine ZARGA, Antonino Concetto PRIVITERA, Anir EL KABIRI, Gabriele DEGOLA,
+							Rebeca CARAMEZ SARAIVA SANTOS, Michel LECORSIER</span>
+					</div>
+				</div>
+			</footer>
+			<!-- End of Footer -->
+
+		</div>
+		<!-- End of Content Wrapper -->
+
+	</div>
+	<!-- End of Page Wrapper -->
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+		integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+		crossorigin="anonymous"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="scripts/sb-admin-2.min.js"></script>
+
+	<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+	<script type="text/javascript"
+		src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="https://d3js.org/topojson.v2.min.js"></script>
+	<script src="min_data.js"></script>
+	<script src="min_data_continent.js"></script>
+	<script src="scripts/map2.js"></script>
+	<script src="scripts/pieChart.js"></script>
+	<script src="scripts/barChart.js"></script>
+	<script type="text/javascript">
+		init_map().then((val) => {
+			update_legend(1990);
+			update_map(1990);
+		});
+		piechart = create_pie(1990);
+		drawBarChart("FR", "2005");
+	</script>
+	<script src="scripts/controller.js"></script>
+
+</body>
+
+</html>

@@ -18,7 +18,6 @@ var total_buildings = 0.0;
 function get_data(year) {
     return {
         "chart": {
-            "caption": "Émissions de GHG selon les secteurs et les continents",
             "subcaption": "Year : "+ year.toString(),
             "showPlotBorder": "1",
             "piefillalpha": "60",
@@ -264,8 +263,8 @@ function get_data(year) {
             type: 'multilevelpie',
             renderAt: 'piechart',
             id: "myChart",
-            width: '700',
-            height: '700',
+            width: '100%',
+            height: '100%',
             dataFormat: 'json',
             dataSource: data
         });
