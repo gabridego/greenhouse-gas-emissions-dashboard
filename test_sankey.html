@@ -1,7 +1,6 @@
 <!--
 	https://bl.ocks.org/d3noob/5028304
 -->
-
 <!DOCTYPE html>
 <html class="h-100" lang="en">
 	<head>
@@ -11,18 +10,18 @@
 		<link rel="stylesheet" href="styles/index.css">
 	</head>
 	<body>
-	 
-		<p id="sankey_chart"></p>
-		 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-		<script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/sankey.js"></script>
+		<div id="sankey_chart"></div>
+		<script src="https://d3js.org/d3.v6.min.js"></script>
+		<script src="https://unpkg.com/d3-array@1"></script>
+		<script src="https://unpkg.com/d3-collection@1"></script>
+		<script src="https://unpkg.com/d3-path@1"></script>
+		<script src="https://unpkg.com/d3-shape@1"></script>
+		<script src="https://unpkg.com/d3-sankey@0"></script>
 		<script src="sankey_data.js"></script>
-		<script src="scripts/sankeyDiag.js"></script>
-
+		<script src="scripts/sankeyDiag2.js"></script>
 		<script type="text/javascript">
 			init_sankey();
 			draw_sankey(1990, graph);
 		</script>
-		 
 	</body>
 </html>
