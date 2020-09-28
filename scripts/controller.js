@@ -24,9 +24,9 @@ window.addEventListener("keypress", spacePlay);
 //Update the current slider value (each time you drag the slider handle)
 slider.oninput = function() {
     currentYear = output.innerHTML = firstYearTimeline + +this.value;
-    
+
     UpdateCharts();
-    
+
 }
 
 function playStop() {
@@ -35,9 +35,9 @@ function playStop() {
         if(slider.value == 26){
             slider.value = 0;
             currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
-            
+
             UpdateCharts();
-            
+
             d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
         }
 
@@ -45,27 +45,27 @@ function playStop() {
         intervalTimeline = setInterval(function() {
             slider.value ++;
             currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
-            
+
             UpdateCharts();
-            
+
             // Added Event dispatcher for data updating on the map (Event listener on update_map())
-            
+
             d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
-            
+
             // TODO : We need to add event listeners on other graphs following the same syntaxe
 
             if(slider.value == 26) {
                 playStop();
                 return;
             }
-            
+
         }, 1000);
     } else {
         iconPlayStop.className = "fa fa-play text-white";
         clearInterval(intervalTimeline);
     }
-    
-    
+
+
     isPlaying = !isPlaying;
 }
 
@@ -83,17 +83,37 @@ function spacePlay(event) {
 
 function UpdateCharts()
 {
-    //ADD FUNCTION CHARTS HERE
-    //chart1(year);
-    //chart2(year);
+    //update titles
+    update_titles();
     // update map
     update_legend(currentYear, currentFilter);
     update_map(currentYear, currentFilter);
     // update piechart
     update_piechart(piechart, currentYear, currentFilter);
+
 }
 
-
+function update_titles()
+{
+  let gas;
+  switch (filter) {
+      case 'total_ghg':
+          gas = 'GHG';
+          break;
+      case 'co2':
+          gas = 'CO2';
+          break;
+      case 'methane':
+          gas = 'CH4';
+          break;
+      case 'nitrous_oxide':
+          gas = 'N2O';
+          break;
+      default:
+          console.log('Filter error in piechart: unknown gas');
+  }
+    document.getElementById("pieTitle").innerHTML = "Émissions de gaz " + gas + " par secteur et par continent";
+}
 
 
 //filters
