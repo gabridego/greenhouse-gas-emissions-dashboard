@@ -367,18 +367,18 @@ function update_map(year, currentFilter) {
             qte_emissions = Math.round(full_data[c_code][year].co2 * 100) / 100;
         }
 
+        var text_emissions = qte_emissions + " millions de tonnes éq. CO₂";
+
         country_path.on("mouseover", function() {
             tooltip.style("display", null);
             tooltip.select("#tooltip-country")
             .text(short_name_country(full_data[c_code].country));
             tooltip.select("#tooltip-gas-emission")
-            .text(qte_emissions + " millions de tonnes éq. CO₂");
-
+            .text(text_emissions);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
-                document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail].co2*100)/100;
-
+                document.getElementById("tooltip-gas-emission").innerHTML = text_emissions;
             });
         });
     })
@@ -405,13 +405,13 @@ function update_legend(year, currentFilter) {
             }
         } else {
             if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
-                if (full_data[key][year][currentFilter] > max) {
-                    max = full_data[key][year][currentFilter];
+                if (parseFloat(full_data[key][year][currentFilter]) > max) {
+                    console.log("tralala")
+                    max = parseFloat(full_data[key][year][currentFilter]);
                 }
             }
         }
     });
-    console.log("max : " + max)
 
     // Draw legend
     // TODO: Choisir coorrectement les couleurs de la légende
