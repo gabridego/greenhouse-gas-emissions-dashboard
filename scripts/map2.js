@@ -10,13 +10,13 @@ const zoom = d3.zoom()
 .scaleExtent([1, 8])
 .on("zoom", zoomed);
 
-const width = 975;
+const width = 995;
 const height = 610;
 const legendCellSize = 20;
 const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815']
 
 // bounds of the map (for clipping)
-const boundsMap = [70, 60]
+const boundsMap = [90, 60]
 
 // Last country clicked (= selected) on the map
 var lastCountryClicked = undefined;
@@ -292,7 +292,7 @@ function init_legend() {
     // translation to set the legend on the outside
     // of the drawn map
     var legend = svg.append('g')
-    .attr('transform', 'translate(40, 250)')
+    .attr('transform', 'translate(60, 250)')
     .attr("id", "legend");
     
     legend.append("g")
@@ -333,8 +333,6 @@ function init_legend() {
 // Fixed Tooltip for map interactions
 function update_map(year, currentFilter) {
     // TODO change countries colors according to gas emission.
-    
-    
     var tooltip = d3.select("#tooltip");
     
     Object.keys(full_data).forEach(c_code => {
@@ -381,33 +379,26 @@ function short_name_country(name) {
 /**
 * Update legend (compute min/max by year and adapt the legend)
 * @param {*} year
+* @param {*} currentFilter
 */
-function update_legend(year) {
-    // Compute min/max values for the legend scale
-    var min, max;
-    var first = 0;
+function update_legend(year, currentFilter) {
+    // Compute max values for the legend scale
+    var max;
     
-    
-    // TODO
     Object.keys(full_data).forEach(function(key, index) {
-        if (first == 0) {
-            if (full_data[key][year] && full_data[key][year].total_ghg) {
-                min = max = full_data[key][year].total_ghg;
-                first++;
+        if (index == 0) {
+            if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
+                max = full_data[key][year][currentFilter];
             }
         } else {
-            if (full_data[key][year] && full_data[key][year].total_ghg) {
-                if (full_data[key][year].total_ghg < min) {
-                    min = full_data[key][year].total_ghg;
-                }
-                
-                if (full_data[key][year].total_ghg > max) {
-                    max = full_data[key][year].total_ghg;
+            if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {                
+                if (full_data[key][year][currentFilter] > max) {
+                    max = full_data[key][year][currentFilter];
                 }
             }
         } 
     });
-    
+    console.log("max : " + max)
     
     // Draw legend
     // TODO: Choisir coorrectement les couleurs de la légende
@@ -416,15 +407,11 @@ function update_legend(year) {
     legendAxis.empty();
     
     
-    let legendScale = d3.scaleLinear().domain([min, max])
+    let legendScale = d3.scaleLinear().domain([0, max])
     .range([0, colors.length * legendCellSize]);
     
     legendAxis.attr("class", "axis")
     .call(d3.axisLeft(legendScale));
-}
-
-function setcolorcountry(year, id) {
-    
 }
 
 
