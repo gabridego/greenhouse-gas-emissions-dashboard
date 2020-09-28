@@ -41,7 +41,11 @@ function init_tooltip(location) {
     .style("display", "none");
     
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
+<<<<<<< Updated upstream
     .attr("points","0,0 300,0 300,150 0,150 0,0")
+=======
+    .attr("points","0,0 210,0 210,130 0,130 0,0")
+>>>>>>> Stashed changes
     .style("fill", "#222b1d")
     .style("stroke","black")
     .style("opacity","0.9")
@@ -84,7 +88,17 @@ function init_tooltip(location) {
     .style("font-weight", "bold");
     
     // TODO Create init graph on the tooltip
+<<<<<<< Updated upstream
     
+=======
+    // BarChart Creation Sector / Country
+
+    tooltip.append("div")
+        .attr("id", "barChart")
+        .attr("height", 70)
+        .attr("width", 70);
+
+>>>>>>> Stashed changes
     return tooltip;
 }
 
