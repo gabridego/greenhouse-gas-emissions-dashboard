@@ -1,6 +1,6 @@
-const margin = {top: 60, right: 20, bottom: 40, left: 50},
-barChartWidth = 300 - margin.left - margin.right ,
-barChartHeight = 275 - margin.top - margin.bottom;
+const margin = {top: 60, right: 20, bottom: 150, left: 50},
+barChartWidth = 350 - margin.left - margin.right ,
+barChartHeight = 350 - margin.top - margin.bottom;
 
 /*
 Retrieve data.
@@ -13,7 +13,8 @@ function getBarChartData(country_code, year) {
 			frequency: retrieved["Agriculture (GHG)"]
 		},
 		{
-			sector: "Manufacturing/Construction energy",
+			//sector: "Manufacturing/Construction energy",
+			sector: "Manufacturing/Construction",
 			frequency: retrieved["Manufacturing/Construction energy (GHG)"]
 		},
 		{
@@ -33,7 +34,8 @@ function getBarChartData(country_code, year) {
 		 	frequency: retrieved["Transport (GHG)"]
 		},
 		{
-			sector: "Fugitive from energy production",
+			//sector: "Fugitive from energy production",
+			sector: "Fugitives",
 			frequency: retrieved["Fugitive from energy production (GHG)"]
 		}
 	];
@@ -196,9 +198,11 @@ function update_bar_chart(year, country_code){
         .call(d3.axisBottom(x).tickSize(0))
         .selectAll("text")
             .style("text-anchor", "end")
+			.style("color", "white")
+			.style("font-size", "1.1em")
             .attr("dx", "-.8em")
             .attr("dy", ".15em")
-            .attr("transform", "rotate(-90) translate(10)");
+            .attr("transform", "rotate(-65) translate(5)");
 
     // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
     svgBarchart.select("#yAxis")
