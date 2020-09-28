@@ -429,3 +429,25 @@ function reset() {
         function setcolorcountry(year, id) {
 
         }
+
+
+
+        //Disable scrolling page by mouse wheel
+        // IE9, Chrome, Safari, Opera
+        document.getElementById("map").addEventListener("mousewheel", MouseWheelHandler, false);
+        // Firefox
+        document.getElementById("map").addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+
+        function MouseWheelHandler(e) {
+            // cross-browser wheel delta
+            var e = window.event || e; // old IE support
+            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+
+            if(delta==1 || delta==-1)         // if mouse scrolls up or mouse scrolls down, we disable scrolling.
+            {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }
+            return false;
+        }
