@@ -33,30 +33,41 @@ function get_data(year, filter) {
                 "value": Object.values(totals)[0].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
                 "category": [{
-                    "label": "EU",
+                    "label": "EEEEEU",
+                    "showLabels":"0",
                     "color": "#f8bd19",
                     //TO DO :Replace AF for the European continent. "AF" is just to test !
-                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Europe"].toFixed(2)
+                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Europe"].toFixed(2),
+                    "plottooltext": "$label, $percentValue"
                 }, {
                     "label": "AF",
                     "color": "#f8bd19",
                     //TO DO :Replace GW for the African continent. "GW" is just to test !
-                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Africa"].toFixed(2)
+                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Africa"].toFixed(2),
+                    "showLabels":"1",
+                    "plottooltext": "$label, $percentValue"
+
                 }, {
                     "label": "AS",
                     "color": "#f8bd19",
                     //TO DO :Replace GY for the Asian continent. "GY" is just to test !
-                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Asia"].toFixed(2)
+                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Asia"].toFixed(2),
+                    "showLabels":"1",
+                    "plottooltext": "$label, $percentValue"
                 }, {
                     "label": "NA/SA",
                     "color": "#f8bd19",
                     //TO DO :Replace HT for the American continent. "HT" is just to test !
-                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Americas"].toFixed(2)
+                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Americas"].toFixed(2),
+                    "showLabels":"1",
+                    "plottooltext": "$label, $percentValue"
                 }, {
                     "label": "OC",
                     "color": "#f8bd19",
                     //TO DO :Replace HN for the Oceania. "HN" is just to test !
-                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Oceania"].toFixed(2)
+                    "value": full_camembert[year][filter][Object.keys(totals)[0]]["Oceania"].toFixed(2),
+                    "showLabels":"1",
+                    "plottooltext": "$label, $percentValue"
                 }]
             }, {
                 "label": get_short_label(Object.keys(totals)[1]),
