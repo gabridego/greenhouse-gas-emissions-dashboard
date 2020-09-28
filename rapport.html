@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-100" lang="en">
+<html class="h-100" lang="fr">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,67 +10,73 @@
 </head>
 <body class="d-flex flex-column h-100">
 	<header>
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">COD</a>
+		<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+			<a class="navbar-brand d-flex align-items-center" href="index.html">
+				<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_ENSIMAG_2008.svg/1200px-Logo_ENSIMAG_2008.svg.png"
+				alt="Logo Grenoble INP-Ensimag" style="width: 5%;" />
+			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="index.html">
-							Application
-						</a>
-					</li>
-					<li class="nav-item active">
-						<a class="nav-link" href="#">Rapport</a>
-					</li>
-				</ul>
-			</div>
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="index.html">
+						Application
+					</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Rapport</a>
+				</li>
+			</ul>
 		</nav>
 	</header>
-	<main role="main">
-		<div class="container">
-			<h1>Rapport</h1>
-			<h2>Objectif</h2>
-			<p>
-				L'objectif de ce projet étant de représenter de façon originale et efficace un ensemble de données sur les thèmes du <strong><a href="https://fr.wikipedia.org/wiki/D%C3%A9veloppement_durable" title="Développement durable - Wikipédia">développement durable</a></strong> et de la <strong><a href="https://fr.wikipedia.org/wiki/Responsabilit%C3%A9_sociale" title="Responsabilité sociale - Wikipédia">responsabilité sociale</a></strong>, nous avons choisi de représenter les émissions de gaz à effet de serre au fil des dernières décennies <strong>par pays</strong> et <strong>secteur d'activité</strong>. Nos visualisations doivent permettre de répondre à la question suivante :
-			</p>
-			<p class="lead">
-				Ces dernières décennies, quelles sont les responsabilités des pays et des secteurs économiques sur les émissions de gaz polluants ?
-			</p>
-			<p>
-				Le but est, à l'aide de ces représentations graphiques interactives, de pouvoir déterminer quels sont les pays qui émettent le plus, quels sont les secteurs dont les émissions sont prépondérantes mais aussi quels sont les secteurs d'activité dont les émissions sont prépondérantes dans chaque pays, et le tout entre <strong>1990</strong> et <strong>2016</strong>.
-			</p>
-			<h2>Données et licences de réutilisation</h2>
-			<p>
-				Nous avons utilisé trois jeux de données différents parmi lesquels :
-			</p>
-			<ul>
-				<li>des <a href="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions" title="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions">données sur les émissions de gaz à effet de serre par pays et secteur d'activité ces dernières décennies</a>, partagées sous <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="CC BY 4.0">licence CC BY 4.0</a> par Hannah Ritchie et Max Roser ;</li>
-				<li>un <a href="https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json" title="world-countries-no-antartica.json">fichier <code>JSON</code></a> permettant de tracer la carte du monde avec tous les pays, partagée sous <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" title="CC0 1.0">licence CC0 1.0</a>, c'est-à-dire un transfert dans le domaine public (voir <a href="https://www.datavis.fr" title="Datavis">https://www.datavis.fr</a>).</li>
-				<li>un <a href="https://www.kaggle.com/statchaitya/country-to-continent" title="countryContinent"> fichier <code>CSV</code></a> pour rapporter chaque pays à son continent.</li>
-			</ul>
-			<h2>Traitement des données</h2>
-			<p>TODO</p>
-			<h2>Visualisation des données</h2>
-			<p>TODO</p>
-			<h2>Architecture du projet</h2>
-			<p>
-				Notre application est directement disponible à la racine du projet en ouvrant le fichier <code>index.html</code> dans un navigateur web récent. Cette application appelle plusieurs autres fichiers afin de gérer les différentes représentations graphiques et leurs animations.
-			</p>
-			<ul>
-				<li><code>REAMDE.md</code> : un fichier de présentation rapide du projet.</li>
-				<li><code>index.html</code> : la page contenant l'application de visualisation à proprement dite.</li>
-				<li><code>rapport.html</code> : le présent rapport que vous lisez.</li>
-				<li><code>scripts/</code> : contient les scripts permettant la récupération des données ainsi que la génération des graphiques interactifs.</li>
-				<li><code>styles/</code> : contient les feuilles de styles CSS complémentaires permettant d'améliorer la mise en forme de l'application.</li>
-			</ul>
-			<p class="alert alert-danger">PARTIE A FINIR. TODO</p>
-			<h2>Limites du projet</h2>
-			<p class="alert alert-danger">TODO : nous sommes sans limites, ou presque :-) à écrire</p>
-		</div>
+	<main role="main" class="container">
+		<h1>Rapport</h1>
+		<h2>Objectif</h2>
+		<p>
+			L'objectif de ce projet étant de représenter de façon originale et efficace un ensemble de données sur les thèmes du <strong><a href="https://fr.wikipedia.org/wiki/D%C3%A9veloppement_durable" title="Développement durable - Wikipédia">développement durable</a></strong> et de la <strong><a href="https://fr.wikipedia.org/wiki/Responsabilit%C3%A9_sociale" title="Responsabilité sociale - Wikipédia">responsabilité sociale</a></strong>, nous avons choisi de représenter les émissions de gaz à effet de serre au fil des dernières décennies <strong>par pays</strong> et <strong>secteur d'activité</strong>. Nos visualisations doivent permettre de répondre à la question suivante :
+		</p>
+		<p class="lead">
+			Ces dernières décennies, quelles sont les responsabilités des pays et des secteurs économiques sur les émissions de gaz polluants ?
+		</p>
+		<p>
+			Le but est, à l'aide de ces représentations graphiques interactives, de pouvoir déterminer quels sont les pays qui émettent le plus, quels sont les secteurs dont les émissions sont prépondérantes mais aussi quels sont les secteurs d'activité dont les émissions sont prépondérantes dans chaque pays, et le tout entre <strong>1990</strong> et <strong>2016</strong>.
+		</p>
+		<h2>Données et licences de réutilisation</h2>
+		<p>
+			Nous avons utilisé trois jeux de données différents parmi lesquels :
+		</p>
+		<ul>
+			<li>des <a href="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions" title="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions">données sur les émissions de gaz à effet de serre par pays et secteur d'activité ces dernières décennies</a>, partagées sous <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="CC BY 4.0">licence CC BY 4.0</a> par Hannah Ritchie et Max Roser ;</li>
+			<li>un <a href="https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json" title="world-countries-no-antartica.json">fichier <code>JSON</code></a> permettant de tracer la carte du monde avec tous les pays, partagée sous <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" title="CC0 1.0">licence CC0 1.0</a>, c'est-à-dire un transfert dans le domaine public (voir <a href="https://www.datavis.fr" title="Datavis">https://www.datavis.fr</a>).</li>
+			<li>un <a href="https://www.kaggle.com/statchaitya/country-to-continent" title="countryContinent"> fichier <code>CSV</code></a> pour rapporter chaque pays à son continent.</li>
+		</ul>
+		<h2>Librairies utilisées</h2>
+		<p>
+			La présente application est réalisée sans <em>framework</em> Javascript et est mise en page à l'aide de <a href="https://getbootstrap.com/" title="Boostrap">Boostrap 4.5</a> et de quelques feuilles de styles <abbr title="Feuilles de styles en cascade">CSS</abbr> complémentaires.
+		</p>
+		<p>
+			Les graphiques sont réalisés à l'aide de <a href="https://d3js.org/" title="D3.js">D3.js</a> pour réaliser la carte, le diagramme en barres et le diagramme de Sankey tandis que le diagramme circulaire à plusieurs niveaux est implémenté à l'aide de <a href="https://www.fusioncharts.com/" title="FusionCharts">FusionCharts</a>.
+		</p>
+		<h2>Traitement des données</h2>
+		<p>TODO</p>
+		<h2>Visualisation des données</h2>
+		<p>TODO</p>
+		<h2>Architecture du projet</h2>
+		<p>
+			Notre application est directement disponible à la racine du projet en ouvrant le fichier <code>index.html</code> dans un navigateur web récent. Cette application appelle plusieurs autres fichiers afin de gérer les différentes représentations graphiques et leurs animations.
+		</p>
+		<ul>
+			<li><code>REAMDE.md</code> : un fichier de présentation rapide du projet.</li>
+			<li><code>index.html</code> : la page contenant l'application de visualisation à proprement dite.</li>
+			<li><code>rapport.html</code> : le présent rapport que vous lisez.</li>
+			<li><code>scripts/</code> : contient les scripts permettant la récupération des données ainsi que la génération des graphiques interactifs.</li>
+			<li><code>styles/</code> : contient les feuilles de styles CSS complémentaires permettant d'améliorer la mise en forme de l'application.</li>
+		</ul>
+		<p class="alert alert-danger">PARTIE A FINIR. TODO</p>
+		<h2>Limites du projet</h2>
+		<p class="alert alert-danger">TODO : nous sommes sans limites, ou presque :-) à écrire</p>
 	</main>
 	<footer class="footer mt-auto py-3">
 		<div class="container">
