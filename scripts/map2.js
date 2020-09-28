@@ -408,13 +408,13 @@ function update_legend(year, currentFilter) {
             }
         } else {
             if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
-                if (full_data[key][year][currentFilter] > max) {
-                    max = full_data[key][year][currentFilter];
+                if (parseFloat(full_data[key][year][currentFilter]) > max) {
+                    console.log("tralala")
+                    max = parseFloat(full_data[key][year][currentFilter]);
                 }
             }
         }
     });
-    console.log("max : " + max)
 
     // Draw legend
     // TODO: Choisir coorrectement les couleurs de la légende
