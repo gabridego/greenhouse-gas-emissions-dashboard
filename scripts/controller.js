@@ -84,7 +84,7 @@ function spacePlay(event) {
 function UpdateCharts()
 {
     //update titles
-    update_titles(currentFilter);
+    update_titles();
     // update map
     update_legend(currentYear, currentFilter);
     update_map(currentYear, currentFilter);
@@ -94,7 +94,7 @@ function UpdateCharts()
     update_sankey(currentYear, graph);
 }
 
-function update_titles(filter)
+function update_titles()
 {
   let gas;
   switch (currentFilter) {
@@ -113,14 +113,14 @@ function update_titles(filter)
       default:
           console.log('Filter error in piechart: unknown gas');
   }
-    document.getElementById("pieTitle").innerHTML = "Émissions de gaz " + gas + " par secteur et par continent";
-    document.getElementById("carteTitle").innerHTML = "Émissions de gaz " + gas +" dans le monde";
-    document.getElementById("barTitle").innerHTML = "Émissions de gaz " + gas +" par secteur";
+    document.getElementById("pieTitle").textContent = "Émissions de gaz " + gas + " par secteur et par continent";
+    document.getElementById("carteTitle").textContent = "Émissions de gaz " + gas +" dans le monde";
+    document.getElementById("sankeyTitle").textContent = "Émissions de gaz " + gas + " selon les secteurs et les continents";
 }
 
 
 //filters
-$('#filters').on('click','a', function(){
+$('#filters').on('click','a', function() {
     $(this).addClass('active').siblings().removeClass('active');
     currentFilter = $(this).attr("name");
     console.log(currentFilter);
