@@ -96,9 +96,9 @@ function UpdateCharts()
 function update_titles()
 {
   let gas;
-  switch (filter) {
+  switch (currentFilter) {
       case 'total_ghg':
-          gas = 'GHG';
+          gas = 'à effet de serre';
           break;
       case 'co2':
           gas = 'CO2';
@@ -113,6 +113,8 @@ function update_titles()
           console.log('Filter error in piechart: unknown gas');
   }
     document.getElementById("pieTitle").innerHTML = "Émissions de gaz " + gas + " par secteur et par continent";
+    document.getElementById("carteTitle").innerHTML = "Émissions de gaz " + gas +" dans le monde";
+    document.getElementById("barTitle").innerHTML = "Émissions de gaz " + gas +" par secteur";
 }
 
 
