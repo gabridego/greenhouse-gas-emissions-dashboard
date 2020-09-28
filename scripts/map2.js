@@ -133,8 +133,6 @@ function resize_tooltip(resize_factor, tooltip) {
             tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75/resize_factor) + ")");
         });
     })
-
-
 }
 
 /**
@@ -242,215 +240,211 @@ function reset() {
         // remove the border of the previously selected country
         lastCountryClicked.transition().style("stroke", null);
     }
-    svg.transition().duration(750).call(
-        zoom.transform,
-        d3.zoomIdentity,
-        d3.zoomTransform(svg.node()).invert([width / 2, height / 2])
-        );
+    svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity, d3.zoomTransform(svg.node()).invert([width / 2, height / 2]));
+}
+
+
+function clicked(event, d) {
+    const svg = d3.select("#svg_zone");
+    const cGroup = d3.select("#cGroup");
+    const [[x0, y0], [x1, y1]] = path.bounds(d);
+
+    event.stopPropagation();
+
+    if (lastCountryClicked !== undefined) {
+        // remove the border of the previously selected country
+        lastCountryClicked.transition().style("stroke", null);
     }
 
-    function clicked(event, d) {
-        const svg = d3.select("#svg_zone");
-        const cGroup = d3.select("#cGroup");
-        const [[x0, y0], [x1, y1]] = path.bounds(d);
+    // lastCountryClicked becomes the current clicked country
+    lastCountryClicked = d3.select(this)
+    // we set a red border to the current selected country
+    lastCountryClicked.transition().style("stroke", "red");
 
-        event.stopPropagation();
+    var zoomParams = d3.zoomIdentity
+    .translate(width / 2, height / 2)
+    .scale(Math.min(8, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height)))
+    .translate(-(x0 + x1) / 2, -(y0 + y1) / 2);
 
-        if (lastCountryClicked !== undefined) {
-            // remove the border of the previously selected country
-            lastCountryClicked.transition().style("stroke", null);
+    svg.transition().duration(750).call(zoom.transform, zoomParams, d3.pointer(event, svg.node()));
+}
+
+
+function zoomed(event) {
+    const {transform} = event;
+    const g = d3.select("#g");
+    g.attr("transform", transform);
+
+    g.attr("stroke-width", 1 / transform.k);
+    // zooming the tooltip
+    console.log("k "+transform.k);
+    const tooltip_zoomed = d3.select("#tooltip");
+
+    resize_tooltip(transform.k, tooltip_zoomed);
+}
+
+/**
+* Init legend
+*/
+function init_legend() {
+    const svg = d3.select("#svg_zone");
+
+    // translation to set the legend on the outside
+    // of the drawn map
+    var legend = svg.append('g')
+    .attr('transform', 'translate(40, 250)')
+    .attr("id", "legend");
+
+    legend.append("g")
+    .attr("id", "legendAxis")
+
+    // draw legend
+    legend.selectAll()
+    .data(d3.range(colors.length))
+    .enter().append('svg:rect')
+    .attr('height', legendCellSize + 'px')
+    .attr('width', legendCellSize + 'px')
+    .attr('x', 5)
+    .attr('y', d => d * legendCellSize)
+    .style("fill", d => colors[d]);
+
+    // add "données non connues" legend
+    legend.append('svg:rect')
+    .attr('y', legendCellSize + colors.length * legendCellSize)
+    .attr('height', legendCellSize + 'px')
+    .attr('width', legendCellSize + 'px')
+    .attr('x', 5)
+    .style("fill", "#999");
+
+    legend.append("text")
+    .attr("x", 30)
+    .attr("y", 35 + colors.length * legendCellSize)
+    .style("font-size", "13px")
+    .style("color", "#000000")
+    .style("fill", "#000000")
+    .text("données non connues");
+}
+
+/**
+* Updates map data according to the year.
+* @param {*} year
+*/
+
+// Fixed Tooltip for map interactions
+function update_map(year, currentFilter) {
+    // TODO change countries colors according to gas emission.
+
+
+    var tooltip = d3.select("#tooltip");
+
+    Object.keys(full_data).forEach(c_code => {
+
+        let idCode = "#code" + c_code;
+        //console.log(d3.select(idCode));
+        var color = "#999";
+        if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year].total_ghg) {
+            color = colors[Math.floor(colors.length * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"]))];
         }
 
-        // lastCountryClicked becomes the current clicked country
-        lastCountryClicked = d3.select(this)
-        // we set a red border to the current selected country
-        lastCountryClicked.transition().style("stroke", "red");
+        d3.select(idCode)
+        .attr("fill", color);
+        var country_path = d3.select(idCode)
 
-        svg.transition().duration(750).call(
-            zoom.transform,
-            d3.zoomIdentity
-            .translate(width / 2, height / 2)
-            .scale(Math.min(8, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height)))
-            .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-            d3.pointer(event, svg.node())
-            );
+        var qte_emissions = undefined
+
+        // WARNING: some countries does not have full_data[c_code][year] defined!!
+        if (full_data[c_code][year] !== undefined) {
+            qte_emissions = Math.round(full_data[c_code][year].co2 * 100) / 100;
         }
 
-
-        function zoomed(event) {
-            const {transform} = event;
-            const g = d3.select("#g");
-            g.attr("transform", transform);
-
-            g.attr("stroke-width", 1 / transform.k);
-            // zooming the tooltip
-            console.log("k "+transform.k);
-            const tooltip_zoomed = d3.select("#tooltip");
-
-            resize_tooltip(transform.k, tooltip_zoomed);
-        }
-
-        /**
-        * Init legend
-        */
-        function init_legend() {
-            const svg = d3.select("#svg_zone");
-
-            // translation to set the legend on the outside
-            // of the drawn map
-            var legend = svg.append('g')
-            .attr('transform', 'translate(40, 250)')
-            .attr("id", "legend");
-
-            legend.append("g")
-            .attr("id", "legendAxis")
-
-            // draw legend
-            legend.selectAll()
-            .data(d3.range(colors.length))
-            .enter().append('svg:rect')
-            .attr('height', legendCellSize + 'px')
-            .attr('width', legendCellSize + 'px')
-            .attr('x', 5)
-            .attr('y', d => d * legendCellSize)
-            .style("fill", d => colors[d]);
-
-            // add "données non connues" legend
-            legend.append('svg:rect')
-            .attr('y', legendCellSize + colors.length * legendCellSize)
-            .attr('height', legendCellSize + 'px')
-            .attr('width', legendCellSize + 'px')
-            .attr('x', 5)
-            .style("fill", "#999");
-
-            legend.append("text")
-            .attr("x", 30)
-            .attr("y", 35 + colors.length * legendCellSize)
-            .style("font-size", "13px")
-            .style("color", "#000000")
-            .style("fill", "#000000")
-            .text("données non connues");
-        }
-
-        /**
-        * Updates map data according to the year.
-        * @param {*} year
-        */
-
-        // Fixed Tooltip for map interactions
-        function update_map(year, currentFilter) {
-            // TODO change countries colors according to gas emission.
-
-
-            var tooltip = d3.select("#tooltip");
-
-            Object.keys(full_data).forEach(c_code => {
-
-                let idCode = "#code" + c_code;
-                //console.log(d3.select(idCode));
-                var color = "#999";
-                if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year].total_ghg) {
-                    color = colors[Math.floor(colors.length * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"]))];
-                }
-
-                d3.select(idCode)
-                .attr("fill", color);
-                var country_path = d3.select(idCode)
-
-                var qte_emissions = undefined
-
-                // WARNING: some countries does not have full_data[c_code][year] defined!!
-                if (full_data[c_code][year] !== undefined) {
-                    qte_emissions = Math.round(full_data[c_code][year].co2 * 100) / 100;
-                }
-
-                country_path.on("mouseover", function() {
-                    tooltip.style("display", null);
-                    tooltip.select("#tooltip-country")
-                    .text(short_name_country(full_data[c_code].country));
-                    tooltip.select("#tooltip-gas-emission")
-                    .text(qte_emissions + " millions de tonnes éq. CO₂");
-                    //Event listener
-                    var toolgazemi = tooltip.select("#tooltip-gas-emission");
-                    toolgazemi.on('dataUpdateEvent', function(e) {
-                        document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail].co2*100)/100;
-
-                    });
-                });
-            })
-
-        }
-
-        function short_name_country(name) {
-            return name.replace("Democratic", "Dem.").replace("Republic", "Rep.");
-        }
-
-        /**
-        * Update legend (compute min/max by year and adapt the legend)
-        * @param {*} year
-        */
-        function update_legend(year) {
-            // Compute min/max values for the legend scale
-            var min, max;
-            var first = 0;
-
-
-            // TODO
-            Object.keys(full_data).forEach(function(key, index) {
-                if (first == 0) {
-                    if (full_data[key][year] && full_data[key][year].total_ghg) {
-                        min = max = full_data[key][year].total_ghg;
-                        first++;
-                    }
-                } else {
-                    if (full_data[key][year] && full_data[key][year].total_ghg) {
-                        if (full_data[key][year].total_ghg < min) {
-                            min = full_data[key][year].total_ghg;
-                        }
-
-                        if (full_data[key][year].total_ghg > max) {
-                            max = full_data[key][year].total_ghg;
-                        }
-                    }
-                }
+        country_path.on("mouseover", function() {
+            tooltip.style("display", null);
+            tooltip.select("#tooltip-country")
+            .text(short_name_country(full_data[c_code].country));
+            tooltip.select("#tooltip-gas-emission")
+            .text(qte_emissions + " millions de tonnes éq. CO₂");
+            //Event listener
+            var toolgazemi = tooltip.select("#tooltip-gas-emission");
+            toolgazemi.on('dataUpdateEvent', function(e) {
+                document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail].co2*100)/100;
 
             });
+        });
+    })
+
+}
+
+function short_name_country(name) {
+    return name.replace("Democratic", "Dem.").replace("Republic", "Rep.");
+}
+
+/**
+* Update legend (compute min/max by year and adapt the legend)
+* @param {*} year
+*/
+function update_legend(year) {
+    // Compute min/max values for the legend scale
+    var min, max;
+    var first = 0;
 
 
-            // Draw legend
-            // TODO: Choisir coorrectement les couleurs de la légende
-
-            const legendAxis = d3.select("#legendAxis");
-            legendAxis.empty();
-
-
-            let legendScale = d3.scaleLinear().domain([min, max])
-            .range([0, colors.length * legendCellSize]);
-
-            legendAxis.attr("class", "axis")
-            .call(d3.axisLeft(legendScale));
-        }
-
-        function setcolorcountry(year, id) {
-
-        }
-
-        //Disable scrolling page by mouse wheel
-        // IE9, Chrome, Safari, Opera
-        document.getElementById("map").addEventListener("mousewheel", MouseWheelHandler, false);
-        // Firefox
-        document.getElementById("map").addEventListener("DOMMouseScroll", MouseWheelHandler, false);
-
-        function MouseWheelHandler(e) {
-            // cross-browser wheel delta
-            var e = window.event || e; // old IE support
-            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-
-            if(delta==1 || delta==-1)         // if mouse scrolls up or mouse scrolls down, we disable scrolling.
-            {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
+    // TODO
+    Object.keys(full_data).forEach(function(key, index) {
+        if (first == 0) {
+            if (full_data[key][year] && full_data[key][year].total_ghg) {
+                min = max = full_data[key][year].total_ghg;
+                first++;
             }
-            return false;
+        } else {
+            if (full_data[key][year] && full_data[key][year].total_ghg) {
+                if (full_data[key][year].total_ghg < min) {
+                    min = full_data[key][year].total_ghg;
+                }
+
+                if (full_data[key][year].total_ghg > max) {
+                    max = full_data[key][year].total_ghg;
+                }
+            }
         }
+    });
+
+
+    // Draw legend
+    // TODO: Choisir coorrectement les couleurs de la légende
+
+    const legendAxis = d3.select("#legendAxis");
+    legendAxis.empty();
+
+
+    let legendScale = d3.scaleLinear().domain([min, max])
+    .range([0, colors.length * legendCellSize]);
+    
+    legendAxis.attr("class", "axis")
+    .call(d3.axisLeft(legendScale));
+}
+
+function setcolorcountry(year, id) {
+
+}
+
+
+//Disable scrolling page by mouse wheel
+// IE9, Chrome, Safari, Opera
+document.getElementById("map").addEventListener("mousewheel", MouseWheelHandler, false);
+// Firefox
+document.getElementById("map").addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+
+function MouseWheelHandler(e) {
+    // cross-browser wheel delta
+    var e = window.event || e; // old IE support
+    var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+
+    // if mouse scrolls up or mouse scrolls down, we disable scrolling.
+    if (delta == 1 || delta == -1) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
+    return false;
+}

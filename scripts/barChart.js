@@ -11,7 +11,7 @@ function getBarChartData(country_code, year) {
 		{
 			sector: "Manufacturing/Construction energy",
 			frequency: retrieved["Manufacturing/Construction energy (GHG)"]
-		},
+		},, (e.wheelDelta ||
 		{
 			sector: "Buildings",
 			frequency: retrieved["Buildings (GHG)"]
@@ -134,7 +134,7 @@ function drawBarChart(country_code, year) {
 
 
 
-				debugger;
+
 				var tooltip = document.getElementById("tooltip");
 
 
