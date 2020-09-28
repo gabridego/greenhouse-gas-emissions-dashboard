@@ -41,7 +41,7 @@ function init_tooltip(location) {
     .style("display", "none");
 
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-    .attr("points","0,0 210,0 210,60 0,60 0,0")
+    .attr("points","0,0 300,0 300,150 0,150 0,0")
     .style("fill", "#222b1d")
     .style("stroke","black")
     .style("opacity","0.9")
@@ -147,8 +147,6 @@ function init_map() {
         const svg = d3.select("#map").append("svg")
         .attr("id", "svg_zone")
         .attr("viewBox", [0, 0, width, height])
-        .attr("width", "100%")
-        .attr("height", "100%")
         .classed("svg-content", true)
         .on("click", reset);
 
