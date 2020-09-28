@@ -12,17 +12,22 @@ let gases = ['GHG','CO2','CH4','N2O'];
 function get_data(year, filter) {
     return {
         "chart": {
-            "subcaption": "Year : "+ year.toString(),
+            "subcaption": "Année : "+ year.toString() + "{br}Valeurs : Millions des tonnes/"+ filter.toString(),
+            "subcaptionFontSize": "16",
+            "subcaptionFontColor": "#000000",
             "showPlotBorder": "1",
             "piefillalpha": "60",
             "pieborderthickness": "2",
             "piebordercolor": "#FFFFFF",
-            "hoverfillcolor": "#CCCCCC",
+            "hoverfillcolor": "#00FFFF",
             "numberprefix": "$",
-            "plottooltext": "$valueK, $percentValue",
+            "plottooltext": "$valueM, $percentValue",
             "theme": "fusion",
             "showLabels":"1", // 1 = yes
-            "baseFontSize": "9"
+            "toolTipBorderColor": "#666666",
+            "toolTipBgColor": "#F0FFFF",
+            "toolTipBgAlpha": "80",
+            "baseFontSize": "10"
         },
         "category": [{
             "label": "Secteurs",
@@ -31,72 +36,68 @@ function get_data(year, filter) {
             "value": firstSum[filter].toFixed(2),
             "category": [{
                 "label": get_short_label(labels[filter][0]),
-                "showLabels": "0",
-                "color": "#f8bd19",
+                "color": "#5F9EA0",
                 "value": totals[labels[filter][0]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                     //"label": "EU",
-                    "color": "#f8bd19",
+                    "color": "#5F9EA0",
                     "tooltext": "Europe, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][0]]["Europe"].toFixed(2)
                 }, {
                     //"label": "AF",
-                    "color": "#f8bd19",
+                    "color": "#5F9EA0",
                     "tooltext": "Africa, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][0]]["Africa"].toFixed(2)
                 }, {
                     //"label": "AS",
-                    "color": "#f8bd19",
+                    "color": "#5F9EA0",
                     "tooltext": "Asia, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][0]]["Asia"].toFixed(2)
                 }, {
                     //"label": "NA/SA",
-                    "color": "#f8bd19",
+                    "color": "#5F9EA0",
                     "tooltext": "Americas, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][0]]["Americas"].toFixed(2)
                 }, {
                     //"label": "OC",
-                    "color": "#f8bd19",
+                    "color": "#5F9EA0",
                     "tooltext": "Oceania, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][0]]["Oceania"].toFixed(2)
                 }]
             }, {
                 "label": get_short_label(labels[filter][1]),
-                "color": "#33ccff",
+                "color": "#B8860B",
                 "value": totals[labels[filter][1]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                     //"label": "EU",
-                    "color": "#33ccff",
+                    "color": "#B8860B",
                     "tooltext": "Europe, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][1]]["Europe"].toFixed(2)
                 }, {
                     //"label": "AF",
-                    "color": "#33ccff",
+                    "color": "#B8860B",
                     "tooltext": "Africa, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][1]]["Africa"].toFixed(2)
                 }, {
                     //"label": "AS",
-                    "color": "#33ccff",
+                    "color": "#B8860B",
                     "tooltext": "Asia, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][1]]["Asia"].toFixed(2)
                 }, {
                     //"label": "NA/SA",
-                    "color": "#33ccff",
+                    "color": "#B8860B",
                     "tooltext": "Americas, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][1]]["Americas"].toFixed(2)
                 }, {
                     //"label": "OC",
-                    "color": "#33ccff",
+                    "color": "#B8860B",
                     "tooltext": "Oceania, $percentValue",
                     "value": full_camembert[year][filter][labels[filter][1]]["Oceania"].toFixed(2)
                 }]
             }, {
                 "label": get_short_label(labels[filter][2]),
-                "color": "#FF69B4",
+                "color": "#FF69B4", //pink
                 "value": totals[labels[filter][2]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                     //"label": "EU",
                     "color": "#FF69B4",
@@ -125,9 +126,8 @@ function get_data(year, filter) {
                 }]
             }, {
                 "label": get_short_label(labels[filter][3]),
-                "color": "##696969",
+                "color": "##696969", //gray
                 "value": totals[labels[filter][3]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                   //  "label": "EU",
                     "color": "##696969",
@@ -156,9 +156,8 @@ function get_data(year, filter) {
                 }]
             }, {
                 "label": get_short_label(labels[filter][4]),
-                "color": "##FF0000",
+                "color": "##FF0000", //red
                 "value": totals[labels[filter][4]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                     //"label": "EU",
                     "color": "##FF0000",
@@ -187,9 +186,8 @@ function get_data(year, filter) {
                 }]
             }, {
                 "label": get_short_label(labels[filter][5]),
-                "color": "##800080",
+                "color": "##800080", //purple
                 "value": totals[labels[filter][5]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                     //"label": "EU",
                     "color": "##800080",
@@ -218,9 +216,8 @@ function get_data(year, filter) {
                 }]
             }, {
                 "label": get_short_label(labels[filter][6]),
-                "color": "#006400",
+                "color": "#006400", //green
                 "value": totals[labels[filter][6]].toFixed(2),
-                "tooltext": "$valueK, $percentValue",
                 "category": [{
                     //"label": "EU",
                     "color": "#006400",
