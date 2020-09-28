@@ -117,6 +117,7 @@ function update_titles()
   }
     document.getElementById("pieTitle").textContent = "Émissions de gaz " + gas + " par secteur et par continent";
     document.getElementById("carteTitle").textContent = "Émissions de gaz " + gas +" dans le monde";
+    document.getElementById("lineTitle").textContent = "Évolution de gaz " + gas +" par secteur";
 }
 
 

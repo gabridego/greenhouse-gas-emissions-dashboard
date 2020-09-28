@@ -165,6 +165,22 @@
                 </div>
                 <!-- Pie Chart -->
                 <div class="row">
+					<div class="col">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 id="lineTitle" class="m-0 font-weight-bold text-primary">
+                                    Évolution de gaz à effet de serre par secteur
+                                </h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div style="height: 25rem;">
+                                    <div id="chart-container" class="svg-container"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
@@ -274,7 +290,8 @@
     <script src="full_data_continent.js"></script>
     <script src="scripts/barChart.js"></script>
     <script src="scripts/map2.js"></script>
-    <script src="scripts/pieChart.js"></script>
+	<script src="scripts/pieChart.js"></script>
+	<script src="scripts/lineChart.js"></script>
     <script src="scripts/sankeyDiag.js"></script>
     <script src="scripts/controller.js"></script>
     <script type="text/javascript">
@@ -282,7 +299,8 @@
             update_map(currentYear, currentFilter);
             piechart = create_pie(currentYear);
             init_sankey();
-            update_sankey(currentYear, graph);
+			update_sankey(currentYear, graph);
+			create_line(currentFilter);
         });
         adblock_fusioncharts();
     </script>
