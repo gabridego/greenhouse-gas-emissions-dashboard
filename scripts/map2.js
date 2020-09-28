@@ -49,9 +49,9 @@ function init_tooltip(location) {
     .style("padding", "1em");
 
     tooltip.append("line") // A line inserted between country name and score
-    .attr("x1", 40)
+    .attr("x1", 25)
     .attr("y1", 25)
-    .attr("x2", 160)
+    .attr("x2", 250)
     .attr("y2", 25)
     .style("stroke","#929292")
     .style("stroke-width","0.5")
@@ -63,7 +63,7 @@ function init_tooltip(location) {
     .attr("transform", "translate(0, 20)");
 
     text.append("tspan") // Country name udpated by its id
-    .attr("x", 105) // ie, tooltip width / 2
+    .attr("x", 150) // ie, tooltip width / 2
     .attr("y", 0)
     .attr("id", "tooltip-country")
     .attr("text-anchor", "middle")
@@ -71,7 +71,7 @@ function init_tooltip(location) {
     .style("font-size", "16px");
 
     text.append("tspan") // Fixed text
-    .attr("x", 105) // ie, tooltip width / 2
+    .attr("x", 150) // ie, tooltip width / 2
     .attr("y", 30)
     .attr("id", "text_emission")
     .attr("text-anchor", "middle")
@@ -100,13 +100,13 @@ function init_tooltip(location) {
 
 function resize_tooltip(resize_factor, tooltip) {
     tooltip.select("polyline")
-    .attr("points","0,0 "+210/resize_factor+",0 "+210/resize_factor+","+60/resize_factor+" 0,"+60/resize_factor+" 0,0")
+    .attr("points","0,0 "+300/resize_factor+",0 "+300/resize_factor+","+400/resize_factor+" 0,"+400/resize_factor+" 0,0")
     .style("stroke-width",1/resize_factor);
 
     tooltip.select("line")
-    .attr("x1", 40/resize_factor)
+    .attr("x1", 25/resize_factor)
     .attr("y1", 25/resize_factor)
-    .attr("x2", 160/resize_factor)
+    .attr("x2", 250/resize_factor)
     .attr("y2", 25/resize_factor)
     .attr("transform", "translate(0, "+5/resize_factor+")")
     .style("stroke-width",0.5/resize_factor);
@@ -116,21 +116,32 @@ function resize_tooltip(resize_factor, tooltip) {
     .attr("transform", "translate(0, "+20/resize_factor+")");
 
     d3.select("#tooltip-country") // Country name udpated by its id
-    .attr("x", 105/resize_factor) // ie, tooltip width / 2
+    .attr("x", 150/resize_factor) // ie, tooltip width / 2
     .attr("y", 0)
     .style("font-size", 16/resize_factor+"px");
 
     d3.select("#text_emission") // Fixed text
-    .attr("x", 105/resize_factor) // ie, tooltip width / 2
+    .attr("x", 150/resize_factor) // ie, tooltip width / 2
     .attr("y", 30/resize_factor);
     Object.keys(full_data).forEach(countryCode => {
 
         var countryPath = d3.select("#code"+countryCode);
         countryPath.on("mousemove", function() {
             var mouse = d3.pointer(event);
-            tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75/resize_factor) + ")");
+            tooltip.attr("transform", "translate(" + (mouse[0] + 75/resize_factor) + "," + (mouse[1] - 75/resize_factor) + ")");
         });
     })
+
+    var bars = document.getElementsByClassName('bar');
+
+    Array.prototype.forEach.call(bars, function(theBar) {
+    // resize bars in bar chart here
+      theBar.attr("x", x(data[index].sector))
+      .attr("width", x.bandwidth()/resize_factor)
+      .attr("y", y(data[index].frequency))
+      .attr("height", (barChartHeight - y(parseFloat(data[index].frequency)))/resize_factor);
+    });
+
 }
 
 /**
@@ -275,7 +286,6 @@ function zoomed(event) {
 
     g.attr("stroke-width", 1 / transform.k);
     // zooming the tooltip
-    console.log("k "+transform.k);
     const tooltip_zoomed = d3.select("#tooltip");
 
     resize_tooltip(transform.k, tooltip_zoomed);
