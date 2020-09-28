@@ -86,7 +86,6 @@ function UpdateCharts()
     //update titles
     update_titles();
     // update map
-    update_legend(currentYear, currentFilter);
     update_map(currentYear, currentFilter);
     // update piechart
     update_piechart(piechart, currentYear, currentFilter);
