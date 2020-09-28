@@ -266,9 +266,9 @@
 	<script src="min_data.js"></script>
 	<script src="full_data.js"></script>
 	<script src="full_data_continent.js"></script>
+	<script src="scripts/barChart.js"></script>
 	<script src="scripts/map2.js"></script>
 	<script src="scripts/pieChart.js"></script>
-	<script src="scripts/barChart.js"></script>
 	<script src="scripts/sankeyDiag.js"></script>
 	<script src="scripts/controller.js"></script>
 	<script type="text/javascript">
@@ -277,7 +277,7 @@
 			update_map(currentYear, currentFilter);
 		});
 		piechart = create_pie(currentYear);
-		drawBarChart("FR", "2005");
+		drawBarChart("FR", currentYear);
 	</script>
 </body>
 </html>
