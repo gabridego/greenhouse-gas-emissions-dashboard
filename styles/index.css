@@ -20,6 +20,7 @@ main > .container {
     padding: 5px;
     left: 5%;
     bottom: 10px;
+    z-index: 999;
 }
 
 .slider-td {
