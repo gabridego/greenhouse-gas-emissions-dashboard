@@ -1,8 +1,8 @@
 /*
 Retrieve data.
 */
-function getBarChartData(sector, year) {
-	var retrieved = gas_complete_data[sector][year];
+function getBarChartData(country_code, year) {
+	var retrieved = gas_complete_data[country_code][year];
 	var data = [
 		{
 			sector: "Agriculture",
@@ -45,8 +45,11 @@ function getBarChartData(sector, year) {
 	return data;
 }
 
-function drawBarChart(sectorCode, year) {
-    var data = getBarChartData(sectorCode, year);
+
+//function getBarChartCH2()
+
+function drawBarChart(country_code, year) {
+    var data = getBarChartData(country_code, year);
 
 
 
@@ -114,21 +117,21 @@ function drawBarChart(sectorCode, year) {
         .attr("x", d => x(d.sector))
         .attr("width", x.bandwidth())
         .attr("y", d => y(parseFloat(d.frequency)))
-        .attr("height", d => height - y(parseFloat(d.frequency)))
-        .on("mouseover", function(d, e) {
-            console.log(d, e);
-            div.transition()
-                .duration(200)
-                .style("opacity", .9)
-				.style("left", d.pageX  + "px")
-				.style("top", d.pageY + "px");
-            div.html("frequency : " + parseFloat(e.frequency))
-        })
-        .on("mouseout", function(d) {
-            div.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
+        .attr("height", d => height - y(parseFloat(d.frequency)));
+        // .on("mouseover", function(d, e) {
+        //     console.log(d, e);
+        //     div.transition()
+        //         .duration(200)
+        //         .style("opacity", .9)
+		// 		.style("left", d.pageX  + "px")
+		// 		.style("top", d.pageY + "px");
+        //     div.html("frequency : " + parseFloat(e.frequency))
+        // })
+        // .on("mouseout", function(d) {
+        //     div.transition()
+        //         .duration(500)
+        //         .style("opacity", 0);
+        // });
 
 
 

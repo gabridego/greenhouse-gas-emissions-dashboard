@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fr">
 <head>
-
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-
 	<title>Dashboard - Challenge OpenData</title>
 
 	<!-- Custom fonts for this template-->
@@ -17,20 +14,13 @@
 	<link
 		href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 		rel="stylesheet">
-
 	<!-- Custom styles for this template-->
 	<link href="styles/sb-admin-2.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="styles/index.css">
-
-
-
 </head>
-
 <body id="page-top">
-
 	<!-- Page Wrapper -->
 	<div id="wrapper">
-
 		<!-- Sidebar -->
 		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -66,15 +56,15 @@
 				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
 					aria-expanded="true" aria-controls="collapseTwo">
 					<i class="fas fa-fw fa-cog"></i>
-					<span>Filters</span>
+					<span>Filtres</span>
 				</a>
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded" id="filters">
-						<h6 class="collapse-header">Emissions:</h6>
-						<a class="collapse-item active" href="#" name="co2">CO2</a>
-						<a class="collapse-item" href="#" name="methane">CH4</a>
-						<a class="collapse-item" href="#" name="nitrous_oxide">N2O</a>
-						<a class="collapse-item" href="#" name="total_ghg">Total GHG</a>
+						<h6 class="collapse-header">Gaz :</h6>
+						<a class="collapse-item active" href="#" name="total_ghg">Tous</a>
+						<a class="collapse-item" href="#" name="co2">CO₂</a>
+						<a class="collapse-item" href="#" name="methane">CH₄</a>
+						<a class="collapse-item" href="#" name="nitrous_oxide">N₂O</a>
 					</div>
 				</div>
 			</li>
@@ -96,12 +86,12 @@
 				</a>
 				<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Info Pages:</h6>
+						<h6 class="collapse-header">Pages :</h6>
 						<a class="collapse-item" href="index.html">Application</a>
 						<a class="collapse-item" href="rapport.html">Rapport</a>
 						<div class="collapse-divider"></div>
-						<h6 class="collapse-header">Test Pages:</h6>
-						<a class="collapse-item" href="test_histog.html">Histog</a>
+						<h6 class="collapse-header">Pages de test :</h6>
+						<a class="collapse-item" href="test_histog.html">Histogramme</a>
 						<a class="collapse-item" href="test_sankey.html">Sankey</a>
 					</div>
 				</div>
@@ -120,13 +110,10 @@
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
-
 			<!-- Main Content -->
 			<div id="content">
-
 				<!-- Topbar -->
 				<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
 					<!-- Sidebar Toggle (Topbar) -->
 					<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
 						<i class="fa fa-bars"></i>
@@ -148,77 +135,44 @@
 
 				</nav>
 				<!-- End of Topbar -->
-
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
-
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Challenge Open Data</h1>
 					</div>
-
 					<!-- Content Row -->
-
 					<div class="row">
-
 						<!-- Area Chart -->
 						<div class="col">
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">Émissions de gaz à effet de serre dans
-										le monde</h6>
-									<div class="dropdown no-arrow">
-										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-										</a>
-										<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-											aria-labelledby="dropdownMenuLink">
-											<div class="dropdown-header">Dropdown Header:</div>
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<div class="dropdown-divider"></div>
-											<a class="dropdown-item" href="#">Something else here</a>
-										</div>
-									</div>
+									<h6 class="m-0 font-weight-bold text-primary">
+										Émissions de gaz à effet de serre dans
+										le monde
+									</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
-									<div style="height: 30rem;">
-										<div id="map" class="svg-container" style="background-color: #1aa1d6"></div>
-									</div>
+									<div id="map" class="svg-container" style="height: 40rem;"></div>
 								</div>
 							</div>
 						</div>
 					</div>
-
 					<!-- Content Row -->
 					<div class="row">
-
 						<!-- Content Column -->
 						<div class="col-xl-6 col-lg-5">
 							<div class="card shadow mb-4">
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">Émissions de GHG selon les secteurs et
-										les continents</h6>
-									<div class="dropdown no-arrow">
-										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-										</a>
-										<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-											aria-labelledby="dropdownMenuLink">
-											<div class="dropdown-header">Dropdown Header:</div>
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<div class="dropdown-divider"></div>
-											<a class="dropdown-item" href="#">Something else here</a>
-										</div>
-									</div>
+									<h6 class="m-0 font-weight-bold text-primary">
+										Émissions de gaz à effet de serre selon les secteurs et
+										les continents
+									</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
@@ -235,22 +189,9 @@
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 class="m-0 font-weight-bold text-primary">Émissions de GHG selon les secteurs et
-										les continents</h6>
-									<div class="dropdown no-arrow">
-										<a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											<i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-										</a>
-										<div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-											aria-labelledby="dropdownMenuLink">
-											<div class="dropdown-header">Dropdown Header:</div>
-											<a class="dropdown-item" href="#">Action</a>
-											<a class="dropdown-item" href="#">Another action</a>
-											<div class="dropdown-divider"></div>
-											<a class="dropdown-item" href="#">Something else here</a>
-										</div>
-									</div>
+									<h6 class="m-0 font-weight-bold text-primary">
+										Émissions de gaz à effet de serre selon les secteurs et les continents
+									</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
@@ -264,29 +205,25 @@
 
 				</div>
 				<!-- /.container-fluid -->
-
-
 				<div class="slidecontainer">
 					<table style="width:100%">
 						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-						<tr>
-							<td><button id="btnPlayStop" class="btn"><i id="iconPlayStop"
-										class="fa fa-play text-white"></i></button></td>
-							<td style="width:90%"><input type="range" min="0" max="26" value="0" class="slider"
-									id="timeline"></td>
-							<td><span id="year"></span></td>
+							<td>
+								<button id="btnPlayStop" class="btn">
+									<i id="iconPlayStop" class="fa fa-play text-white"></i>
+								</button>
+							</td>
+							<td class="slider-td">
+								<input type="range" min="0" max="26" value="0" class="slider" id="timeline">
+							</td>
+							<td class="year-slider">
+								<strong id="year" class="text-white"></span>
+							</td>
 						</tr>
 					</table>
 				</div>
-
-
 			</div>
 			<!-- End of Main Content -->
-
 			<!-- Footer -->
 			<footer class="sticky-footer bg-white">
 				<div class="container my-auto">
@@ -297,10 +234,8 @@
 				</div>
 			</footer>
 			<!-- End of Footer -->
-
 		</div>
 		<!-- End of Content Wrapper -->
-
 	</div>
 	<!-- End of Page Wrapper -->
 
@@ -332,9 +267,9 @@
 	<script src="min_data.js"></script>
 	<script src="full_data.js"></script>
 	<script src="full_data_continent.js"></script>
+	<script src="scripts/barChart.js"></script>
 	<script src="scripts/map2.js"></script>
 	<script src="scripts/pieChart.js"></script>
-	<script src="scripts/barChart.js"></script>
 	<script src="scripts/sankeyDiag.js"></script>
 	<script src="scripts/controller.js"></script>
 	<script type="text/javascript">
@@ -343,8 +278,7 @@
 			update_map(currentYear, currentFilter);
 		});
 		piechart = create_pie(currentYear);
-		drawBarChart("FR", "2005");
+		drawBarChart("FR", currentYear);
 	</script>
 </body>
-
 </html>
