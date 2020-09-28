@@ -74,6 +74,7 @@ function UpdateCharts()
     //chart1(year);
     //chart2(year);
     update_map(currentYear, currentFilter);
+    update_piechart(piechart, currentYear, currentFilter);
 }
 
 
