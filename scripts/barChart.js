@@ -91,6 +91,7 @@ function drawBarChart(country_code, year) {
     // Déplacement de l'axe horizontal et du futur texte (via la fonction translate) au bas du SVG
     // Selection des noeuds text, positionnement puis rotation
     svgBarchart.append("g")
+		.attr("id", "xAxis")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSize(0))
         .selectAll("text")
@@ -101,6 +102,7 @@ function drawBarChart(country_code, year) {
 
     // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
     svgBarchart.append("g")
+		.attr("id", "yAxis")
         .call(d3.axisLeft(y).ticks(6));
 
     // Ajout des bars en utilisant les données de notre fichier data.tsv
@@ -177,6 +179,8 @@ function update_bar_chart(year, country_code){
 	width = 300 - margin.left - margin.right ,
 	height = 275 - margin.top - margin.bottom;
 
+	const svgBarchart = d3.select("#barChart")
+
   const x = d3.scaleBand()
       .range([0, width])
       .padding(0.1);
@@ -185,7 +189,23 @@ function update_bar_chart(year, country_code){
       .range([height, 0]);
 
 	x.domain(data.map(d => d.sector));
-  y.domain([0, d3.max(data, d => parseFloat(d.frequency))]);
+  	y.domain([0, d3.max(data, d => parseFloat(d.frequency))]);
+
+
+	svgBarchart.select("#xAxis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(x).tickSize(0))
+        .selectAll("text")
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", ".15em")
+            .attr("transform", "rotate(-90) translate(10)");
+
+    // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
+    svgBarchart.select("#yAxis")
+        .call(d3.axisLeft(y).ticks(6));
+
+
 
 	Object.keys(data).forEach(index =>{
 
