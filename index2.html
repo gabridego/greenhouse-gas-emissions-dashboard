@@ -177,7 +177,7 @@
 								<!-- Card Body -->
 								<div class="card-body">
 									<div class="chart-area">
-										<div id="chart" class="svg-container"></div>
+										<!-- <div id="Chart" class="svg-container"></div> -->
 									</div>
 								</div>
 							</div>
@@ -274,11 +274,11 @@
 	<script src="scripts/controller.js"></script>
 	<script type="text/javascript">
 		init_map().then((val) => {
-			update_legend(currentYear);
+			update_legend(currentYear, currentFilter);
 			update_map(currentYear, currentFilter);
+			piechart = create_pie(currentYear);
+			drawBarChart("FR", currentYear);
 		});
-		piechart = create_pie(currentYear);
-		drawBarChart("FR", currentYear);
 	</script>
 </body>
 </html>

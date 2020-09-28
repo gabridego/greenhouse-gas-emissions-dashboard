@@ -32,11 +32,19 @@ slider.oninput = function() {
 function playStop() {
     console.log(isPlaying)
     if (!isPlaying) {
+        if(slider.value == 26){
+            slider.value = 0;
+            currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
+            
+            UpdateCharts();
+            
+            d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
+        }
+
         iconPlayStop.className = "fa fa-pause text-white";
         intervalTimeline = setInterval(function() {
             slider.value ++;
             currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
-            
             
             UpdateCharts();
             
@@ -45,6 +53,11 @@ function playStop() {
             d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
             
             // TODO : We need to add event listeners on other graphs following the same syntaxe
+
+            if(slider.value == 26) {
+                playStop();
+                return;
+            }
             
         }, 1000);
     } else {
@@ -73,7 +86,10 @@ function UpdateCharts()
     //ADD FUNCTION CHARTS HERE
     //chart1(year);
     //chart2(year);
+    // update map
+    update_legend(currentYear, currentFilter);
     update_map(currentYear, currentFilter);
+    // update piechart
     update_piechart(piechart, currentYear, currentFilter);
 }
 
