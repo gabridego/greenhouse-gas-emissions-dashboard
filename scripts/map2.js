@@ -434,7 +434,6 @@ function reset() {
         function setcolorcountry(year, id) {
 
         }
-<<<<<<< HEAD
 
 
 
@@ -457,6 +456,3 @@ function reset() {
             }
             return false;
         }
-=======
-
->>>>>>> 0340cab... Emissions unit in the tooltip.
