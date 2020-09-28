@@ -75,7 +75,7 @@ function spacePlay(event) {
 
     playStop()
     console.log(isPlaying)
-    if(event.target == document.body)
+    //if(event.target == document.body)
         event.preventDefault();
 }
 
