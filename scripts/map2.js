@@ -147,8 +147,6 @@ function init_map() {
         const svg = d3.select("#map").append("svg")
         .attr("id", "svg_zone")
         .attr("viewBox", [0, 0, width, height])
-        .attr("width", "100%")
-        .attr("height", "100%")
         .classed("svg-content", true)
         .on("click", reset);
 
