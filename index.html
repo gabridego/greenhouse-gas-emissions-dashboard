@@ -22,7 +22,7 @@
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 		<!-- Sidebar -->
-		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" style="position: fixed; top: 0; z-index: 99;">
 
 			<!-- Sidebar - Brand -->
 			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -61,10 +61,10 @@
 				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded" id="filters">
 						<h6 class="collapse-header">Gaz :</h6>
-						<a class="collapse-item active" href="#" name="total_ghg">Tous</a>
-						<a class="collapse-item" href="#" name="co2">CO₂</a>
-						<a class="collapse-item" href="#" name="methane">CH₄</a>
-						<a class="collapse-item" href="#" name="nitrous_oxide">N₂O</a>
+						<a class="collapse-item active" name="total_ghg">Tous</a>
+						<a class="collapse-item" name="co2">CO₂</a>
+						<a class="collapse-item" name="methane">CH₄</a>
+						<a class="collapse-item" name="nitrous_oxide">N₂O</a>
 					</div>
 				</div>
 			</li>
@@ -106,6 +106,14 @@
 
 		</ul>
 		<!-- End of Sidebar -->
+		<!-- Empty Sidebar just used for getting the space required -->
+		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+
+			<!-- Nav Item - Dashboard -->
+			<li class="nav-item active">
+				<a class="nav-link"></a>
+			</li>
+		</ul>
 
 		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
@@ -131,7 +139,7 @@
 				</nav>
 				<!-- End of Topbar -->
 				<!-- Begin Page Content -->
-				<div class="container-fluid">
+				<div class="container">
 					<!-- Page Heading -->
 					<div class="d-sm-flex align-items-center justify-content-between mb-4">
 						<h1 class="h3 mb-0 text-gray-800">Challenge Open Data</h1>
@@ -197,7 +205,7 @@
 					</div>
 
 				</div>
-				<!-- /.container-fluid -->
+				<!-- /.container -->
 				<div class="slidecontainer">
 					<table style="width:100%">
 						<tr>
