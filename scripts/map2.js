@@ -10,13 +10,13 @@ const zoom = d3.zoom()
 .scaleExtent([1, 8])
 .on("zoom", zoomed);
 
-const width = 975;
+const width = 995;
 const height = 610;
 const legendCellSize = 20;
 const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815']
 
 // bounds of the map (for clipping)
-const boundsMap = [70, 60]
+const boundsMap = [90, 60]
 
 // Last country clicked (= selected) on the map
 var lastCountryClicked = undefined;
@@ -41,7 +41,7 @@ function init_tooltip(location) {
     .style("display", "none");
 
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-    .attr("points","0,0 210,0 210,60 0,60 0,0")
+    .attr("points","0,0 300,0 300,300 0,300 0,0")
     .style("fill", "#222b1d")
     .style("stroke","black")
     .style("opacity","0.9")
@@ -84,12 +84,27 @@ function init_tooltip(location) {
     .style("font-weight", "bold");
 
     // TODO Create init graph on the tooltip
-    // BarChart Creation Sector / Country
+    tooltip.append("g")
+    .attr("id", "barChart");
 
-    // tooltip.append("div")
-    //     .attr("id", "barChart")
-    //     .attr("height", 70)
-    //     .attr("width", 70);
+    // const margin = {top: 60, right: 20, bottom: 20, left: 50},
+    // width = 300 - margin.left - margin.right ,
+    // height = 275 - margin.top - margin.bottom;
+    //
+
+    // const x = d3.scaleBand()
+    //     .range([0, width])
+    //     .padding(0.1);
+    //
+    // const y = d3.scaleLinear()
+    //     .range([height, 0]);
+    //
+    // const svg = d3.select("#barChart").append("svg")
+    //     .attr("id", "svgBarchart")
+    //     .attr("width", width + margin.left + margin.right)
+    //     .attr("height", height + margin.top + margin.bottom)
+    //     .append("g")
+    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     return tooltip;
 }
@@ -199,7 +214,7 @@ function init_map() {
                 .on("mousemove", function() {
                     var mouse = d3.pointer(event);
 
-                    tooltip.attr("transform", "translate(" + mouse[0] + "," + (mouse[1] - 75) + ")");
+                    tooltip.attr("transform", "translate(" + (mouse[0] + 75) + "," + (mouse[1] - 75) + ")");
                 });
             })
 
@@ -292,7 +307,7 @@ function init_legend() {
     // translation to set the legend on the outside
     // of the drawn map
     var legend = svg.append('g')
-    .attr('transform', 'translate(40, 250)')
+    .attr('transform', 'translate(60, 250)')
     .attr("id", "legend");
 
     legend.append("g")
@@ -333,8 +348,6 @@ function init_legend() {
 // Fixed Tooltip for map interactions
 function update_map(year, currentFilter) {
     // TODO change countries colors according to gas emission.
-
-
     var tooltip = d3.select("#tooltip");
 
     Object.keys(full_data).forEach(c_code => {
@@ -381,33 +394,26 @@ function short_name_country(name) {
 /**
 * Update legend (compute min/max by year and adapt the legend)
 * @param {*} year
+* @param {*} currentFilter
 */
-function update_legend(year) {
-    // Compute min/max values for the legend scale
-    var min, max;
-    var first = 0;
+function update_legend(year, currentFilter) {
+    // Compute max values for the legend scale
+    var max;
 
-
-    // TODO
     Object.keys(full_data).forEach(function(key, index) {
-        if (first == 0) {
-            if (full_data[key][year] && full_data[key][year].total_ghg) {
-                min = max = full_data[key][year].total_ghg;
-                first++;
+        if (index == 0) {
+            if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
+                max = full_data[key][year][currentFilter];
             }
         } else {
-            if (full_data[key][year] && full_data[key][year].total_ghg) {
-                if (full_data[key][year].total_ghg < min) {
-                    min = full_data[key][year].total_ghg;
-                }
-
-                if (full_data[key][year].total_ghg > max) {
-                    max = full_data[key][year].total_ghg;
+            if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
+                if (full_data[key][year][currentFilter] > max) {
+                    max = full_data[key][year][currentFilter];
                 }
             }
         }
     });
-
+    console.log("max : " + max)
 
     // Draw legend
     // TODO: Choisir coorrectement les couleurs de la légende
@@ -416,15 +422,11 @@ function update_legend(year) {
     legendAxis.empty();
 
 
-    let legendScale = d3.scaleLinear().domain([min, max])
+    let legendScale = d3.scaleLinear().domain([0, max])
     .range([0, colors.length * legendCellSize]);
-    
+
     legendAxis.attr("class", "axis")
     .call(d3.axisLeft(legendScale));
-}
-
-function setcolorcountry(year, id) {
-
 }
 
 

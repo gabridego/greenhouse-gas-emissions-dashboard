@@ -73,7 +73,10 @@ function UpdateCharts()
     //ADD FUNCTION CHARTS HERE
     //chart1(year);
     //chart2(year);
+    // update map
+    update_legend(currentYear, currentFilter);
     update_map(currentYear, currentFilter);
+    // update piechart
     update_piechart(piechart, currentYear, currentFilter);
 }
 

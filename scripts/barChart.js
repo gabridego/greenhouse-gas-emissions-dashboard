@@ -52,15 +52,19 @@ function drawBarChart(country_code, year) {
     var data = getBarChartData(country_code, year);
 
 
-	var elem = document.getElementById("chart");
-	if(elem) {
-	  var rect = elem.getBoundingClientRect();
-	  console.log("height: " + rect.height);
-	}
 
-    const margin = {top: 20, right: 20, bottom: 150, left: 50},
-        width = rect.width - margin.left - margin.right ,
-        height = rect.height - margin.top - margin.bottom;
+	// var elem = document.getElementById("barChart");
+	// console.log(elem)
+	// if(elem) {
+	//   var rect = elem.getBoundingClientRect();
+	//   console.log("height: " + rect.height);
+	// }
+
+
+    const margin = {top: 60, right: 20, bottom: 20, left: 50},
+    width = 300 - margin.left - margin.right ,
+    height = 275 - margin.top - margin.bottom;
+
 
     const x = d3.scaleBand()
         .range([0, width])
@@ -69,17 +73,12 @@ function drawBarChart(country_code, year) {
     const y = d3.scaleLinear()
         .range([height, 0]);
 
-    const svg = d3.select("#chart").append("svg")
+    const svg = d3.select("#barChart").append("svg")
         .attr("id", "svg")
         .attr("width", width + margin.left + margin.right)
-		.attr("max-width", 80)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    const div = d3.select("body").append("div")
-        .attr("class", "BarChartTooltip")
-        .style("opacity", 0);
 
 
 
