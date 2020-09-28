@@ -43,10 +43,6 @@ function playStop() {
 
         iconPlayStop.className = "fa fa-pause text-white";
         intervalTimeline = setInterval(function() {
-            if(slider.value == 26) {
-                playStop();
-                return;
-            }
             slider.value ++;
             currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
             
@@ -57,6 +53,11 @@ function playStop() {
             d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
             
             // TODO : We need to add event listeners on other graphs following the same syntaxe
+
+            if(slider.value == 26) {
+                playStop();
+                return;
+            }
             
         }, 1000);
     } else {
