@@ -91,6 +91,8 @@ function UpdateCharts()
     // update piechart
     update_piechart(piechart, currentYear, currentFilter);
 
+    update_linechart(currentFilter);
+
 }
 
 function update_titles()
