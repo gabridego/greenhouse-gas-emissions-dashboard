@@ -1,6 +1,4 @@
 const units = "billion t";
-const width = 954;
-const height = 600;
 
 var sankey;
 var svg;
@@ -64,7 +62,7 @@ function init_sankey() {
     .attr("id", "sankey_svg")
     .attr("width", s_width + margin.left + margin.right)
     .attr("height", s_height + margin.top + margin.bottom)
-    .attr("viewBox", [0, 0, width, height])
+    .attr("viewBox", [0, 0, 954, 600])
     .append("g")
     .attr("transform", 
     "translate(" + margin.left + "," + margin.top + ")");
