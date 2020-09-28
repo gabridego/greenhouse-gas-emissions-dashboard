@@ -153,7 +153,8 @@
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 									<h6 id="carteTitle" class="m-0 font-weight-bold text-primary">
-										Émissions de gaz à effet de serre dans le monde
+										Émissions de gaz à effet de serre dans
+										le monde
 									</h6>
 								</div>
 								<!-- Card Body -->
@@ -171,15 +172,14 @@
 								<!-- Card Header - Dropdown -->
 								<div
 									class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-									<h6 id="barTitle" class="m-0 font-weight-bold text-primary">
-										Émissions de gaz à effet de serre par secteur
+									<h6 class="m-0 font-weight-bold text-primary">
+										Émissions de gaz à effet de serre selon les secteurs et
+										les continents
 									</h6>
 								</div>
 								<!-- Card Body -->
 								<div class="card-body">
-									<div class="chart-area">
-										<!-- <div id="Chart" class="svg-container"></div> -->
-									</div>
+									<div id="sankey_chart"></div>
 								</div>
 							</div>
 						</div>
@@ -265,6 +265,13 @@
 		src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 	<script src="https://d3js.org/d3.v6.min.js"></script>
 	<script src="https://d3js.org/topojson.v2.min.js"></script>
+	<script src="https://d3js.org/d3.v6.min.js"></script>
+	<script src="https://unpkg.com/d3-array@1"></script>
+	<script src="https://unpkg.com/d3-collection@1"></script>
+	<script src="https://unpkg.com/d3-path@1"></script>
+	<script src="https://unpkg.com/d3-shape@1"></script>
+	<script src="https://unpkg.com/d3-sankey@0"></script>
+	<script src="sankey_data.js"></script>
 	<script src="min_data.js"></script>
 	<script src="full_data.js"></script>
 	<script src="full_data_continent.js"></script>
@@ -278,6 +285,8 @@
 			update_legend(currentYear, currentFilter);
 			update_map(currentYear, currentFilter);
 			piechart = create_pie(currentYear);
+			init_sankey();
+			update_sankey(currentYear, graph);
 		});
 	</script>
 </body>

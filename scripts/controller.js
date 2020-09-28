@@ -84,16 +84,17 @@ function spacePlay(event) {
 function UpdateCharts()
 {
     //update titles
-    update_titles();
+    update_titles(currentFilter);
     // update map
     update_legend(currentYear, currentFilter);
     update_map(currentYear, currentFilter);
     // update piechart
     update_piechart(piechart, currentYear, currentFilter);
-
+    // update sankey diagram
+    update_sankey(currentYear, graph);
 }
 
-function update_titles()
+function update_titles(filter)
 {
   let gas;
   switch (currentFilter) {
