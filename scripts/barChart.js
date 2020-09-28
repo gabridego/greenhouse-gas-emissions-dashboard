@@ -11,7 +11,7 @@ function getBarChartData(country_code, year) {
 		{
 			sector: "Manufacturing/Construction energy",
 			frequency: retrieved["Manufacturing/Construction energy (GHG)"]
-		},, (e.wheelDelta ||
+		},
 		{
 			sector: "Buildings",
 			frequency: retrieved["Buildings (GHG)"]
@@ -52,7 +52,6 @@ function drawBarChart(country_code, year) {
     var data = getBarChartData(country_code, year);
 
 
-
 	// var elem = document.getElementById("barChart");
 	// console.log(elem)
 	// if(elem) {
@@ -73,8 +72,8 @@ function drawBarChart(country_code, year) {
     const y = d3.scaleLinear()
         .range([height, 0]);
 
-    const svg = d3.select("#barChart").append("svg")
-        .attr("id", "svg")
+    const svgBarchart = d3.select("#barChart").append("svg")
+        .attr("id", "svgBarchart")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -91,7 +90,7 @@ function drawBarChart(country_code, year) {
     // Ajout de l'axe X au SVG
     // Déplacement de l'axe horizontal et du futur texte (via la fonction translate) au bas du SVG
     // Selection des noeuds text, positionnement puis rotation
-    svg.append("g")
+    svgBarchart.append("g")
         .attr("transform", "translate(0," + height + ")")
         .call(d3.axisBottom(x).tickSize(0))
         .selectAll("text")
@@ -101,21 +100,33 @@ function drawBarChart(country_code, year) {
             .attr("transform", "rotate(-65)");
 
     // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
-    svg.append("g")
+    svgBarchart.append("g")
         .call(d3.axisLeft(y).ticks(6));
 
     // Ajout des bars en utilisant les données de notre fichier data.tsv
     // La largeur de la barre est déterminée par la fonction x
     // La hauteur par la fonction y en tenant compte de la frequency
     // La gestion des events de la souris pour le popup
-	svg.selectAll("bar")
-        .data(data)
-    .enter().append("rect")
-        .attr("class", "bar")
-        .attr("x", d => x(d.sector))
+		Object.keys(data).forEach(index =>{
+
+			console.log("dans le x : ", data[index].sector.slice(0,4))
+			console.log("dans le y : ", data[index].frequency)
+			svgBarchart.append("rect")
+				.attr("id", "bar"+ data[index].sector.slice(0,4))
+				.attr("x", x(data[index].sector))
         .attr("width", x.bandwidth())
-        .attr("y", d => y(parseFloat(d.frequency)))
-        .attr("height", d => height - y(parseFloat(d.frequency)));
+        .attr("y", y(data[index].frequency))
+        .attr("height", height - y(parseFloat(data[index].frequency)));
+
+		})
+	// svgBarchart.selectAll("bar")
+  //       .data(data)
+  //   		.enter().append("rect")
+  //       .attr("class", "bar")
+  //       .attr("x", d => x(d.sector))
+  //       .attr("width", x.bandwidth())
+  //       .attr("y", d => y(parseFloat(d.frequency)))
+  //       .attr("height", d => height - y(parseFloat(d.frequency)));
         // .on("mouseover", function(d, e) {
         //     console.log(d, e);
         //     div.transition()
@@ -130,14 +141,6 @@ function drawBarChart(country_code, year) {
         //         .duration(500)
         //         .style("opacity", 0);
         // });
-
-
-
-
-				var tooltip = document.getElementById("tooltip");
-
-
-
 
 
 	// add bar value text

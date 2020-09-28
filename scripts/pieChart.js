@@ -162,27 +162,27 @@ function get_data(year, filter) {
                     //"label": "EU",
                     "color": "##FF0000",
                     "tooltext": "Europe, $percentValue",
-                    "value": full_camembert[year][filter][Object.keys(totals)[4]]["Europe"].toFixed(2)
+                    "value": full_camembert[year][filter][labels[filter][4]]["Europe"].toFixed(2)
                 }, {
                     //"label": "AF",
                     "color": "##FF0000",
                     "tooltext": "Africa, $percentValue",
-                    "value": full_camembert[year][filter][Object.keys(totals)[4]]["Africa"].toFixed(2)
+                    "value": full_camembert[year][filter][labels[filter][4]]["Africa"].toFixed(2)
                 }, {
                     //"label": "AS",
                     "color": "##FF0000",
                     "tooltext": "Asia, $percentValue",
-                    "value": full_camembert[year][filter][Object.keys(totals)[4]]["Asia"].toFixed(2)
+                    "value": full_camembert[year][filter][labels[filter][4]]["Asia"].toFixed(2)
                 }, {
                   //  "label": "NA/SA",
                     "color": "##FF0000",
                     "tooltext": "Americas, $percentValue",
-                    "value": full_camembert[year][filter][Object.keys(totals)[4]]["Americas"].toFixed(2)
+                    "value": full_camembert[year][filter][labels[filter][4]]["Americas"].toFixed(2)
                 }, {
                     //"label": "OC",
                     "color": "##FF0000",
                     "tooltext": "Oceania, $percentValue",
-                    "value": full_camembert[year][filter][Object.keys(totals)[4]]["Oceania"].toFixed(2)
+                    "value": full_camembert[year][filter][labels[filter][4]]["Oceania"].toFixed(2)
                 }]
             }, {
                 "label": get_short_label(labels[filter][5]),

@@ -87,24 +87,7 @@ function init_tooltip(location) {
     tooltip.append("g")
     .attr("id", "barChart");
 
-    // const margin = {top: 60, right: 20, bottom: 20, left: 50},
-    // width = 300 - margin.left - margin.right ,
-    // height = 275 - margin.top - margin.bottom;
-    //
-
-    // const x = d3.scaleBand()
-    //     .range([0, width])
-    //     .padding(0.1);
-    //
-    // const y = d3.scaleLinear()
-    //     .range([height, 0]);
-    //
-    // const svg = d3.select("#barChart").append("svg")
-    //     .attr("id", "svgBarchart")
-    //     .attr("width", width + margin.left + margin.right)
-    //     .attr("height", height + margin.top + margin.bottom)
-    //     .append("g")
-    //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    drawBarChart("FR", "2000");
 
     return tooltip;
 }
@@ -339,6 +322,20 @@ function init_legend() {
     .style("fill", "#000000")
     .text("données non connues");
 }
+
+
+/**
+* Updates barChart data according to the year and country.
+* @param {*} year
+* @param {*} country_code
+*/
+
+function update_bar_chart(year, country_code){
+
+
+
+}
+
 
 /**
 * Updates map data according to the year.
