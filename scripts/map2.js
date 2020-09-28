@@ -41,7 +41,7 @@ function init_tooltip(location) {
     .style("display", "none");
 
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-    .attr("points","0,0 300,0 300,300 0,300 0,0")
+    .attr("points","0,0 300,0 300,400 0,400 0,0")
     .style("fill", "#222b1d")
     .style("stroke","black")
     .style("opacity","0.9")
@@ -324,18 +324,6 @@ function init_legend() {
 }
 
 
-/**
-* Updates barChart data according to the year and country.
-* @param {*} year
-* @param {*} country_code
-*/
-
-function update_bar_chart(year, country_code){
-
-
-
-}
-
 
 /**
 * Updates map data according to the year.
@@ -358,9 +346,9 @@ function update_map(year, currentFilter) {
 
         d3.select(idCode)
         .attr("fill", color);
-        var country_path = d3.select(idCode)
+        var country_path = d3.select(idCode);
 
-        var qte_emissions = undefined
+        var qte_emissions = undefined;
 
         // WARNING: some countries does not have full_data[c_code][year] defined!!
         if (full_data[c_code][year] !== undefined) {
@@ -375,12 +363,15 @@ function update_map(year, currentFilter) {
             .text(short_name_country(full_data[c_code].country));
             tooltip.select("#tooltip-gas-emission")
             .text(text_emissions);
+            update_bar_chart(year, c_code);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
                 document.getElementById("tooltip-gas-emission").innerHTML = text_emissions;
+
             });
         });
+
     })
 
 }
