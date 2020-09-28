@@ -57,9 +57,13 @@ function playStop() {
 }
 
 function spacePlay(event) {
-    console.log(isPlaying)
-    if (event.which === 32)
+    if (event.which != 32)
+        return;
+
     playStop()
+    console.log(isPlaying)
+    if(event.target == document.body)
+        event.preventDefault();
 }
 
 //FUNCTIONS
