@@ -41,7 +41,7 @@ function init_tooltip(location) {
     .style("display", "none");
 
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-    .attr("points","0,0 210,0 210,130 0,130 0,0")
+    .attr("points","0,0 210,0 210,60 0,60 0,0")
     .style("fill", "#222b1d")
     .style("stroke","black")
     .style("opacity","0.9")
@@ -86,10 +86,10 @@ function init_tooltip(location) {
     // TODO Create init graph on the tooltip
     // BarChart Creation Sector / Country
 
-    tooltip.append("div")
-        .attr("id", "barChart")
-        .attr("height", 70)
-        .attr("width", 70);
+    // tooltip.append("div")
+    //     .attr("id", "barChart")
+    //     .attr("height", 70)
+    //     .attr("width", 70);
 
     return tooltip;
 }
@@ -434,9 +434,6 @@ function reset() {
         function setcolorcountry(year, id) {
 
         }
-<<<<<<< HEAD
-
-
 
         //Disable scrolling page by mouse wheel
         // IE9, Chrome, Safari, Opera
@@ -457,6 +454,3 @@ function reset() {
             }
             return false;
         }
-=======
-
->>>>>>> 0340cab... Emissions unit in the tooltip.

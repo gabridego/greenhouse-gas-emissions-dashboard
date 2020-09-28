@@ -52,7 +52,6 @@ function drawBarChart(country_code, year) {
     var data = getBarChartData(country_code, year);
 
 
-
 	var elem = document.getElementById("chart");
 	if(elem) {
 	  var rect = elem.getBoundingClientRect();
@@ -135,7 +134,8 @@ function drawBarChart(country_code, year) {
 
 
 
-
+				debugger;
+				var tooltip = document.getElementById("tooltip");
 
 
 
