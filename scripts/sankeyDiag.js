@@ -66,7 +66,7 @@ function init_sankey() {
     "translate(" + margin.left + "," + margin.top + ")");
 }
 
-function update_sankey(year, data) {
+function update_sankey(year, data, currentFilter) {
     const {nodes, links} = sankey(year, data);
     svg.selectAll("*").remove();
 
