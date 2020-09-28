@@ -29,16 +29,16 @@ function get_data(year, filter) {
             "hoverfillcolor": "#CCCCCC",
             "numberprefix": "$",
             "plottooltext": "$label, $$valueK, $percentValue",
-            "theme": "fusion"
+            "theme": "fusion",
+            "baseFontSize": "8"
         },
         "category": [{
             "label": "Secteurs",
             "color": "#ffffff",
             //"value": (total_agriculture + total_energy + total_industry + total_transport + total_heat + total_construction + total_buildings).toFixed(2),
-            //"value": Object.values(totals).reduce((a, b) => a + b).toFixed(2),
             "value": firstSum.toFixed(2),
             "category": [{
-                "label": Object.keys(totals)[0],
+                "label": get_short_label(Object.keys(totals)[0]),
                 "color": "#f8bd19",
                 "value": Object.values(totals)[0].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -69,7 +69,7 @@ function get_data(year, filter) {
                     "value": full_camembert[year][filter][Object.keys(totals)[0]]["Oceania"].toFixed(2)
                 }]
             }, {
-                "label": Object.keys(totals)[1],
+                "label": get_short_label(Object.keys(totals)[1]),
                 "color": "#33ccff",
                 "value": Object.values(totals)[1].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -100,7 +100,7 @@ function get_data(year, filter) {
                     "value": full_camembert[year][filter][Object.keys(totals)[1]]["Oceania"].toFixed(2)
                 }]
             }, {
-                "label": Object.keys(totals)[2],
+                "label": get_short_label(Object.keys(totals)[2]),
                 "color": "#FF69B4",
                 "value": Object.values(totals)[2].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -131,7 +131,7 @@ function get_data(year, filter) {
                     "value": full_camembert[year][filter][Object.keys(totals)[2]]["Oceania"].toFixed(2)
                 }]
             }, {
-                "label": Object.keys(totals)[3],
+                "label": get_short_label(Object.keys(totals)[3]),
                 "color": "##696969",
                 "value": Object.values(totals)[3].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -162,7 +162,7 @@ function get_data(year, filter) {
                     "value": full_camembert[year][filter][Object.keys(totals)[3]]["Oceania"].toFixed(2)
                 }]
             }, {
-                "label": Object.keys(totals)[4],
+                "label": get_short_label(Object.keys(totals)[4]),
                 "color": "##FF0000",
                 "value": Object.values(totals)[4].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -193,7 +193,7 @@ function get_data(year, filter) {
                     "value": full_camembert[year][filter][Object.keys(totals)[4]]["Oceania"].toFixed(2)
                 }]
             }, {
-                "label": Object.keys(totals)[5],
+                "label": get_short_label(Object.keys(totals)[5]),
                 "color": "##800080",
                 "value": Object.values(totals)[5].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -224,7 +224,7 @@ function get_data(year, filter) {
                     "value": full_camembert[year][filter][Object.keys(totals)[5]]["Oceania"].toFixed(2)
                 }]
             }, {
-                "label": Object.keys(totals)[6],
+                "label": get_short_label(Object.keys(totals)[6]),
                 "color": "#006400",
                 "value": Object.values(totals)[6].toFixed(2),
                 "tooltext": "$$valueK, $percentValue",
@@ -256,6 +256,36 @@ function get_data(year, filter) {
                 }]
             }]
         }]}
+    }
+
+    function get_short_label(label) {
+        let new_label;
+        switch (label){
+            case "Land-Use Change and Forestry":
+                new_label = "LUCF";
+                break;
+            case "Manufacturing & Construction":
+                new_label = "Manufacturing";
+                break;
+            case "Manufacturing/Construction energy":
+                new_label = "Manufacturing";
+                break;
+            case "Electricity & Heat":
+                new_label = "Electricity";
+                break;
+            case "Other Fuel Combustion":
+                new_label = "Other";
+                break;
+            case "Intl aviation & shipping":
+                new_label = "Shipping";
+                break;
+            case "Fugitive from energy production":
+                new_label = "Fugitive Emissions";
+                break;
+            default:
+                new_label = label;
+        }
+        return new_label;
     }
     
     // Draw the chart and set the chart values
