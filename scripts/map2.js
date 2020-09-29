@@ -266,7 +266,7 @@ function init_legend() {
 
     let svg = d3.select("#legend").append("svg")
         .attr("id", "svg_zone_legend")
-        .attr("viewBox", [0, 0, 80, 16 * legendCellSize + 20])
+        .attr("viewBox", [0, 0, 95, 16 * legendCellSize + 20])
         .attr("width", "100%")
         .attr("height", "100%")
         .attr("style", "background-color: white")
@@ -276,7 +276,7 @@ function init_legend() {
     // translation to set the legend on the outside
     // of the drawn map
     var legend = svg.append('g')
-    .attr('transform', 'translate(60, 0)')
+    .attr('transform', 'translate(65, 0)')
     .attr("id", "legend");
 
     let legendScale = d3.scaleLinear().domain([0, 10000])
