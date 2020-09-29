@@ -351,8 +351,9 @@ function update_bar_chart(year, country_code, filter){
 	x.domain(data.map(d => d.sector));
   	y.domain([0, d3.max(data, d => parseFloat(d.emissions))]);
 
-
+    /** TODO Edit animation */
 	svgBarchart.select("#xAxis")
+        .transition().duration(800)
         .attr("transform", "translate(0," + barChartHeight + ")")
         .call(d3.axisBottom(x).tickSize(0))
         .selectAll("text")
@@ -370,9 +371,7 @@ function update_bar_chart(year, country_code, filter){
     Object.keys(initData).forEach(index =>{
 
 		d3.select("#bar"+ initData[index].sector.slice(0,4))
-			.attr("x", 0)
-			.attr("width", 0)
-			.attr("y", 0)
+			//.attr("y", 0)
 			.attr("height", 0)
 			.attr("class", "bar");
 	})
@@ -381,11 +380,13 @@ function update_bar_chart(year, country_code, filter){
 	Object.keys(data).forEach(index =>{
 
 		d3.select("#bar"+ data[index].sector.slice(0,4))
-			.attr("x", x(data[index].sector))
-			.attr("width", x.bandwidth())
 			.attr("y", y(data[index].emissions))
 			.attr("height", barChartHeight - y(parseFloat(data[index].emissions)))
-			.attr("class", "bar");
+            .attr("width", x.bandwidth());
+
+    	d3.select("#bar"+ data[index].sector.slice(0,4))
+            .transition().duration(800)
+            .attr("x", x(data[index].sector));
 	})
 
 }
