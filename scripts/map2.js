@@ -91,44 +91,6 @@ function init_tooltip(location) {
     return tooltip;
 }
 
-
-function resize_tooltip(resize_factor, tooltip) {
-    tooltip.select("polyline")
-    .attr("points","0,0 "+375/resize_factor+",0 "+375/resize_factor+","+350/resize_factor+" 0,"+350/resize_factor+" 0,0")
-    .style("stroke-width",1/resize_factor);
-
-    tooltip.select("line")
-    .attr("x1", 25/resize_factor)
-    .attr("y1", 25/resize_factor)
-    .attr("x2", 350/resize_factor)
-    .attr("y2", 25/resize_factor)
-    .attr("transform", "translate(0, "+5/resize_factor+")")
-    .style("stroke-width",0.5/resize_factor);
-
-    tooltip.select("text") // Text that will contain all tspan (used for multilines)
-    .style("font-size", 13/resize_factor+"px")
-    .attr("transform", "translate(0, "+20/resize_factor+")");
-
-    d3.select("#tooltip-country") // Country name udpated by its id
-    .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
-    .attr("y", 0)
-    .style("font-size", 16/resize_factor+"px");
-
-    d3.select("#text_emission") // Fixed text
-    .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
-    .attr("y", 30/resize_factor);
-    Object.keys(full_data).forEach(countryCode => {
-
-        var countryPath = d3.select("#code"+countryCode);
-        countryPath.on("mousemove", function() {
-            var mouse = d3.pointer(event);
-            tooltip.attr("transform", "translate(" + (mouse[0] + 75/resize_factor) + "," + (mouse[1] - 75/resize_factor) + ")");
-        });
-    })
-    // Call resize_bar_chart()
-
-}
-
 /**
 * Init the map container with a legend, titles and countries drawn.
 * @param {*} id_container
@@ -177,6 +139,11 @@ function init_map() {
 
             var tooltip = init_tooltip(g);
 
+            g.on("mousemove", function() {
+                var mouse = d3.pointer(event);
+                tooltip.attr("transform", "translate(" + (mouse[0] + 75) + "," + (mouse[1] - 75) + ")");
+            })
+
             Object.keys(full_data).forEach(countryCode => {
                 // console.log(countryCode);
                 var countryPath = d3.select("#code"+countryCode);
@@ -188,10 +155,6 @@ function init_map() {
                 })
                 .on("mouseout", function() {
                     tooltip.style("display", "none");
-                })
-                .on("mousemove", function() {
-                    var mouse = d3.pointer(event);
-                    tooltip.attr("transform", "translate(" + (mouse[0] + 75) + "," + (mouse[1] - 75) + ")");
                 });
             })
 
@@ -218,10 +181,8 @@ function reset() {
     svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity, d3.zoomTransform(svg.node()).invert([width / 2, height / 2]));
 }
 
-
 function clicked(event, d) {
     const svg = d3.select("#svg_zone");
-    const cGroup = d3.select("#cGroup");
     const [[x0, y0], [x1, y1]] = path.bounds(d);
 
     event.stopPropagation();
@@ -247,16 +208,9 @@ function clicked(event, d) {
 
 function zoomed(event) {
     const {transform} = event;
-    const g = d3.select("#g");
-    g.attr("transform", transform);
-
-    g.attr("stroke-width", 1 / transform.k);
-
-
-    const tooltip_zoomed = d3.select("#tooltip");
-
-    resize_tooltip(transform.k, tooltip_zoomed);
-
+    const cGroup = d3.select("#cGroup");
+    cGroup.attr("transform", transform);
+    cGroup.attr("stroke-width", 1 / transform.k);
 }
 
 /**
@@ -396,11 +350,11 @@ function short_name_country(name) {
 
 //Disable scrolling page by mouse wheel
 // IE9, Chrome, Safari, Opera
-document.getElementById("map").addEventListener("mousewheel", MouseWheelHandler, false);
+document.getElementById("map").addEventListener("mousewheel", mouseWheelHandler, false);
 // Firefox
-document.getElementById("map").addEventListener("DOMMouseScroll", MouseWheelHandler, false);
+document.getElementById("map").addEventListener("DOMMouseScroll", mouseWheelHandler, false);
 
-function MouseWheelHandler(e) {
+function mouseWheelHandler(e) {
     // cross-browser wheel delta
     var e = window.event || e; // old IE support
     var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
