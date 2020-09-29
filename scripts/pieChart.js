@@ -22,27 +22,27 @@ function get_data(year, filter) {
 	                    //"label": "EU",
 	                    "color": colors[i],
 	                    "tooltext": "Europe, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Europe"].toFixed(2)
+	                    "value": full_camembert[year][filter][labels[filter][i]]["Europe"]['value'].toFixed(2)
 	                }, {
 	                    //"label": "AF",
 	                    "color": colors[i],
 	                    "tooltext": "Africa, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Africa"].toFixed(2)
+	                    "value": full_camembert[year][filter][labels[filter][i]]["Africa"]['value'].toFixed(2)
 	                }, {
 	                    //"label": "AS",
 	                    "color": colors[i],
 	                    "tooltext": "Asia, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Asia"].toFixed(2)
+	                    "value": full_camembert[year][filter][labels[filter][i]]["Asia"]['value'].toFixed(2)
 	                }, {
 	                    //"label": "NA/SA",
 	                    "color": colors[i],
 	                    "tooltext": "Americas, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Americas"].toFixed(2)
+	                    "value": full_camembert[year][filter][labels[filter][i]]["Americas"]['value'].toFixed(2)
 	                }, {
 	                    //"label": "OC",
 	                    "color": colors[i],
 	                    "tooltext": "Oceania, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Oceania"].toFixed(2)
+	                    "value": full_camembert[year][filter][labels[filter][i]]["Oceania"]['value'].toFixed(2)
 	                }]
 	            }
 	    );
@@ -176,7 +176,7 @@ function set_totals(year, filter, first) {
         //if(!(sector in totals))
         totals[sector] = 0.0;
         for(let [key,value] of Object.entries(data_year[sector]))
-            totals[sector] += value;
+            totals[sector] += value['value'];
     }
 
     //sort sectors by emission and compute total emission
