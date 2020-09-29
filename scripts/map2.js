@@ -16,7 +16,7 @@ const legendCellSize = 20;
 const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815']
 
 // bounds of the map (for clipping)
-const boundsMap = [90, 60]
+// const boundsMap = [90, 60]
 
 // Last country clicked (= selected) on the map
 var lastCountryClicked = undefined;
@@ -24,7 +24,7 @@ var lastCountryClicked = undefined;
 // Map projection parameters
 const projection = d3.geoNaturalEarth1()
 .scale(180)
-.translate([(width - boundsMap[0]) / 2 + boundsMap[0], (height - boundsMap[1]) / 2 + boundsMap[1]])
+.translate([width / 2, height / 2])
 
 const path = d3.geoPath()
 .pointRadius(2)
@@ -154,6 +154,8 @@ function init_map() {
         const svg = d3.select("#map").append("svg")
         .attr("id", "svg_zone")
         .attr("viewBox", [0, 0, width, height])
+        .attr("width", "100%")
+        .attr("height", "100%")
         .classed("svg-content", true)
         .on("click", reset);
 
@@ -213,22 +215,6 @@ function init_map() {
             console.log(error); // erreur
         });
 
-        // Draw clip rectangles
-        const clipRectangles = svg.append("g");
-        clipRectangles.append('svg:rect')
-        .attr('height', height + "px")
-        .attr('width', boundsMap[0] + 10 + 'px')
-        .attr('x', -10)
-        .attr('y', 0)
-        .style("fill", "#FFFFFF");
-
-        clipRectangles.append('svg:rect')
-        .attr('height', 10 + legendCellSize)
-        .attr('width',  (width + 10) + 'px')
-        .attr('x', 0)
-        .attr('y', height - (5 + legendCellSize))
-        .style("fill", "#FFFFFF");
-
         svg.call(zoom);
 
         init_legend();
@@ -287,12 +273,20 @@ function zoomed(event) {
 * Init legend
 */
 function init_legend() {
-    const svg = d3.select("#svg_zone");
+
+    let svg = d3.select("#legend").append("svg")
+        .attr("id", "svg_zone_legend")
+        .attr("viewBox", [0, 0, 80, 16 * legendCellSize + 20])
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("style", "background-color: white")
+        .classed("svg-content", true);
+    svg = d3.select("#svg_zone_legend");
 
     // translation to set the legend on the outside
     // of the drawn map
     var legend = svg.append('g')
-    .attr('transform', 'translate(60, 250)')
+    .attr('transform', 'translate(60, 0)')
     .attr("id", "legend");
 
     let legendScale = d3.scaleLinear().domain([0, 10000])
@@ -313,17 +307,32 @@ function init_legend() {
     .attr('y', d => d * legendCellSize)
     .style("fill", d => colors[d]);
 
+    
+
+    svg = d3.select("#legend_bottom").append("svg")
+        .attr("id", "svg_zone_legend_bottom")
+        .attr("viewBox", [0, 0, width, legendCellSize])
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("style", "background-color: white")
+        .classed("svg-content", true);
+    svg = d3.select("#svg_zone_legend_bottom");
+
+    var legendbottom = svg.append('g')
+    // .attr('transform', 'translate(10, 10)')
+    .attr("id", "legend_bottom");
+
     // add "données non connues" legend
-    legend.append('svg:rect')
-    .attr('y', legendCellSize + colors.length * legendCellSize)
+    legendbottom.append('svg:rect')
+    .attr('y', 0)
     .attr('height', legendCellSize + 'px')
     .attr('width', legendCellSize + 'px')
-    .attr('x', 5)
+    .attr('x', 0)
     .style("fill", "#999");
 
-    legend.append("text")
+    legendbottom.append("text")
     .attr("x", 30)
-    .attr("y", 35 + colors.length * legendCellSize)
+    .attr("y", 15)
     .style("font-size", "13px")
     .style("color", "#000000")
     .style("fill", "#000000")
