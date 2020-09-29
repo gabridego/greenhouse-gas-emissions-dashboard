@@ -37,7 +37,7 @@ function color(d) {
     return colord3(d.name);
 }
 
-function zoomed(event) {
+function sankey_zoomed(event) {
     const {transform} = event;
     const g = d3.select("#sankey_svg");
     g.attr("transform", transform);
@@ -77,11 +77,11 @@ function init_sankey() {
     "translate(" + margin.left + "," + margin.top + ")");
 
     // Zoom management
-    const zoom = d3.zoom()
+    const sankey_zoom = d3.zoom()
     .scaleExtent([1, 8])
-    .on("zoom", zoomed);
+    .on("zoom", sankey_zoomed);
 
-    svg.call(zoom);
+    svg.call(sankey_zoom);
 }
 
 function update_sankey(year, data, currentFilter) {
