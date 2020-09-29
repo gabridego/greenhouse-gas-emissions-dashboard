@@ -222,5 +222,14 @@ function update_bar_chart(year, country_code){
 			.attr("class", "bar");
 	})
 
+}
+
+/**
+* Zomming the barchart with the tooltip
+* @param {*} resize_factor_k
+*/
+function resize_bar_chart(resize_factor_k) {
+
+// TODO
 
 }
