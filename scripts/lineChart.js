@@ -63,7 +63,7 @@ let myChart;
                 for(let j = 0; j < Object.keys(obj).length; j++) {
                     let tot = 0.0;
                     for(let cont in obj[Object.keys(obj)[j]])
-                        tot += obj[Object.keys(obj)[j]][cont];
+                        tot += obj[Object.keys(obj)[j]][cont]['value'];
                     arraySectors[j].data.push({
                         value: tot.toString()
                     });
