@@ -9,6 +9,51 @@ const x = d3.scaleBand()
 
 const y = d3.scaleLinear()
     .range([barChartHeight, 0]);
+
+
+const initData = [
+    {
+        sector: "Agriculture",
+        emissions: "0"
+
+    },
+    {
+        sector: "Fugitives",
+        emissions: "0"
+    },
+    {
+        sector: "Industry",
+        emissions: "0"
+    },
+    // {
+    //     sector: "Waste",
+    //     emissions: "0"
+    // },
+    // {
+    //     sector: "Land-use and forestry",
+    //     emissions: "0"
+    // },
+    {
+        sector: "Other fuel combustions",
+        emissions: "0"
+    },
+    {
+        sector: "Manufacturing/Construction",
+        emissions: "0"
+    },
+    {
+        sector: "Transport",
+        emissions: "0"
+    },
+    {
+        sector: "Elec & Heat",
+        emissions: "0"
+    },
+    {
+        sector: "Buildings",
+        emissions: "0"
+    }
+]
 /*
 Retrieve data.
 */
@@ -84,7 +129,7 @@ function getBarChartNO2(country, year) {
             emissions: retrieved["Land-Use Change and Forestry (N2O)"]
         },
         {
-            sector: "other fuel combustions",
+            sector: "Other fuel combustions",
             emissions: retrieved["Other Fuel Combustion (N2O)"]
         }
     ]
@@ -128,7 +173,7 @@ function getBarChartCH4(country, year) {
             emissions: retrieved["Land-Use Change and Forestry (CH4)"]
         },
         {
-            sector: "other fuel combustions",
+            sector: "Other fuel combustions",
             emissions: retrieved["Other Fuel Combustion (CH4)"]
         }
     ]
@@ -147,10 +192,7 @@ function getBarChartCH4(country, year) {
 
 /** TODO adapt to new filters */
 function drawBarChart(country_code, year, filter) {
-    var data = getBarChartGHG(country_code, year);
-    // if (filter === "methane"){data = getBarChartCH4(country_code, year);}
-    // else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
-    // else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
+
 
 
     const svgBarchart = d3.select("#barChart").append("svg")
@@ -165,8 +207,8 @@ function drawBarChart(country_code, year, filter) {
     // Mise en relation du scale avec les données de notre fichier
     // Pour l'axe X, c'est la liste des pays
     // Pour l'axe Y, c'est le max des emissionss
-    x.domain(data.map(d => d.sector));
-    y.domain([0, d3.max(data, d => parseFloat(d.emissions))]);
+    x.domain(initData.map(d => d.sector));
+    y.domain([0, d3.max(initData, d => parseFloat(d.emissions))]);
 
     // Ajout de l'axe X au SVG
     // Déplacement de l'axe horizontal et du futur texte (via la fonction translate) au bas du SVG
@@ -190,14 +232,14 @@ function drawBarChart(country_code, year, filter) {
     // La largeur de la barre est déterminée par la fonction x
     // La hauteur par la fonction y en tenant compte de la emissions
     // La gestion des events de la souris pour le popup
-		Object.keys(data).forEach(index =>{
+		Object.keys(initData).forEach(index =>{
 
 			svgBarchart.append("rect")
-				.attr("id", "bar"+ data[index].sector.slice(0,4))
-				.attr("x", x(data[index].sector))
+				.attr("id", "bar"+ initData[index].sector.slice(0,4))
+				.attr("x", x(initData[index].sector))
         .attr("width", x.bandwidth())
-        .attr("y", y(data[index].emissions))
-        .attr("height", barChartHeight - y(parseFloat(data[index].emissions)))
+        .attr("y", y(initData[index].emissions))
+        .attr("height", barChartHeight - y(parseFloat(initData[index].emissions)))
 				.attr("class", "bar");
 
 		})
@@ -269,6 +311,15 @@ function update_bar_chart(year, country_code, filter){
     svgBarchart.select("#yAxis")
         .call(d3.axisLeft(y).ticks(6));
 
+    Object.keys(initData).forEach(index =>{
+
+		d3.select("#bar"+ initData[index].sector.slice(0,4))
+			.attr("x", 0)
+			.attr("width", 0)
+			.attr("y", 0)
+			.attr("height", 0)
+			.attr("class", "bar");
+	})
 
 
 	Object.keys(data).forEach(index =>{
