@@ -55,16 +55,10 @@ let myChart;
             
             for (const key in full_camembert[1990][gas]) {
             	let c;
-            	if(col_graphs[gas][key]) {
+            	if(col_graphs[gas][key])
             		c = col_graphs[gas][key];
-            		console.log(true);
-            	}
-            	else {
-            		c = color_picker[i++];
-            		console.log(false);
-            	}
-
-            	console.log(c);
+            	else
+            		c = color_picker[i++]
 
                 arraySectors.push({
                     seriesname: get_short_label(key),

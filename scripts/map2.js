@@ -97,7 +97,7 @@ function init_tooltip(location) {
 * @param {*} id_map
 * @param {*} url_geojson
 */
-function init_map() {
+function init_map(currentFilter) {
     return new Promise((resolve) => {
         // Create root svg element
         const svg = d3.select("#map").append("svg")
@@ -166,7 +166,7 @@ function init_map() {
 
         svg.call(zoom);
 
-        init_legend();
+        init_legend(currentFilter);
     });
 }
 
@@ -216,7 +216,7 @@ function zoomed(event) {
 /**
 * Init legend
 */
-function init_legend() {
+function init_legend(currentFilter) {
 
     let svg = d3.select("#legend").append("svg")
         .attr("id", "svg_zone_legend")
@@ -233,7 +233,7 @@ function init_legend() {
     .attr('transform', 'translate(65, 0)')
     .attr("id", "legend");
 
-    let legendScale = d3.scaleLinear().domain([0, 10000])
+    let legendScale = d3.scaleLinear().domain([full_data["global"][currentFilter + '_min'], full_data["global"][currentFilter + '_max']])
     .range([0, colors.length * legendCellSize]);
 
     legend.append("g")
@@ -281,6 +281,16 @@ function init_legend() {
     .style("color", "#000000")
     .style("fill", "#000000")
     .text("données non connues");
+}
+
+function update_legend(currentFilter) {
+    const legendAxis = d3.select("#legendAxis");
+    legendAxis.empty();
+
+    let legendScale = d3.scaleLinear().domain([full_data["global"][currentFilter + '_min'], full_data["global"][currentFilter + '_max']])
+    .range([0, colors.length * legendCellSize]);
+
+    legendAxis.attr("class", "axis").call(d3.axisLeft(legendScale));
 }
 
 /**
@@ -341,6 +351,7 @@ function update_map(year, currentFilter) {
 
     })
 
+    update_legend(currentFilter);
 }
 
 function short_name_country(name) {

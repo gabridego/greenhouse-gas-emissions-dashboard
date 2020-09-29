@@ -306,7 +306,7 @@
     <script src="scripts/sankeyDiag.js"></script>
     <script src="scripts/controller.js"></script>
     <script type="text/javascript">
-        init_map().then((val) => {
+        init_map(currentFilter).then((val) => {
             update_map(currentYear, currentFilter);
             piechart = create_pie(currentYear);
             init_sankey();

@@ -37,16 +37,15 @@ function color(d) {
     return colord3(d.name);
 }
 
-function sankey_zoomed(event) {
+/*function sankey_zoomed(event) {
     const {transform} = event;
     const g = d3.select("#sankey_svg");
     g.attr("transform", transform);
 
     g.attr("stroke-width", 1 / transform.k);
-}
+}*/
 
 function sankey(year, data) {
-    console.log(year)
     const sankey = d3.sankey()
     .nodeId(d => d.name)
     // .nodeAlign(d3[`sankey${align[0].toUpperCase()}${align.slice(1)}`])
@@ -67,16 +66,16 @@ function init_sankey() {
 
     // append the svg canvas to the page
     // Zoom management
-    const sankey_zoom = d3.zoom()
+    /*const sankey_zoom = d3.zoom()
     .scaleExtent([1, 8])
-    .on("zoom", sankey_zoomed);
+    .on("zoom", sankey_zoomed);*/
     svg = d3.select("#sankey_chart").append("svg")
     .attr("id", "sankey_svg")
     .attr("viewBox", [0, 0, 1010, 620])
     .attr("width", "100%")
     .attr("height", "100%")
-    .call(sankey_zoom)
-    .on("mousedown.zoom", null)
+    /*.call(sankey_zoom)
+    .on("mousedown.zoom", null)*/
     .append("g")
     .attr("id", "sankey_zone")
     .attr("transform",
