@@ -98,28 +98,28 @@ function UpdateCharts()
 
 function update_titles()
 {
-  let gas;
-  switch (currentFilter) {
-      case 'total_ghg':
-          gas = 'à effet de serre';
-          break;
-      case 'co2':
-          gas = 'CO2';
-          break;
-      case 'methane':
-          gas = 'CH4';
-          break;
-      case 'nitrous_oxide':
-          gas = 'N2O';
-          break;
-      default:
-          console.log('Filter error in piechart: unknown gas');
-  }
-    document.getElementById("pieTitle").textContent = "Émissions de gaz " + gas + " par secteur et par continent";
-    document.getElementById("carteTitle").textContent = "Émissions de gaz " + gas +" dans le monde";
-    document.getElementById("lineTitle").textContent = "Évolution de gaz " + gas +" par secteur";
+    document.getElementById("pieTitle").textContent = "Émissions de " + realname_gas(currentFilter, false) + " par secteur et par continent";
+    document.getElementById("carteTitle").textContent = "Émissions de " + realname_gas(currentFilter, false) + " dans le monde";
+    document.getElementById("lineTitle").textContent = "Évolution de " + realname_gas(currentFilter, false) + " par secteur";
 }
 
+function realname_gas(gas, maj) {
+    const dict_gas_maj = {
+        "total_ghg": "Gaz à effet de serre",
+        "co2": "CO₂",
+        "methane": "CH₄",
+        "nitrous_oxide": "N₂O"
+    }
+
+    const dict_gas_min = {
+        "total_ghg": "gaz à effet de serre",
+        "co2": "CO₂",
+        "methane": "CH₄",
+        "nitrous_oxide": "N₂O"
+    }
+
+    return (maj) ? dict_gas_maj[gas] : dict_gas_min[gas];
+}
 
 //filters
 $('#filters').on('click','a', function(e) {

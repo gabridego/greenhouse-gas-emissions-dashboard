@@ -30,17 +30,6 @@ const path = d3.geoPath()
 .pointRadius(2)
 .projection(projection);
 
-function realname_gas(gas) {
-    const dict_gas = {
-        "total_ghg": "Gaz à effet de serre",
-        "co2": "CO₂",
-        "methane": "CH₄",
-        "nitrous_oxide": "N₂O"
-    }
-
-    return dict_gas[gas];
-}
-
 /**
 * Init tooltip to show pop-up for each country's own data.
 * @param {*} location
@@ -221,7 +210,6 @@ function init_map() {
 
 function reset() {
     const svg = d3.select("#svg_zone");
-    const cGroup = d3.select("#cGroup");
 
     if (lastCountryClicked !== undefined) {
         // remove the border of the previously selected country
@@ -362,7 +350,6 @@ function get_string_emissions(year, filter, c_code) {
 * Updates map data according to the year.
 * @param {*} year
 */
-
 // Fixed Tooltip for map interactions
 function update_map(year, currentFilter) {
     // TODO change countries colors according to gas emission.
@@ -373,7 +360,7 @@ function update_map(year, currentFilter) {
         let idCode = "#code" + c_code;
         //console.log(d3.select(idCode));
         var color = "#999";
-        if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year].total_ghg) {
+        if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year][currentFilter]) {
             color = colors[Math.floor(colors.length * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"]))];
         }
 
@@ -386,7 +373,7 @@ function update_map(year, currentFilter) {
             tooltip.select("#tooltip-country")
             .text(short_name_country(full_data[c_code].country));
             tooltip.select("#text_emission")
-            .text(realname_gas(currentFilter) + " : ")
+            .text(realname_gas(currentFilter, true) + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(get_string_emissions(year, currentFilter, c_code));
             update_bar_chart(year, c_code, currentFilter);
