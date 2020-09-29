@@ -202,7 +202,6 @@ function init_map() {
                 })
                 .on("mousemove", function() {
                     var mouse = d3.pointer(event);
-
                     tooltip.attr("transform", "translate(" + (mouse[0] + 75) + "," + (mouse[1] - 75) + ")");
                 });
             })
@@ -280,6 +279,9 @@ function zoomed(event) {
     g.attr("transform", transform);
 
     g.attr("stroke-width", 1 / transform.k);
+    console.log("moving...")
+
+    var mouse = d3.pointer(event);
 
 }
 
@@ -377,7 +379,8 @@ function update_map(year, currentFilter) {
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
-                document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail][currentFilter] * 100) / 100 + " millions de tonnes éq. CO2";
+
+                d3.select("#tooltip-gas-emission").text(Math.round(full_data[c_code][e.detail][currentFilter] * 100) / 100 + " millions de tonnes éq. CO2");
                 update_bar_chart(e.detail, c_code);
             });
         });
