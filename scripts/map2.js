@@ -87,7 +87,7 @@ function init_tooltip(location) {
     tooltip.append("g")
     .attr("id", "barChart");
 
-    drawBarChart("FR", "2000");
+    drawBarChart("FR", "2000", currentFilter);
 
     return tooltip;
 }
@@ -212,7 +212,7 @@ function init_map() {
             resolve("init completed");
 
         }, (error) => {
-            console.log(error); // erreur
+            console.error(error); // erreur
         });
 
         svg.call(zoom);
@@ -339,7 +339,22 @@ function init_legend() {
     .text("données non connues");
 }
 
-
+/**
+ * Returns the text with the qty of gas emissions for the
+ * toolip.
+ * @param {*} year current year
+ * @param {*} filter filter (gas selected)
+ * @param {*} c_code country code
+ */
+function get_string_emissions(year, filter, c_code) {
+    // WARNING: some countries does not have full_data[c_code][year] defined!!
+    if (full_data[c_code][year] !== undefined) {
+        qte_emissions = Math.round(full_data[c_code][year][filter] * 100) / 100;
+        return qte_emissions + " millions de tonnes éq. CO₂";
+    } else {
+        "Données non fournies."
+    }
+}
 
 /**
 * Updates map data according to the year.
@@ -364,30 +379,20 @@ function update_map(year, currentFilter) {
         .attr("fill", color);
         var country_path = d3.select(idCode);
 
-        var qte_emissions = undefined;
-
-        // WARNING: some countries does not have full_data[c_code][year] defined!!
-        if (full_data[c_code][year] !== undefined) {
-            qte_emissions = Math.round(full_data[c_code][year][currentFilter] * 100) / 100;
-        }
-
-        var text_emissions = qte_emissions + " millions de tonnes éq. CO2";
-
-        country_path.attr("fill", color)
-            .on("mouseover", function() {
+        country_path.on("mouseover", function() {
             tooltip.style("display", null);
             tooltip.select("#tooltip-country")
             .text(short_name_country(full_data[c_code].country));
             tooltip.select("#text_emission")
             .text(currentFilter + " : ")
             tooltip.select("#tooltip-gas-emission")
-            .text(text_emissions);
-            update_bar_chart(year, c_code);
+            .text(get_string_emissions(year, currentFilter, c_code));
+            update_bar_chart(year, c_code, currentFilter);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
-                document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail][currentFilter] * 100) / 100 + " millions de tonnes éq. CO2";
-                update_bar_chart(e.detail, c_code);
+                d3.select("#tooltip-gas-emission").text(get_string_emissions(e.detail, currentFilter, c_code));
+                update_bar_chart(e.detail, c_code, currentFilter);
             });
         });
 
