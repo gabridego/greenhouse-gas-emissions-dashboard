@@ -15,6 +15,9 @@ const height = 610;
 const legendCellSize = 20;
 const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815']
 
+const width_tooltip = 375;
+const height_tooltip = 350;
+
 // bounds of the map (for clipping)
 // const boundsMap = [90, 60]
 
@@ -37,10 +40,11 @@ const path = d3.geoPath()
 function init_tooltip(location) {
     var tooltip = location.append("g") // Group for the whole tooltip
     .attr("id", "tooltip")
-    .style("display", "none");
+    .style("display", "none")
+    .style("pointer-events", "none");
 
     tooltip.append("polyline") // The rectangle containing the text, it is 210px width and 60 height
-    .attr("points","0,0 375,0 375,350 0,350 0,0")
+    .attr("points","0,0 " + width_tooltip + ",0 " + width_tooltip + "," + height_tooltip + " 0," + height_tooltip + " 0,0")
     .style("fill", "#222b1d")
     .style("stroke","black")
     .style("opacity","0.9")
@@ -141,7 +145,7 @@ function init_map(currentFilter) {
 
             g.on("mousemove", function() {
                 var mouse = d3.pointer(event);
-                tooltip.attr("transform", "translate(" + (mouse[0] + 75) + "," + (mouse[1] - 75) + ")");
+                tooltip.attr("transform", "translate(" + Math.min(width-width_tooltip, mouse[0] + 75) + "," + Math.min(mouse[1] - 75, height-height_tooltip) + ")");
             })
 
             Object.keys(full_data).forEach(countryCode => {
@@ -223,7 +227,7 @@ function init_legend(currentFilter) {
         .attr("viewBox", [0, 0, 95, 16 * legendCellSize + 20])
         .attr("width", "100%")
         .attr("height", "100%")
-        .attr("style", "background-color: white")
+        .style("background-color", "white")
         .classed("svg-content", true);
     svg = d3.select("#svg_zone_legend");
 
