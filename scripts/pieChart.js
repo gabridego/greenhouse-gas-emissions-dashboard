@@ -13,44 +13,45 @@ function get_data(year, filter) {
 	let colors = ["#5F9EA0","#B8860B","#FF69B4","#696969","#FF0000","#800080","#006400"];
 	let category = [];
 
+    //add information for each sector
 	for(i = 0; i < 7 && i < Object.keys(labels[filter]).length; i++) {
-		category.push({
-	                "label": get_short_label(labels[filter][i]),
-	                "color": colors[i],
-	                "value": totals[labels[filter][i]].toFixed(2),
-	                "category": [{
-	                    //"label": "EU",
-	                    "color": colors[i],
-	                    "tooltext": "Europe, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Europe"].toFixed(2)
-	                }, {
-	                    //"label": "AF",
-	                    "color": colors[i],
-	                    "tooltext": "Africa, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Africa"].toFixed(2)
-	                }, {
-	                    //"label": "AS",
-	                    "color": colors[i],
-	                    "tooltext": "Asia, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Asia"].toFixed(2)
-	                }, {
-	                    //"label": "NA/SA",
-	                    "color": colors[i],
-	                    "tooltext": "Americas, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Americas"].toFixed(2)
-	                }, {
-	                    //"label": "OC",
-	                    "color": colors[i],
-	                    "tooltext": "Oceania, $percentValue",
-	                    "value": full_camembert[year][filter][labels[filter][i]]["Oceania"].toFixed(2)
-	                }]
-	            }
-	    );
+        let info = [];
+        
+        //add information for each continent
+        for(let cont of ["Europe","Africa","Asia","Americas","Oceania"]) {
+            tooltext = cont + ", $percentValue{br}";
+            for(let country of full_camembert[year][filter][labels[filter][i]][cont]['countries'])
+                tooltext = tooltext + "{br}" + country;
+
+            let val = full_camembert[year][filter][labels[filter][i]][cont]['value'];
+            let obj = {
+                "color": colors[i],
+                "tooltext": tooltext,
+                "value": val.toFixed(2)
+            }
+
+            //show continent label only if big
+            if(val / firstSum[filter] > 0.02)
+                obj["label"] = get_short_label(cont);
+
+            info.push(obj);
+        }
+
+        let obj = {
+                "color": colors[i],
+                "value": totals[labels[filter][i]].toFixed(2),
+                "category": info
+            };
+
+        if(totals[labels[filter][i]] / firstSum[filter] > 0.03)
+            obj["label"] = get_short_label(labels[filter][i]);
+
+		category.push(obj);
 	}
 
     return {
         "chart": {
-            "subcaption": "Année : "+ year.toString() + "{br}Valeurs : Millions des tonnes/"+ filter.toString(),
+            "subcaption": "Valeurs : Millions des tonnes/"+ filter.toString(),
             "subcaptionFontSize": "16",
             "subcaptionFontColor": "#000000",
             "showPlotBorder": "1",
@@ -99,8 +100,28 @@ function get_short_label(label) {
             new_label = "Shipping";
             break;
         case "Fugitive from energy production":
-            new_label = "Fugitive Emissions";
+            new_label = "Fugitive";
             break;
+        case "Fugitive Emissions":
+            new_label = "Fugitive";
+            break;
+
+        case "Europe":
+            new_label = "EU";
+            break;
+        case "Africa":
+            new_label = "AF"
+            break;
+        case "Asia":
+            new_label = "AS"
+            break;
+        case "Americas":
+            new_label = "NA/SA"
+            break;
+        case "Oceania":
+            new_label = "OC"
+            break;
+
         default:
             new_label = label;
     }
@@ -176,7 +197,7 @@ function set_totals(year, filter, first) {
         //if(!(sector in totals))
         totals[sector] = 0.0;
         for(let [key,value] of Object.entries(data_year[sector]))
-            totals[sector] += value;
+            totals[sector] += value['value'];
     }
 
     //sort sectors by emission and compute total emission

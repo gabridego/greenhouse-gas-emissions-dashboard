@@ -16,7 +16,7 @@ const legendCellSize = 20;
 const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815']
 
 // bounds of the map (for clipping)
-const boundsMap = [90, 60]
+// const boundsMap = [90, 60]
 
 // Last country clicked (= selected) on the map
 var lastCountryClicked = undefined;
@@ -24,7 +24,7 @@ var lastCountryClicked = undefined;
 // Map projection parameters
 const projection = d3.geoNaturalEarth1()
 .scale(180)
-.translate([(width - boundsMap[0]) / 2 + boundsMap[0], (height - boundsMap[1]) / 2 + boundsMap[1]])
+.translate([width / 2, height / 2])
 
 const path = d3.geoPath()
 .pointRadius(2)
@@ -87,58 +87,48 @@ function init_tooltip(location) {
     tooltip.append("g")
     .attr("id", "barChart");
 
-    drawBarChart("FR", "2000");
+    drawBarChart("FR", "2000", currentFilter);
 
     return tooltip;
 }
 
 
-// function resize_tooltip(resize_factor, tooltip) {
-//     tooltip.select("polyline")
-//     .attr("points","0,0 "+375/resize_factor+",0 "+375/resize_factor+","+350/resize_factor+" 0,"+350/resize_factor+" 0,0")
-//     .style("stroke-width",1/resize_factor);
-//
-//     tooltip.select("line")
-//     .attr("x1", 25/resize_factor)
-//     .attr("y1", 25/resize_factor)
-//     .attr("x2", 350/resize_factor)
-//     .attr("y2", 25/resize_factor)
-//     .attr("transform", "translate(0, "+5/resize_factor+")")
-//     .style("stroke-width",0.5/resize_factor);
-//
-//     tooltip.select("text") // Text that will contain all tspan (used for multilines)
-//     .style("font-size", 13/resize_factor+"px")
-//     .attr("transform", "translate(0, "+20/resize_factor+")");
-//
-//     d3.select("#tooltip-country") // Country name udpated by its id
-//     .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
-//     .attr("y", 0)
-//     .style("font-size", 16/resize_factor+"px");
-//
-//     d3.select("#text_emission") // Fixed text
-//     .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
-//     .attr("y", 30/resize_factor);
-//     Object.keys(full_data).forEach(countryCode => {
-//
-//         var countryPath = d3.select("#code"+countryCode);
-//         countryPath.on("mousemove", function() {
-//             var mouse = d3.pointer(event);
-//             tooltip.attr("transform", "translate(" + (mouse[0] + 75/resize_factor) + "," + (mouse[1] - 75/resize_factor) + ")");
-//         });
-//     })
-//
-//     // var svgbarchart = document.getElementById('svgBarchart');
-//     // ;
-//     //
-//     // Array.prototype.forEach.call(bars, function(theBar) {
-//     //     // resize bars in bar chart here
-//     //     theBar.attr("x", x(data[index].sector))
-//     //     .attr("width", x.bandwidth()/resize_factor)
-//     //     .attr("y", y(data[index].frequency))
-//     //     .attr("height", (barChartHeight - y(parseFloat(data[index].frequency)))/resize_factor);
-//     // });
-//
-// }
+function resize_tooltip(resize_factor, tooltip) {
+    tooltip.select("polyline")
+    .attr("points","0,0 "+375/resize_factor+",0 "+375/resize_factor+","+350/resize_factor+" 0,"+350/resize_factor+" 0,0")
+    .style("stroke-width",1/resize_factor);
+
+    tooltip.select("line")
+    .attr("x1", 25/resize_factor)
+    .attr("y1", 25/resize_factor)
+    .attr("x2", 350/resize_factor)
+    .attr("y2", 25/resize_factor)
+    .attr("transform", "translate(0, "+5/resize_factor+")")
+    .style("stroke-width",0.5/resize_factor);
+
+    tooltip.select("text") // Text that will contain all tspan (used for multilines)
+    .style("font-size", 13/resize_factor+"px")
+    .attr("transform", "translate(0, "+20/resize_factor+")");
+
+    d3.select("#tooltip-country") // Country name udpated by its id
+    .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
+    .attr("y", 0)
+    .style("font-size", 16/resize_factor+"px");
+
+    d3.select("#text_emission") // Fixed text
+    .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
+    .attr("y", 30/resize_factor);
+    Object.keys(full_data).forEach(countryCode => {
+
+        var countryPath = d3.select("#code"+countryCode);
+        countryPath.on("mousemove", function() {
+            var mouse = d3.pointer(event);
+            tooltip.attr("transform", "translate(" + (mouse[0] + 75/resize_factor) + "," + (mouse[1] - 75/resize_factor) + ")");
+        });
+    })
+    // Call resize_bar_chart()
+
+}
 
 /**
 * Init the map container with a legend, titles and countries drawn.
@@ -154,6 +144,8 @@ function init_map() {
         const svg = d3.select("#map").append("svg")
         .attr("id", "svg_zone")
         .attr("viewBox", [0, 0, width, height])
+        .attr("width", "100%")
+        .attr("height", "100%")
         .classed("svg-content", true)
         .on("click", reset);
 
@@ -209,24 +201,8 @@ function init_map() {
             resolve("init completed");
 
         }, (error) => {
-            console.log(error); // erreur
+            console.error(error); // erreur
         });
-
-        // Draw clip rectangles
-        const clipRectangles = svg.append("g");
-        clipRectangles.append('svg:rect')
-        .attr('height', height + "px")
-        .attr('width', boundsMap[0] + 10 + 'px')
-        .attr('x', -10)
-        .attr('y', 0)
-        .style("fill", "#FFFFFF");
-
-        clipRectangles.append('svg:rect')
-        .attr('height', 10 + legendCellSize)
-        .attr('width',  (width + 10) + 'px')
-        .attr('x', 0)
-        .attr('y', height - (5 + legendCellSize))
-        .style("fill", "#FFFFFF");
 
         svg.call(zoom);
 
@@ -275,13 +251,15 @@ function clicked(event, d) {
 
 function zoomed(event) {
     const {transform} = event;
-    const g = d3.select("#cGroup");
+    const g = d3.select("#g");
     g.attr("transform", transform);
 
     g.attr("stroke-width", 1 / transform.k);
-    console.log("moving...")
 
-    var mouse = d3.pointer(event);
+
+    const tooltip_zoomed = d3.select("#tooltip");
+
+    resize_tooltip(transform.k, tooltip_zoomed);
 
 }
 
@@ -289,12 +267,20 @@ function zoomed(event) {
 * Init legend
 */
 function init_legend() {
-    const svg = d3.select("#svg_zone");
+
+    let svg = d3.select("#legend").append("svg")
+        .attr("id", "svg_zone_legend")
+        .attr("viewBox", [0, 0, 80, 16 * legendCellSize + 20])
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("style", "background-color: white")
+        .classed("svg-content", true);
+    svg = d3.select("#svg_zone_legend");
 
     // translation to set the legend on the outside
     // of the drawn map
     var legend = svg.append('g')
-    .attr('transform', 'translate(60, 250)')
+    .attr('transform', 'translate(60, 0)')
     .attr("id", "legend");
 
     let legendScale = d3.scaleLinear().domain([0, 10000])
@@ -315,24 +301,54 @@ function init_legend() {
     .attr('y', d => d * legendCellSize)
     .style("fill", d => colors[d]);
 
+
+
+    svg = d3.select("#legend_bottom").append("svg")
+        .attr("id", "svg_zone_legend_bottom")
+        .attr("viewBox", [0, 0, width, legendCellSize])
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("style", "background-color: white")
+        .classed("svg-content", true);
+    svg = d3.select("#svg_zone_legend_bottom");
+
+    var legendbottom = svg.append('g')
+    // .attr('transform', 'translate(10, 10)')
+    .attr("id", "legend_bottom");
+
     // add "données non connues" legend
-    legend.append('svg:rect')
-    .attr('y', legendCellSize + colors.length * legendCellSize)
+    legendbottom.append('svg:rect')
+    .attr('y', 0)
     .attr('height', legendCellSize + 'px')
     .attr('width', legendCellSize + 'px')
-    .attr('x', 5)
+    .attr('x', 0)
     .style("fill", "#999");
 
-    legend.append("text")
+    legendbottom.append("text")
     .attr("x", 30)
-    .attr("y", 35 + colors.length * legendCellSize)
+    .attr("y", 15)
     .style("font-size", "13px")
     .style("color", "#000000")
     .style("fill", "#000000")
     .text("données non connues");
 }
 
-
+/**
+ * Returns the text with the qty of gas emissions for the
+ * toolip.
+ * @param {*} year current year
+ * @param {*} filter filter (gas selected)
+ * @param {*} c_code country code
+ */
+function get_string_emissions(year, filter, c_code) {
+    // WARNING: some countries does not have full_data[c_code][year] defined!!
+    if (full_data[c_code][year] !== undefined) {
+        qte_emissions = Math.round(full_data[c_code][year][filter] * 100) / 100;
+        return qte_emissions + " millions de tonnes éq. CO₂";
+    } else {
+        "Données non fournies."
+    }
+}
 
 /**
 * Updates map data according to the year.
@@ -357,31 +373,20 @@ function update_map(year, currentFilter) {
         .attr("fill", color);
         var country_path = d3.select(idCode);
 
-        var qte_emissions = undefined;
-
-        // WARNING: some countries does not have full_data[c_code][year] defined!!
-        if (full_data[c_code][year] !== undefined) {
-            qte_emissions = Math.round(full_data[c_code][year][currentFilter] * 100) / 100;
-        }
-
-        var text_emissions = qte_emissions + " millions de tonnes éq. CO2";
-
-        country_path.attr("fill", color)
-            .on("mouseover", function() {
+        country_path.on("mouseover", function() {
             tooltip.style("display", null);
             tooltip.select("#tooltip-country")
             .text(short_name_country(full_data[c_code].country));
             tooltip.select("#text_emission")
             .text(currentFilter + " : ")
             tooltip.select("#tooltip-gas-emission")
-            .text(text_emissions);
-            update_bar_chart(year, c_code);
+            .text(get_string_emissions(year, currentFilter, c_code));
+            update_bar_chart(year, c_code, currentFilter);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
-
-                d3.select("#tooltip-gas-emission").text(Math.round(full_data[c_code][e.detail][currentFilter] * 100) / 100 + " millions de tonnes éq. CO2");
-                update_bar_chart(e.detail, c_code);
+                d3.select("#tooltip-gas-emission").text(get_string_emissions(e.detail, currentFilter, c_code));
+                update_bar_chart(e.detail, c_code, currentFilter);
             });
         });
 
