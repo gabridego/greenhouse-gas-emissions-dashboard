@@ -69,6 +69,7 @@ function init_sankey() {
     svg = d3.select("#sankey_chart").append("svg")
     .attr("id", "sankey_svg")
     .attr("viewBox", [0, 0, 1010, 620])
+    .attr("cursor", "pointer")
     .append("g")
     .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
