@@ -34,16 +34,19 @@ function get_data(year, filter) {
             if(val / firstSum[filter] > 0.02)
                 obj["label"] = get_short_label(cont);
 
-            info.push(obj)
+            info.push(obj);
         }
 
-		category.push({
-	                "label": get_short_label(labels[filter][i]),
-	                "color": colors[i],
-	                "value": totals[labels[filter][i]].toFixed(2),
-                    "category": info
-	            }
-	    );
+        let obj = {
+                "color": colors[i],
+                "value": totals[labels[filter][i]].toFixed(2),
+                "category": info
+            };
+
+        if(totals[labels[filter][i]] / firstSum[filter] > 0.03)
+            obj["label"] = get_short_label(labels[filter][i]);
+
+		category.push(obj);
 	}
 
     return {
