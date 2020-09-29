@@ -9,7 +9,9 @@ let myChart;
           showhovereffect: "1",
           numbersuffix: " M",
           drawcrossline: "1",
-          legendItemFontSize: "11",
+          legendItemFontSize: "10",
+          legendNumRows: "2",
+          alignLegendWithCanvas: "0",
           theme: "fusion"
         },
         categories: [
