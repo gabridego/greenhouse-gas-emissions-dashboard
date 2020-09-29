@@ -36,9 +36,9 @@ function playStop() {
             slider.value = 0;
             currentYear = output.innerHTML = firstYearTimeline +  +slider.value;
 
-            UpdateCharts();
-
-            d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
+            // UpdateCharts();
+            //
+            // d3.select('#tooltip-gas-emission').dispatch('dataUpdateEvent', {detail: output.innerHTML });
         }
 
         iconPlayStop.className = "fa fa-pause text-white";

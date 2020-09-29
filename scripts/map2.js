@@ -50,9 +50,9 @@ function init_tooltip(location) {
 
     tooltip.append("line") // A line inserted between country name and score
     .attr("x1", 25)
-    .attr("y1", 25)
-    .attr("x2", 250)
-    .attr("y2", 25)
+    .attr("y1", 30)
+    .attr("x2", 350)
+    .attr("y2", 30)
     .style("stroke","#929292")
     .style("stroke-width","0.5")
     .attr("transform", "translate(0, 5)");
@@ -63,7 +63,7 @@ function init_tooltip(location) {
     .attr("transform", "translate(0, 20)");
 
     text.append("tspan") // Country name udpated by its id
-    .attr("x", 150) // ie, tooltip width / 2
+    .attr("x", 375/2) // ie, tooltip width / 2
     .attr("y", 0)
     .attr("id", "tooltip-country")
     .attr("text-anchor", "middle")
@@ -71,7 +71,7 @@ function init_tooltip(location) {
     .style("font-size", "16px");
 
     text.append("tspan") // Fixed text
-    .attr("x", 150) // ie, tooltip width / 2
+    .attr("x", 375/2) // ie, tooltip width / 2
     .attr("y", 30)
     .attr("id", "text_emission")
     .attr("text-anchor", "middle")
@@ -100,13 +100,13 @@ function init_tooltip(location) {
 
 function resize_tooltip(resize_factor, tooltip) {
     tooltip.select("polyline")
-    .attr("points","0,0 "+300/resize_factor+",0 "+300/resize_factor+","+400/resize_factor+" 0,"+400/resize_factor+" 0,0")
+    .attr("points","0,0 "+375/resize_factor+",0 "+375/resize_factor+","+350/resize_factor+" 0,"+350/resize_factor+" 0,0")
     .style("stroke-width",1/resize_factor);
 
     tooltip.select("line")
     .attr("x1", 25/resize_factor)
     .attr("y1", 25/resize_factor)
-    .attr("x2", 250/resize_factor)
+    .attr("x2", 350/resize_factor)
     .attr("y2", 25/resize_factor)
     .attr("transform", "translate(0, "+5/resize_factor+")")
     .style("stroke-width",0.5/resize_factor);
@@ -116,12 +116,12 @@ function resize_tooltip(resize_factor, tooltip) {
     .attr("transform", "translate(0, "+20/resize_factor+")");
 
     d3.select("#tooltip-country") // Country name udpated by its id
-    .attr("x", 150/resize_factor) // ie, tooltip width / 2
+    .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
     .attr("y", 0)
     .style("font-size", 16/resize_factor+"px");
 
     d3.select("#text_emission") // Fixed text
-    .attr("x", 150/resize_factor) // ie, tooltip width / 2
+    .attr("x", 375/(2*resize_factor)) // ie, tooltip width / 2
     .attr("y", 30/resize_factor);
     Object.keys(full_data).forEach(countryCode => {
 
@@ -132,15 +132,16 @@ function resize_tooltip(resize_factor, tooltip) {
         });
     })
 
-    var bars = document.getElementsByClassName('bar');
-
-    Array.prototype.forEach.call(bars, function(theBar) {
-        // resize bars in bar chart here
-        theBar.attr("x", x(data[index].sector))
-        .attr("width", x.bandwidth()/resize_factor)
-        .attr("y", y(data[index].frequency))
-        .attr("height", (barChartHeight - y(parseFloat(data[index].frequency)))/resize_factor);
-    });
+    // var svgbarchart = document.getElementById('svgBarchart');
+    // ;
+    //
+    // Array.prototype.forEach.call(bars, function(theBar) {
+    //     // resize bars in bar chart here
+    //     theBar.attr("x", x(data[index].sector))
+    //     .attr("width", x.bandwidth()/resize_factor)
+    //     .attr("y", y(data[index].frequency))
+    //     .attr("height", (barChartHeight - y(parseFloat(data[index].frequency)))/resize_factor);
+    // });
 
 }
 
@@ -194,7 +195,6 @@ function init_map() {
 
             Object.keys(full_data).forEach(countryCode => {
                 // console.log(countryCode);
-
                 var countryPath = d3.select("#code"+countryCode);
                 countryPath.on("mouseover", function() {
 
@@ -285,9 +285,10 @@ function zoomed(event) {
     g.attr("transform", transform);
 
     g.attr("stroke-width", 1 / transform.k);
-    // zooming the tooltip
+    // Resizing tooltip
     const tooltip_zoomed = d3.select("#tooltip");
-
+    // tooltip_zoomed.attr("transform", transform);
+    // tooltip_zoomed.attr("stroke-width", 1 / transform.k);
     resize_tooltip(transform.k, tooltip_zoomed);
 }
 
@@ -367,23 +368,26 @@ function update_map(year, currentFilter) {
 
         // WARNING: some countries does not have full_data[c_code][year] defined!!
         if (full_data[c_code][year] !== undefined) {
-            qte_emissions = Math.round(full_data[c_code][year].co2 * 100) / 100;
+            qte_emissions = Math.round(full_data[c_code][year][currentFilter] * 100) / 100;
         }
 
-        var text_emissions = qte_emissions + " millions de tonnes éq. CO₂";
+        var text_emissions = qte_emissions + " millions de tonnes éq. CO2";
 
-        country_path.on("mouseover", function() {
+        country_path.attr("fill", color)
+            .on("mouseover", function() {
             tooltip.style("display", null);
             tooltip.select("#tooltip-country")
             .text(short_name_country(full_data[c_code].country));
+            tooltip.select("#text_emission")
+            .text(currentFilter + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(text_emissions);
             update_bar_chart(year, c_code);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
-                document.getElementById("tooltip-gas-emission").innerHTML = text_emissions;
-
+                document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail][currentFilter] * 100) / 100 + " millions de tonnes éq. CO2";
+                update_bar_chart(e.detail, c_code);
             });
         });
 
