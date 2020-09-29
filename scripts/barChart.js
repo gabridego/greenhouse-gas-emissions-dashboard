@@ -103,9 +103,54 @@ function getBarChartNO2(country, year) {
 
 
 
-function drawBarChart(country_code, year) {
-    var data = getBarChartNO2(country_code, year);
+function getBarChartCH4(country, year) {
+    var retrieved = full_data[country][year];
+    var data = [
+        {
+            sector: "Agriculture",
+            emissions: retrieved["Agriculture (CH4)"]
 
+        },
+        {
+            sector: "Fugitives",
+            emissions: retrieved["Fugitive Emissions (CH4)"]
+        },
+        {
+            sector: "Industry",
+            emissions: retrieved["Industry (CH4)"]
+        },
+        {
+            sector: "Waste",
+            emissions: retrieved["Waste (CH4)"]
+        },
+        {
+            sector: "Land-use and forestry",
+            emissions: retrieved["Land-Use Change and Forestry (CH4)"]
+        },
+        {
+            sector: "other fuel combustions",
+            emissions: retrieved["Other Fuel Combustion (CH4)"]
+        }
+    ]
+
+    data.forEach((item) => {
+		if(item.emissions == "") {
+			item.emissions = "0";
+		}
+	});
+
+
+	data.sort((a, b) => (parseFloat(a.emissions) < parseFloat(b.emissions)) ? 1 : -1)
+	return data;
+}
+
+
+/** TODO adapt to new filters */
+function drawBarChart(country_code, year, filter) {
+    var data = getBarChartGHG(country_code, year);
+    // if (filter === "methane"){data = getBarChartCH4(country_code, year);}
+    // else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
+    // else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
 
 
     const svgBarchart = d3.select("#barChart").append("svg")
@@ -186,10 +231,13 @@ function drawBarChart(country_code, year) {
 * @param {*} country_code
 */
 
-function update_bar_chart(year, country_code){
+function update_bar_chart(year, country_code, filter){
 
-	var data = getBarChartNO2(country_code, year);
-    console.log(data);
+    var data = getBarChartGHG(country_code, year);
+    // if (filter === "methane"){data = getBarChartCH4(country_code, year);}
+    // else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
+    // else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
+
 
 
 

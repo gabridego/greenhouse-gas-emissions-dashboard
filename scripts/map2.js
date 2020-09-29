@@ -87,7 +87,7 @@ function init_tooltip(location) {
     tooltip.append("g")
     .attr("id", "barChart");
 
-    drawBarChart("FR", "2000");
+    drawBarChart("FR", "2000", currentFilter);
 
     return tooltip;
 }
@@ -373,12 +373,12 @@ function update_map(year, currentFilter) {
             .text(currentFilter + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(text_emissions);
-            update_bar_chart(year, c_code);
+            update_bar_chart(year, c_code, currentFilter);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
                 document.getElementById("tooltip-gas-emission").innerHTML = Math.round(full_data[c_code][e.detail][currentFilter] * 100) / 100 + " millions de tonnes éq. CO2";
-                update_bar_chart(e.detail, c_code);
+                update_bar_chart(e.detail, c_code, currentFilter);
             });
         });
 
