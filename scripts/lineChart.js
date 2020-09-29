@@ -51,7 +51,7 @@ let myChart;
             
             for (const key in full_camembert[1990][gas]) {
                 arraySectors.push({
-                    seriesname: key,
+                    seriesname: get_short_label(key),
                     data: []
                 })
             }
