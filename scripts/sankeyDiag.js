@@ -37,6 +37,14 @@ function color(d) {
     return colord3(d.name);
 }
 
+function zoomed(event) {
+    const {transform} = event;
+    const g = d3.select("#sankey_svg");
+    g.attr("transform", transform);
+
+    g.attr("stroke-width", 1 / transform.k);
+}
+
 function sankey(year, data) {
     console.log(year)
     const sankey = d3.sankey()
@@ -64,6 +72,13 @@ function init_sankey() {
     .append("g")
     .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
+
+    // Zoom management
+    const zoom = d3.zoom()
+    .scaleExtent([1, 8])
+    .on("zoom", zoomed);
+
+    svg.call(zoom);
 }
 
 function update_sankey(year, data, currentFilter) {
