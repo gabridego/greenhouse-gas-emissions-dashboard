@@ -2,9 +2,17 @@ const margin = {top: 60, right: 20, bottom: 150, left: 50},
 barChartWidth = 350 - margin.left - margin.right ,
 barChartHeight = 350 - margin.top - margin.bottom;
 
+
+const x = d3.scaleBand()
+    .range([0, barChartWidth])
+    .padding(0.1);
+
+const y = d3.scaleLinear()
+    .range([barChartHeight, 0]);
 /*
 Retrieve data.
 */
+
 function getBarChartData(country_code, year) {
 	var retrieved = gas_complete_data[country_code][year];
 	var data = [
@@ -68,12 +76,6 @@ function drawBarChart(country_code, year) {
 
 
 
-    const x = d3.scaleBand()
-        .range([0, barChartWidth])
-        .padding(0.1);
-
-    const y = d3.scaleLinear()
-        .range([barChartHeight, 0]);
 
     const svgBarchart = d3.select("#barChart").append("svg")
         .attr("id", "svgBarchart")

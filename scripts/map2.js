@@ -132,15 +132,8 @@ function resize_tooltip(resize_factor, tooltip) {
         });
     })
 
-    var bars = document.getElementsByClassName('bar');
+    var barChart = d3.select("barChart");
 
-    Array.prototype.forEach.call(bars, function(theBar) {
-    // resize bars in bar chart here
-      theBar.attr("x", x(data[index].sector))
-      .attr("width", x.bandwidth()/resize_factor)
-      .attr("y", y(data[index].frequency))
-      .attr("height", (barChartHeight - y(parseFloat(data[index].frequency)))/resize_factor);
-    });
 
 }
 
