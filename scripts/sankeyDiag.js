@@ -71,7 +71,7 @@ function init_sankey() {
     .attr("viewBox", [0, 0, 1010, 620])
     .attr("width", "100%")
     .attr("height", "100%")
-    .attr("cursor", "pointer")
+    //.attr("cursor", "pointer")
     .append("g")
     .attr("transform",
     "translate(" + margin.left + "," + margin.top + ")");
