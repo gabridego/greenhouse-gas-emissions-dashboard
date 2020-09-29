@@ -8,10 +8,12 @@
 //global variables
 let totals, firstSum = {}, labels = {};
 let gases = ['GHG','CO2','CH4','N2O'];
+let col_graphs = {};
+let color_picker = []
 
 function get_data(year, filter) {
-	let colors = ["#5F9EA0","#B8860B","#FF69B4","#696969","#FF0000","#800080","#006400"];
-	let category = [];
+	let i, category = [];
+    let colors = ["#5F9EA0","#B8860B","#FF69B4","#696969","#FF0000","#800080","#006400","#FF9933","#8D1837","#1F21E5","#549211"];
 
     //add information for each sector
 	for(i = 0; i < 7 && i < Object.keys(labels[filter]).length; i++) {
@@ -43,11 +45,17 @@ function get_data(year, filter) {
                 "category": info
             };
 
+        col_graphs[filter][labels[filter][i]] = colors[i];
+
         if(totals[labels[filter][i]] / firstSum[filter] > 0.03)
             obj["label"] = get_short_label(labels[filter][i]);
 
 		category.push(obj);
 	}
+
+    for(; i < colors.length; i++) {
+        color_picker.push(colors[i]);
+    }
 
     return {
         "chart": {
@@ -130,7 +138,9 @@ function get_short_label(label) {
 
 function init_labels() {
     for(let gas of gases) {
-        labels[gas] = []
+        labels[gas] = [];
+        col_graphs[gas] = {};
+
         set_totals(1990, gas, true);
         for(let i = 0; i < 7 && i < Object.keys(totals).length; i++)
             labels[gas].push(Object.keys(totals)[i]);

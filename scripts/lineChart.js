@@ -4,11 +4,12 @@ let myChart;
   {
     return dataSource = {
         chart: {
-          yaxisname: "total emission",
+          yaxisname: "Total emission",
           subcaption: "1990-2016",
           showhovereffect: "1",
           numbersuffix: " M",
           drawcrossline: "1",
+          legendItemFontSize: "11",
           theme: "fusion"
         },
         categories: [
@@ -48,15 +49,29 @@ let myChart;
             }
 
             let arraySectors = [];
+            let i = 0;
             
             for (const key in full_camembert[1990][gas]) {
+            	let c;
+            	if(col_graphs[gas][key]) {
+            		c = col_graphs[gas][key];
+            		console.log(true);
+            	}
+            	else {
+            		c = color_picker[i++];
+            		console.log(false);
+            	}
+
+            	console.log(c);
+
                 arraySectors.push({
                     seriesname: get_short_label(key),
+                    color: col_graphs[gas][key],
                     data: []
                 })
             }
 
-            for (let i = 1990; i < 2017; i++) {
+            for (i = 1990; i < 2017; i++) {
 
                 let obj = full_camembert[i][gas]
                 
