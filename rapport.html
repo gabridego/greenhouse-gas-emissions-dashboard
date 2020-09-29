@@ -70,7 +70,33 @@
 			En plus, pour mieux interagir avec les données, un script <em>Javascript</em> a été créé pour faire la lecture du fichier en <em>csv</em> et le convertir de façon apropriée en format <em>js</em>.
 		</p>
 		<h2>Visualisation des données</h2>
-		<p>TODO</p>
+		<p>Le but tout au long du projet a été de créer une interface simple, intuitive et capable de répondre à la question posée au début de ce rapport.
+			L'utilisateur se retrouve face à un écran avec une carte, trois graphiques en dessous et un filtre en haut à gauche pour selectionner le type de gaz qui sera présenté.</p>
+			<h3>La carte</h3>
+			La carte montre tous les pays avec une couleur verte qui varie son intensité selon son niveau d'émission de gaz polluant.
+			<br><br>
+			D'une façon dynamique, les pays de la carte peuvent être déplacés, proximés et, en passant le curseur sur un pays, un graphique en barre est présenté.
+			<br>
+			Le graphique en barre contient les émissions en millions de tonnes de son pays selon les secteurs répresentés par des barres.
+			<h3>Le graphique de lignes</h3>
+			Le graphique de lignes presente, par le gaz polluant sélectionné, l'évolution du numéro total d'émission de tous les secteurs selon le temps, entre 1990 et 2016.
+			<br>
+			Ce graphique est important car il permet de montrer, d'une façon mondiale, que les émissions de gaz polluant continuent très nocives pour la planète et ont même augmentés selon quelques secteurs comme celui de l'lectricité.
+			<h3>Le graphique rond multi niveaux</h3>
+			Le graphique rond multi niveaux contient, dans son premier niveau, les secteurs les plus émetteurs du gaz poluant choisi par l'utilisateur (CO&#8322;, methane, N&#8322;O  ou à effet de serre),
+			mais, pour que ça soit plus lisible, ce diagramme ne montre plus que 7 secteurs différents à la fois.
+			<br><br>
+			Dans son deuxième niveau, il est présenté, pour chaque secteur, les 5 continents selon leurs percentages de contribution et,
+			les continents qui émittent les plus, ont leurs sigles affichées : AS (Asia), NA/SA (América du nord, centrale et du sud), AF (Africa), OC (Océania) et EU (Europe).
+			 <br><br>
+			 En passant le curseur sur chaque continent, c'est possible aussi d'otenir le nom du continent, la percentage de son émission selon le secteur ainsi que les 3 pays les plus polluants dans le continent et pour le secteur.
+			 <br><br>
+			 À noter que le graphique présente les données fournies par chaque année, de 1990 à 2016, et du coup, c'est possible de bien remarquer l'évolution de chaque secteur et la contribution de chaque continent en utilisant la barre de temps.
+			<h3>Le diagramme de Sankey</h3>
+			Le diagramme de Sankey est aussi un graphique séparé par secteur et continent, mais contrairemment au graphique rond multi niveaux, on voit en premier plan l'émission de chaque continent et sa contribution pour les secteurs.
+			En fin, on voit aussi la contribution des secteurs pour chaque gaz polluant.
+			<br><br>
+			Ce graphique permet une vision d'ensemble et très instantanée de la situation globale.
 		<h2>Architecture du projet</h2>
 		<p>
 			Notre application est directement disponible à la racine du projet en ouvrant le fichier <code>index.html</code> dans un navigateur web récent. Cette application appelle plusieurs autres fichiers afin de gérer les différentes représentations graphiques et leurs animations.
@@ -82,7 +108,6 @@
 			<li><code>scripts/</code> : contient les scripts permettant la récupération des données ainsi que la génération des graphiques interactifs.</li>
 			<li><code>styles/</code> : contient les feuilles de styles CSS complémentaires permettant d'améliorer la mise en forme de l'application.</li>
 		</ul>
-		<p class="alert alert-danger">PARTIE A FINIR. TODO</p>
 		<h2>Limites du projet</h2>
 		<p>
 			Le jeu de données présente une limitation autour de laquelle nous avons dû concevoir l'outil de visualisation: les données sont remplies de façon massive suelement entre les années 1990 et 2016.
