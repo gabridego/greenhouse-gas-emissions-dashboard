@@ -25,14 +25,14 @@ const initData = [
         sector: "Industry",
         emissions: "0"
     },
-    // {
-    //     sector: "Waste",
-    //     emissions: "0"
-    // },
-    // {
-    //     sector: "Land-use and forestry",
-    //     emissions: "0"
-    // },
+    {
+        sector: "Waste",
+        emissions: "0"
+    },
+    {
+        sector: "Land-use and forestry",
+        emissions: "0"
+    },
     {
         sector: "Other fuel combustions",
         emissions: "0"
@@ -52,6 +52,10 @@ const initData = [
     {
         sector: "Buildings",
         emissions: "0"
+    },
+    {
+        sector : "Intll",
+        emissions: "0"
     }
 ]
 /*
@@ -65,7 +69,6 @@ function getBarChartGHG(country_code, year) {
 			emissions: retrieved["Agriculture (GHG)"]
 		},
 		{
-			//sector: "Manufacturing/Construction energy",
 			sector: "Manufacturing/Construction",
 			emissions: retrieved["Manufacturing/Construction energy (GHG)"]
 		},
@@ -102,6 +105,61 @@ function getBarChartGHG(country_code, year) {
 	data.sort((a, b) => (parseFloat(a.emissions) < parseFloat(b.emissions)) ? 1 : -1)
 	return data;
 }
+
+
+function getBarChartCO2(country_code, year) {
+	var retrieved = full_data[country_code][year];
+	var data = [
+		{
+			sector: "Land-Use and forestry",
+			emissions: retrieved["Land-Use Change and Forestry (CO2)"]
+		},
+		{
+			//sector: "Manufacturing/Construction energy",
+			sector: "Manufacturing/Construction",
+			emissions: retrieved["Manufacturing & Construction (CO2)"]
+		},
+		{
+			sector: "Buildings",
+			emissions: retrieved["Building (CO2)"]
+		},
+		{
+			sector: "Industry",
+			emissions: retrieved["Industry (CO2)"]
+		},
+		{
+			sector: "Elec & Heat",
+			emissions: retrieved["Electricity & Heat (CO2)"]
+		},
+		{
+		 	sector: "Transport",
+		 	emissions: retrieved["Transport (CO2)"]
+		},
+		{
+			sector: "Fugitives",
+			emissions: retrieved["Fugitive Emissions (CO2)"]
+		},
+        {
+            sector : "Intl",
+            emissions: retrieved["Intl aviation & shipping (CO2)"]
+        },
+        {
+            sector : "Other Fuel Combution",
+            emissions: retrieved["Other Fuel Combustion (CO2)"]
+        }
+	];
+
+	data.forEach((item) => {
+		if(item.emissions == "") {
+			item.emissions = "0";
+		}
+	});
+
+
+	data.sort((a, b) => (parseFloat(a.emissions) < parseFloat(b.emissions)) ? 1 : -1)
+	return data;
+}
+
 
 
 function getBarChartNO2(country, year) {
@@ -275,13 +333,11 @@ function drawBarChart(country_code, year, filter) {
 
 function update_bar_chart(year, country_code, filter){
 
-    var data = getBarChartGHG(country_code, year);
-    // if (filter === "methane"){data = getBarChartCH4(country_code, year);}
-    // else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
-    // else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
-
-
-
+    //var data = getBarChartGHG(country_code, year);
+    if (filter === "methane"){data = getBarChartCH4(country_code, year);}
+    else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
+    else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
+    else if (filter === "co2"){data = getBarChartCO2(country_code, year);}
 
 	const svgBarchart = d3.select("#barChart")
 

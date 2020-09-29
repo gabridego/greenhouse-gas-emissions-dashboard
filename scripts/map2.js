@@ -30,12 +30,22 @@ const path = d3.geoPath()
 .pointRadius(2)
 .projection(projection);
 
+function realname_gas(gas) {
+    const dict_gas = {
+        "total_ghg": "Gaz à effet de serre",
+        "co2": "CO₂",
+        "methane": "CH₄",
+        "nitrous_oxide": "N₂O"
+    }
+
+    return dict_gas[gas];
+}
+
 /**
 * Init tooltip to show pop-up for each country's own data.
 * @param {*} location
 */
 function init_tooltip(location) {
-
     var tooltip = location.append("g") // Group for the whole tooltip
     .attr("id", "tooltip")
     .style("display", "none");
@@ -137,9 +147,7 @@ function resize_tooltip(resize_factor, tooltip) {
 * @param {*} url_geojson
 */
 function init_map() {
-
     return new Promise((resolve) => {
-
         // Create root svg element
         const svg = d3.select("#map").append("svg")
         .attr("id", "svg_zone")
@@ -378,7 +386,7 @@ function update_map(year, currentFilter) {
             tooltip.select("#tooltip-country")
             .text(short_name_country(full_data[c_code].country));
             tooltip.select("#text_emission")
-            .text(currentFilter + " : ")
+            .text(realname_gas(currentFilter) + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(get_string_emissions(year, currentFilter, c_code));
             update_bar_chart(year, c_code, currentFilter);
