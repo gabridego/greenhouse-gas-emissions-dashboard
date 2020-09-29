@@ -122,8 +122,9 @@ function update_titles()
 
 
 //filters
-$('#filters').on('click','a', function() {
+$('#filters').on('click','a', function(e) {
     $(this).addClass('active').siblings().removeClass('active');
+    e.preventDefault();
     currentFilter = $(this).attr("name");
     console.log(currentFilter);
     UpdateCharts();
