@@ -12,69 +12,145 @@ const y = d3.scaleLinear()
 /*
 Retrieve data.
 */
-
-function getBarChartData(country_code, year) {
+function getBarChartGHG(country_code, year) {
 	var retrieved = full_data[country_code][year];
 	var data = [
 		{
 			sector: "Agriculture",
-			frequency: retrieved["Agriculture (GHG)"]
+			emissions: retrieved["Agriculture (GHG)"]
 		},
 		{
 			//sector: "Manufacturing/Construction energy",
 			sector: "Manufacturing/Construction",
-			frequency: retrieved["Manufacturing/Construction energy (GHG)"]
+			emissions: retrieved["Manufacturing/Construction energy (GHG)"]
 		},
 		{
 			sector: "Buildings",
-			frequency: retrieved["Buildings (GHG)"]
+			emissions: retrieved["Buildings (GHG)"]
 		},
 		{
 			sector: "Industry",
-			frequency: retrieved["Industry (GHG)"]
+			emissions: retrieved["Industry (GHG)"]
 		},
 		{
 			sector: "Elec & Heat",
-			frequency: retrieved["Electricity & Heat (GHG)"]
+			emissions: retrieved["Electricity & Heat (GHG)"]
 		},
 		{
 		 	sector: "Transport",
-		 	frequency: retrieved["Transport (GHG)"]
+		 	emissions: retrieved["Transport (GHG)"]
 		},
 		{
 			//sector: "Fugitive from energy production",
 			sector: "Fugitives",
-			frequency: retrieved["Fugitive from energy production (GHG)"]
+			emissions: retrieved["Fugitive from energy production (GHG)"]
 		}
 	];
 
 	data.forEach((item) => {
-		if(item.frequency == "") {
-			item.frequency = "0";
+		if(item.emissions == "") {
+			item.emissions = "0";
 		}
 	});
 
 
-	data.sort((a, b) => (parseFloat(a.frequency) < parseFloat(b.frequency)) ? 1 : -1)
+	data.sort((a, b) => (parseFloat(a.emissions) < parseFloat(b.emissions)) ? 1 : -1)
 	return data;
 }
 
 
-//function getBarChartCH2()
+function getBarChartNO2(country, year) {
+    var retrieved = full_data[country][year];
+    var data = [
+        {
+            sector: "Agriculture",
+            emissions: retrieved["Agriculture (N2O)"]
 
-function drawBarChart(country_code, year) {
-    var data = getBarChartData(country_code, year);
+        },
+        {
+            sector: "Fugitives",
+            emissions: retrieved["Fugitive Emissions (N2O)"]
+        },
+        {
+            sector: "Industry",
+            emissions: retrieved["Industry (N2O)"]
+        },
+        {
+            sector: "Waste",
+            emissions: retrieved["Waste (N2O)"]
+        },
+        {
+            sector: "Land-use and forestry",
+            emissions: retrieved["Land-Use Change and Forestry (N2O)"]
+        },
+        {
+            sector: "other fuel combustions",
+            emissions: retrieved["Other Fuel Combustion (N2O)"]
+        }
+    ]
+
+    data.forEach((item) => {
+		if(item.emissions == "") {
+			item.emissions = "0";
+		}
+	});
 
 
-	// var elem = document.getElementById("barChart");
-	// console.log(elem)
-	// if(elem) {
-	//   var rect = elem.getBoundingClientRect();
-	//   console.log("height: " + rect.height);
-	// }
+	data.sort((a, b) => (parseFloat(a.emissions) < parseFloat(b.emissions)) ? 1 : -1)
+	return data;
+
+}
 
 
 
+function getBarChartCH4(country, year) {
+    var retrieved = full_data[country][year];
+    var data = [
+        {
+            sector: "Agriculture",
+            emissions: retrieved["Agriculture (CH4)"]
+
+        },
+        {
+            sector: "Fugitives",
+            emissions: retrieved["Fugitive Emissions (CH4)"]
+        },
+        {
+            sector: "Industry",
+            emissions: retrieved["Industry (CH4)"]
+        },
+        {
+            sector: "Waste",
+            emissions: retrieved["Waste (CH4)"]
+        },
+        {
+            sector: "Land-use and forestry",
+            emissions: retrieved["Land-Use Change and Forestry (CH4)"]
+        },
+        {
+            sector: "other fuel combustions",
+            emissions: retrieved["Other Fuel Combustion (CH4)"]
+        }
+    ]
+
+    data.forEach((item) => {
+		if(item.emissions == "") {
+			item.emissions = "0";
+		}
+	});
+
+
+	data.sort((a, b) => (parseFloat(a.emissions) < parseFloat(b.emissions)) ? 1 : -1)
+	return data;
+}
+
+
+/** TODO adapt to new filters */
+function drawBarChart(country_code, year, filter) {
+    var data = getBarChartGHG(country_code, year);
+    // if (filter === "methane"){data = getBarChartCH4(country_code, year);}
+    // else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
+    // else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
 
 
     const svgBarchart = d3.select("#barChart").append("svg")
@@ -88,9 +164,9 @@ function drawBarChart(country_code, year) {
 
     // Mise en relation du scale avec les données de notre fichier
     // Pour l'axe X, c'est la liste des pays
-    // Pour l'axe Y, c'est le max des frequencys
+    // Pour l'axe Y, c'est le max des emissionss
     x.domain(data.map(d => d.sector));
-    y.domain([0, d3.max(data, d => parseFloat(d.frequency))]);
+    y.domain([0, d3.max(data, d => parseFloat(d.emissions))]);
 
     // Ajout de l'axe X au SVG
     // Déplacement de l'axe horizontal et du futur texte (via la fonction translate) au bas du SVG
@@ -112,7 +188,7 @@ function drawBarChart(country_code, year) {
 
     // Ajout des bars en utilisant les données de notre fichier data.tsv
     // La largeur de la barre est déterminée par la fonction x
-    // La hauteur par la fonction y en tenant compte de la frequency
+    // La hauteur par la fonction y en tenant compte de la emissions
     // La gestion des events de la souris pour le popup
 		Object.keys(data).forEach(index =>{
 
@@ -120,8 +196,8 @@ function drawBarChart(country_code, year) {
 				.attr("id", "bar"+ data[index].sector.slice(0,4))
 				.attr("x", x(data[index].sector))
         .attr("width", x.bandwidth())
-        .attr("y", y(data[index].frequency))
-        .attr("height", barChartHeight - y(parseFloat(data[index].frequency)))
+        .attr("y", y(data[index].emissions))
+        .attr("height", barChartHeight - y(parseFloat(data[index].emissions)))
 				.attr("class", "bar");
 
 		})
@@ -131,8 +207,8 @@ function drawBarChart(country_code, year) {
   //       .attr("class", "bar")
   //       .attr("x", d => x(d.sector))
   //       .attr("width", x.bandwidth())
-  //       .attr("y", d => y(parseFloat(d.frequency)))
-  //       .attr("height", d => height - y(parseFloat(d.frequency)));
+  //       .attr("y", d => y(parseFloat(d.emissions)))
+  //       .attr("height", d => height - y(parseFloat(d.emissions)));
         // .on("mouseover", function(d, e) {
         //     console.log(d, e);
         //     div.transition()
@@ -140,34 +216,13 @@ function drawBarChart(country_code, year) {
         //         .style("opacity", .9)
 		// 		.style("left", d.pageX  + "px")
 		// 		.style("top", d.pageY + "px");
-        //     div.html("frequency : " + parseFloat(e.frequency))
+        //     div.html("emissions : " + parseFloat(e.emissions))
         // })
         // .on("mouseout", function(d) {
         //     div.transition()
         //         .duration(500)
         //         .style("opacity", 0);
         // });
-
-
-	// add bar value text
-	// svg.selectAll("textvaleur")
-	//    .data(data)
-	//    .enter()
-	//    .append("text")
-	//    .text(function(d) {
-	// 		return d.frequency;
-	//    })
-	//    .attr("text-anchor", "middle")
-	//    .attr("x", function(d, i) {
-	// 		return xScale(i) + x.rangeBand() / 2;
-	//    })
-	//    .attr("y", function(d) {
-	// 		return height - 10;
-	//    })
-	//    .attr("font-family", "sans-serif")
-	//    .attr("font-size", "11px")
-	//    .attr("fill", "black");
-
 }
 
 /**
@@ -176,9 +231,13 @@ function drawBarChart(country_code, year) {
 * @param {*} country_code
 */
 
-function update_bar_chart(year, country_code){
+function update_bar_chart(year, country_code, filter){
 
-	var data = getBarChartData(country_code, year);
+    var data = getBarChartGHG(country_code, year);
+    // if (filter === "methane"){data = getBarChartCH4(country_code, year);}
+    // else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
+    // else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
+
 
 
 
@@ -192,7 +251,7 @@ function update_bar_chart(year, country_code){
       .range([barChartHeight, 0]);
 
 	x.domain(data.map(d => d.sector));
-  	y.domain([0, d3.max(data, d => parseFloat(d.frequency))]);
+  	y.domain([0, d3.max(data, d => parseFloat(d.emissions))]);
 
 
 	svgBarchart.select("#xAxis")
@@ -217,8 +276,8 @@ function update_bar_chart(year, country_code){
 		d3.select("#bar"+ data[index].sector.slice(0,4))
 			.attr("x", x(data[index].sector))
 			.attr("width", x.bandwidth())
-			.attr("y", y(data[index].frequency))
-			.attr("height", barChartHeight - y(parseFloat(data[index].frequency)))
+			.attr("y", y(data[index].emissions))
+			.attr("height", barChartHeight - y(parseFloat(data[index].emissions)))
 			.attr("class", "bar");
 	})
 

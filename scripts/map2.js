@@ -87,7 +87,7 @@ function init_tooltip(location) {
     tooltip.append("g")
     .attr("id", "barChart");
 
-    drawBarChart("FR", "2000");
+    drawBarChart("FR", "2000", currentFilter);
 
     return tooltip;
 }
@@ -378,12 +378,12 @@ function update_map(year, currentFilter) {
             .text(currentFilter + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(get_string_emissions(year, currentFilter, c_code));
-            update_bar_chart(year, c_code);
+            update_bar_chart(year, c_code, currentFilter);
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
                 d3.select("#tooltip-gas-emission").text(get_string_emissions(e.detail, currentFilter, c_code));
-                update_bar_chart(e.detail, c_code);
+                update_bar_chart(e.detail, c_code, currentFilter);
             });
         });
 
