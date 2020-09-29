@@ -132,8 +132,15 @@ function resize_tooltip(resize_factor, tooltip) {
         });
     })
 
-    var barChart = d3.select("barChart");
+    var bars = document.getElementsByClassName('bar');
 
+    Array.prototype.forEach.call(bars, function(theBar) {
+        // resize bars in bar chart here
+        theBar.attr("x", x(data[index].sector))
+        .attr("width", x.bandwidth()/resize_factor)
+        .attr("y", y(data[index].frequency))
+        .attr("height", (barChartHeight - y(parseFloat(data[index].frequency)))/resize_factor);
+    });
 
 }
 
@@ -296,8 +303,13 @@ function init_legend() {
     .attr('transform', 'translate(60, 250)')
     .attr("id", "legend");
 
+    let legendScale = d3.scaleLinear().domain([0, 10000])
+    .range([0, colors.length * legendCellSize]);
+
     legend.append("g")
     .attr("id", "legendAxis")
+    .attr("class", "axis")
+    .call(d3.axisLeft(legendScale));
 
     // draw legend
     legend.selectAll()
@@ -381,44 +393,6 @@ function update_map(year, currentFilter) {
 
 function short_name_country(name) {
     return name.replace("Democratic", "Dem.").replace("Republic", "Rep.");
-}
-
-/**
-* Update legend (compute min/max by year and adapt the legend)
-* @param {*} year
-* @param {*} currentFilter
-*/
-function update_legend(year, currentFilter) {
-    // Compute max values for the legend scale
-    var max;
-
-    Object.keys(full_data).forEach(function(key, index) {
-        if (index == 0) {
-            if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
-                max = full_data[key][year][currentFilter];
-            }
-        } else {
-            if (full_data[key][year] !== undefined && full_data[key][year][currentFilter]) {
-                if (parseFloat(full_data[key][year][currentFilter]) > max) {
-                    console.log("tralala")
-                    max = parseFloat(full_data[key][year][currentFilter]);
-                }
-            }
-        }
-    });
-
-    // Draw legend
-    // TODO: Choisir coorrectement les couleurs de la légende
-
-    const legendAxis = d3.select("#legendAxis");
-    legendAxis.empty();
-
-
-    let legendScale = d3.scaleLinear().domain([0, max])
-    .range([0, colors.length * legendCellSize]);
-
-    legendAxis.attr("class", "axis")
-    .call(d3.axisLeft(legendScale));
 }
 
 

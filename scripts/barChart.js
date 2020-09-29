@@ -14,7 +14,7 @@ Retrieve data.
 */
 
 function getBarChartData(country_code, year) {
-	var retrieved = gas_complete_data[country_code][year];
+	var retrieved = full_data[country_code][year];
 	var data = [
 		{
 			sector: "Agriculture",
