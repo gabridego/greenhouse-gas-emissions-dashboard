@@ -315,6 +315,19 @@ function drawBarChart(country_code, year, filter) {
 }
 
 
+
+// set bars to zero
+function reset_bars() {
+    Object.keys(initData).forEach(index =>{
+        d3.select("#bar"+ initData[index].sector.slice(0,4))
+            .attr("height", 0)
+            .attr("class", "bar");
+    })
+}
+
+
+
+
 /**
 * Updates bar chart data according to the year and country and filter.
 * @param {*} year
@@ -360,14 +373,7 @@ function update_bar_chart(year, country_code, filter){
         .call(d3.axisLeft(y).ticks(6));
 
 
-    // Set all bars value to zero
-    Object.keys(initData).forEach(index =>{
-
-		d3.select("#bar"+ initData[index].sector.slice(0,4))
-			//.attr("y", 0)
-			.attr("height", 0)
-			.attr("class", "bar");
-	})
+    reset_bars();
 
     // fill bars with our data to update the chart
 	Object.keys(data).forEach(index =>{
@@ -382,14 +388,4 @@ function update_bar_chart(year, country_code, filter){
             .attr("x", x(data[index].sector));
 	})
 
-}
-
-
-
-function reset_bars() {
-    Object.keys(initData).forEach(index =>{
-        d3.select("#bar"+ initData[index].sector.slice(0,4))
-            .attr("height", 0)
-            .attr("class", "bar");
-    })
 }
