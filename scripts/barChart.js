@@ -280,15 +280,12 @@ function drawBarChart(country_code, year, filter) {
 
 
 
-    // Mise en relation du scale avec les données de notre fichier
-    // Pour l'axe X, c'est la liste des pays
-    // Pour l'axe Y, c'est le max des emissionss
+    // Scale to our data
     x.domain(initData.map(d => d.sector));
     y.domain([0, d3.max(initData, d => parseFloat(d.emissions))]);
 
-    // Ajout de l'axe X au SVG
-    // Déplacement de l'axe horizontal et du futur texte (via la fonction translate) au bas du SVG
-    // Selection des noeuds text, positionnement puis rotation
+
+    // Draw X axis
     svgBarchart.append("g")
 		.attr("id", "xAxis")
         .attr("transform", "translate(0," + barChartHeight + ")")
@@ -299,49 +296,24 @@ function drawBarChart(country_code, year, filter) {
             .attr("dy", ".15em")
             .attr("transform", "rotate(-65)");
 
-    // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
+    // Draw Y axis
     svgBarchart.append("g")
 		.attr("id", "yAxis")
         .call(d3.axisLeft(y).ticks(6));
 
-    // Ajout des bars en utilisant les données de notre fichier data.tsv
-    // La largeur de la barre est déterminée par la fonction x
-    // La hauteur par la fonction y en tenant compte de la emissions
-    // La gestion des events de la souris pour le popup
-		Object.keys(initData).forEach(index =>{
-
-			svgBarchart.append("rect")
-				.attr("id", "bar"+ initData[index].sector.slice(0,4))
-				.attr("x", x(initData[index].sector))
-        .attr("width", x.bandwidth())
-        .attr("y", y(initData[index].emissions))
-        .attr("height", barChartHeight - y(parseFloat(initData[index].emissions)))
-				.attr("class", "bar");
+    // Create bar classes with id specefic to each sector
+	Object.keys(initData).forEach(index =>{
+		svgBarchart.append("rect")
+			.attr("id", "bar"+ initData[index].sector.slice(0,4))
+			.attr("x", x(initData[index].sector))
+            .attr("width", x.bandwidth())
+            .attr("y", y(initData[index].emissions))
+            .attr("height", barChartHeight - y(parseFloat(initData[index].emissions)))
+			.attr("class", "bar");
 
 		})
-	// svgBarchart.selectAll("bar")
-  //       .data(data)
-  //   		.enter().append("rect")
-  //       .attr("class", "bar")
-  //       .attr("x", d => x(d.sector))
-  //       .attr("width", x.bandwidth())
-  //       .attr("y", d => y(parseFloat(d.emissions)))
-  //       .attr("height", d => height - y(parseFloat(d.emissions)));
-        // .on("mouseover", function(d, e) {
-        //     console.log(d, e);
-        //     div.transition()
-        //         .duration(200)
-        //         .style("opacity", .9)
-		// 		.style("left", d.pageX  + "px")
-		// 		.style("top", d.pageY + "px");
-        //     div.html("emissions : " + parseFloat(e.emissions))
-        // })
-        // .on("mouseout", function(d) {
-        //     div.transition()
-        //         .duration(500)
-        //         .style("opacity", 0);
-        // });
 }
+
 
 /**
 * Updates bar chart data according to the year and country and filter.
@@ -350,7 +322,7 @@ function drawBarChart(country_code, year, filter) {
 */
 function update_bar_chart(year, country_code, filter){
 
-    //var data = getBarChartGHG(country_code, year);
+    // retireve data
     if (filter === "methane"){data = getBarChartCH4(country_code, year);}
     else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
     else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
@@ -369,7 +341,8 @@ function update_bar_chart(year, country_code, filter){
 	x.domain(data.map(d => d.sector));
   	y.domain([0, d3.max(data, d => parseFloat(d.emissions))]);
 
-    /** TODO Edit animation */
+
+    // Draw axis
 	svgBarchart.select("#xAxis")
         .transition().duration(800)
         .attr("transform", "translate(0," + barChartHeight + ")")
@@ -382,10 +355,12 @@ function update_bar_chart(year, country_code, filter){
             .attr("dy", ".15em")
             .attr("transform", "rotate(-65) translate(5)");
 
-    // Ajout de l'axe Y au SVG avec 6 éléments de légende en utilisant la fonction ticks (sinon D3JS en place autant qu'il peut).
+
     svgBarchart.select("#yAxis")
         .call(d3.axisLeft(y).ticks(6));
 
+
+    // Set all bars value to zero
     Object.keys(initData).forEach(index =>{
 
 		d3.select("#bar"+ initData[index].sector.slice(0,4))
@@ -394,7 +369,7 @@ function update_bar_chart(year, country_code, filter){
 			.attr("class", "bar");
 	})
 
-
+    // fill bars with our data to update the chart
 	Object.keys(data).forEach(index =>{
 
 		d3.select("#bar"+ data[index].sector.slice(0,4))
@@ -406,15 +381,5 @@ function update_bar_chart(year, country_code, filter){
             .transition().duration(800)
             .attr("x", x(data[index].sector));
 	})
-
-}
-
-/**
-* Zomming the barchart with the tooltip
-* @param {*} resize_factor_k
-*/
-function resize_bar_chart(resize_factor_k) {
-
-// TODO
 
 }
