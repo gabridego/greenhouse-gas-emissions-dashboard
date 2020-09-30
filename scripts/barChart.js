@@ -1,7 +1,12 @@
+/**
+* Bar chart module.
+*/
+
+
+// global parmeters : chart dimensions
 const margin = {top: 60, right: 20, bottom: 150, left: 50},
 barChartWidth = 350 - margin.left - margin.right ,
 barChartHeight = 350 - margin.top - margin.bottom;
-
 
 const x = d3.scaleBand()
     .range([0, barChartWidth])
@@ -11,6 +16,8 @@ const y = d3.scaleLinear()
     .range([barChartHeight, 0]);
 
 
+
+// Data used to initialise the bars and set their value to 0
 const initData = [
     {
         sector: "Agriculture",
@@ -58,8 +65,10 @@ const initData = [
         emissions: "0"
     }
 ]
-/*
-Retrieve data.
+
+
+/**
+* Returns list of ghg emissions per sector.
 */
 function getBarChartGHG(country_code, year) {
 	var retrieved = full_data[country_code][year];
@@ -107,6 +116,9 @@ function getBarChartGHG(country_code, year) {
 }
 
 
+/**
+* Returns list of CO2 emissions per sector.
+*/
 function getBarChartCO2(country_code, year) {
 	var retrieved = full_data[country_code][year];
 	var data = [
@@ -161,7 +173,9 @@ function getBarChartCO2(country_code, year) {
 }
 
 
-
+/**
+* Returns list of NO2 emissions per sector.
+*/
 function getBarChartNO2(country, year) {
     var retrieved = full_data[country][year];
     var data = [
@@ -205,7 +219,9 @@ function getBarChartNO2(country, year) {
 }
 
 
-
+/**
+* Returns list of CH4 emissions per sector.
+*/
 function getBarChartCH4(country, year) {
     var retrieved = full_data[country][year];
     var data = [
@@ -248,7 +264,9 @@ function getBarChartCH4(country, year) {
 }
 
 
-/** TODO adapt to new filters */
+/**
+* Create the bars classes and initialise their value to 0.
+*/
 function drawBarChart(country_code, year, filter) {
 
 
@@ -326,11 +344,10 @@ function drawBarChart(country_code, year, filter) {
 }
 
 /**
-* Updates barChart data according to the year and country.
+* Updates bar chart data according to the year and country and filter.
 * @param {*} year
 * @param {*} country_code
 */
-
 function update_bar_chart(year, country_code, filter){
 
     //var data = getBarChartGHG(country_code, year);
@@ -338,14 +355,15 @@ function update_bar_chart(year, country_code, filter){
     else if (filter === "total_ghg"){data = getBarChartGHG(country_code, year);}
     else if (filter === "nitrous_oxide"){data = getBarChartNO2(country_code, year);}
     else if (filter === "co2"){data = getBarChartCO2(country_code, year);}
+    else {console.log("Wrong filter");}
 
 	const svgBarchart = d3.select("#barChart")
 
-  const x = d3.scaleBand()
+    const x = d3.scaleBand()
       .range([0, barChartWidth])
       .padding(0.1);
 
-  const y = d3.scaleLinear()
+    const y = d3.scaleLinear()
       .range([barChartHeight, 0]);
 
 	x.domain(data.map(d => d.sector));
