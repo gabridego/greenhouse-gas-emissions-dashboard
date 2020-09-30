@@ -100,7 +100,7 @@ function update_titles()
 {
     document.getElementById("pieTitle").textContent = "Émissions de " + realname_gas(currentFilter, false) + " par secteur et par continent";
     document.getElementById("carteTitle").textContent = "Émissions de " + realname_gas(currentFilter, false) + " dans le monde";
-    document.getElementById("lineTitle").textContent = "Évolution de " + realname_gas(currentFilter, false) + " par secteur";
+    document.getElementById("lineTitle").textContent = "Évolution des émissions de " + realname_gas(currentFilter, false) + " par secteur dans le monde";
 }
 
 function realname_gas(gas, maj) {
