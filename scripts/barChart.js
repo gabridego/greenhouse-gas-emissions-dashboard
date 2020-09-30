@@ -333,7 +333,7 @@ function reset_bars() {
 * @param {*} year
 * @param {*} country_code
 */
-function update_bar_chart(year, country_code, filter){
+function update_bar_chart(year, country_code, filter) {
 
     // retireve data
     if (filter === "methane"){data = getBarChartCH4(country_code, year);}

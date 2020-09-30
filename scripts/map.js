@@ -153,7 +153,7 @@ function init_map(currentFilter) {
             .on("click", clicked)
             .attr("d", path)
             .attr("id", d => "code" + d.id)
-            .attr("fill", "gray");
+            .attr("fill", "#ff0000");
 
             var tooltip = init_tooltip(g);
 
@@ -302,7 +302,7 @@ function init_legend(currentFilter) {
     .attr('height', legendCellSize + 'px')
     .attr('width', legendCellSize + 'px')
     .attr('x', 0)
-    .style("fill", "#999");
+    .style("fill", "#FF0000");
 
     legendbottom.append("text")
     .attr("x", 30)
@@ -357,7 +357,7 @@ function update_map(year, currentFilter) {
 
         let idCode = "#code" + c_code;
         //console.log(d3.select(idCode));
-        var color = "#999";
+        var color = "#FF0000";
         if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year][currentFilter]) {
             color = colors[Math.floor((colors.length - 1) * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"] ))];
         }
@@ -373,11 +373,11 @@ function update_map(year, currentFilter) {
             .text(realname_gas(currentFilter, true) + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(get_string_emissions(year, currentFilter, c_code));
-            if(get_string_emissions(year, currentFilter, c_code) !== "Données non fournies." ){
-              update_bar_chart(year, c_code, currentFilter);
-            }else {
-              reset_bars();
-              d3.select("#svgBarchart")
+            if (get_string_emissions(year, currentFilter, c_code) !== "Données non fournies.") {
+                update_bar_chart(year, c_code, currentFilter);
+            } else {
+                reset_bars();
+                d3.select("#svgBarchart")
                 .attr("fill", "black");
             }
             //Event listener
