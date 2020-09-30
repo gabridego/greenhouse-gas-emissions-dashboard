@@ -34,14 +34,14 @@
 	<main role="main" class="container">
 		<h1>Rapport</h1>
 		<h2>Objectif</h2>
-		<p>
+		<p class="text-justify">
 			L'objectif de ce projet étant de représenter de façon originale et efficace un ensemble de données sur les thèmes du <strong><a href="https://fr.wikipedia.org/wiki/D%C3%A9veloppement_durable" title="Développement durable - Wikipédia">développement durable</a></strong> et de la <strong><a href="https://fr.wikipedia.org/wiki/Responsabilit%C3%A9_sociale" title="Responsabilité sociale - Wikipédia">responsabilité sociale</a></strong>,
 			nous avons choisi de représenter les émissions de gaz CO&#8322;, methane, N&#8322;O et l'ensemble des gaz polluants (à effet de serre),  au fil des dernières décennies <strong>par pays</strong> et <strong>secteur d'activité</strong>. Nos visualisations doivent permettre de répondre à la question suivante :
 		</p>
 		<p style="color:#FF0000"; class="lead">
 			Ces dernières décennies, quelles sont les responsabilités des pays et des secteurs économiques sur les émissions de gaz polluants ?
 		</p>
-		<p>
+		<p class="text-justify">
 			Le but est, à l'aide de ces représentations graphiques interactives, de pouvoir déterminer quels sont les pays qui émettent le plus, quels sont les secteurs dont les émissions sont prépondérantes mais aussi quels sont les secteurs d'activité dont les émissions sont prépondérantes dans chaque pays, et le tout entre <strong>1990</strong> et <strong>2016</strong>.
 		</p>
 		<h2>Données et licences de réutilisation</h2>
@@ -54,27 +54,26 @@
 			<li>un <a href="https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv" title="countryContinent"> fichier <code>CSV</code></a> pour rapporter chaque pays à son continent, partagé sous <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="CC BY 4.0">licence CC BY 4.0</a>.</li>
 		</ul>
 		<h2>Librairies utilisées</h2>
-		<p>
+		<p class="text-justify">
 			La présente application est réalisée sans <em>framework</em> Javascript et est mise en page à l'aide de <a href="https://getbootstrap.com/" title="Boostrap">Boostrap 4.5</a> et de quelques feuilles de styles <abbr title="Feuilles de styles en cascade">CSS</abbr> complémentaires.
 		</p>
-		<p>
+		<p class="text-justify">
 			Les graphiques sont réalisés à l'aide de <a href="https://d3js.org/" title="D3.js">D3.js</a> pour réaliser la carte, le diagramme en barres et le diagramme de Sankey tandis que le diagramme circulaire à plusieurs niveaux est implémenté à l'aide de <a href="https://www.fusioncharts.com/" title="FusionCharts">FusionCharts</a>.
 		</p>
 		<h2>Traitement des données</h2>
-		<p>
-			<!--Les données bruts ont été récuperés en format <em>csv</em> et traités avec le support des outils du software <em>LibreOffice</em>.-->
-			<p style="color:red; font-weight:bold">FRENCH CHECK SVP</p>
-			Les données bruts sont fornis par <em>Our World in Data</em> dans pleusieurs fichiers CSV, une pour chaque gaz. Des scripts Python (avec la librairie <a href="https://pandas.pydata.org/" title="pandas">pandas</a>) ont été developpés pour les fusionner en un seul fichier CSV et ajouter les continents, en supprimant quelques colonnes inutiles pour le projet et des pays peu informatifs ou avec mauvaise information. En plus, les données ont été triés pour les années 1990 - 2016 (les années avec les plus d'information pour tous les pays et tous les gaz polluants). Ensuite, c'était nécessaire d'ajouter le code <a href="https://fr.wikipedia.org/wiki/ISO_3166" title="ISO_3166">ISO 3166</a> à deux lettres pour chaque pays, pour mettre en relation les données avec la carte.
+		<p class="text-justify">
+            Les données brutes sont proposées par <em>Our World in Data</em> via l'intermédiaire de plusieurs fichiers <code>CSV</code>. Chaque fichier contient de nombreuses données sur les émissions pour un même gaz. Des scripts Python (avec la librairie <a href="https://pandas.pydata.org/" title="pandas">pandas</a>) ont été developpés pour les fusionner en un seul fichier <code>CSV</code> ainsi que pour effectuer des regroupements de données par continents. Nous avons également supprimé les colonnes de données inutiles ou parcellaires pour notre projet.
+            Enfin, il a fallu transformer les codes <a href="https://fr.wikipedia.org/wiki/ISO_3166" title="ISO_3166">ISO 3166</a> des pays afin de passer d'un code à trois lettres à un code à deux lettres identique à celui présent dans les données GeoJSON permettant de tracer la carte. Autrement, il n'aurait pas été possible de mettre en lien la carte avec les données d'<em>Our World in Data</em>.
 			<!--Quelques colonnes inutiles pour le projet ont été supprimées ainsi que les données ont été triés pour les années 1990 - 2016 (les années avec les plus d'information pour tous les pays).-->
         </p>
-        <p>
+        <p class="text-justify">
 			<!--Également, d'autres fonctions ont été appliqueés aussi pour grouper les pays par continent et additionner ses valeurs.
 		</p><p>
 			En plus, pour mieux interagir avec les données, un script <em>Javascript</em> a été créé pour faire la lecture du fichier en <em>csv</em> et le convertir de façon apropriée en format <em>js</em>.-->
-			Également, d'autres scripts ont été appliqueés aussi pour convertir le CSV de façon approprieé en format JSON dans pleusieurs fichiers, afin de charger facilement les données pour les différents visualisations. En particulier, pour le graphic rond les pays ont été regroupées par continent et ses valeurs ont été additionnés, tandis que pour le diagramme de Sankey ils ont été organisés comme nœuds/liens.
+			Nous avons également appliqué un autre script afin de convertir nos données du format <code>CSV</code> à une représentation adaptée au format <code>JSON</code> dans plusieurs documents, permettant d'accéder plus facilement aux données et rendre le tracé des diagrammes plus aisé. En particulier, les pays ont été regroupées par continent en regroupant les pays puis en additionnant leurs valeurs tandis que pour le diagramme de Sankey, les données sont organisées en nœuds et liens.
         </p>
         <h2>Architecture du projet</h2>
-		<p>
+		<p class="text-justify">
 			Notre application est directement disponible à la racine du projet en ouvrant le fichier <code>index.html</code> dans un navigateur web récent. Cette application appelle plusieurs autres fichiers afin de gérer les différentes représentations graphiques et leurs animations.
 		</p>
 		<ul>
@@ -89,30 +88,30 @@
             L'application est structurée selon l'architecture <strong>Modèle-Vue-Contrôleur</strong> (MVC).
         </p>
 		<h2>Visualisation des données</h2>
-        <p>
+        <p class="text-justify">
             Le but tout au long du projet a été de créer une interface simple, intuitive et capable de répondre à la question posée au début de ce rapport.
 
             L'utilisateur se retrouve face à un écran avec une carte, trois graphiques en dessous et un filtre en haut à gauche pour selectionner le type de gaz qui sera présenté. Un <em>slider</em> permet de choisir en fin de page l'année pour laquelle l'utilisateur souhaite visualiser les données (la courbe des émissions par secteur ne varie pas en fonction du temps) ou même démarrer une animation faisant défiler les années.
         </p>
         <h3>Carte</h3>
-        <p>
+        <p class="text-justify">
             La carte des émissions des pays permet, pour une année et un type de gaz donnés, de visualiser à l'aide d'une échelle de couleurs variant du vert au violet les niveaux d'émissions de gaz polluants des différents pays. L'utilisateur peut zoomer et faire translater la carte notamment pour accéder aux plus petits pays. Il est également possible de cliquer sur un pays pour zoomer dessus et afficher ses frontières.
         </p>
-        <p>
+        <p class="text-justify">
             En passant le curseur sur un pays, une <em>tooltip</em> s'affiche avec le nom du pays, la quantité d'émissions du gaz considéré par le pays ainsi qu'un diagramme en barres présentant la répartition par secteur des émissions de gaz polluants en millions de tonnes équivalent CO₂.
         </p>
         <h3>Courbes d'émissions de gaz suivant les secteurs</h3>
-        <p>
+        <p class="text-justify">
             Nous traçons dans un module les courbes de l'évolution des émissions de gaz au cours de la période considérée (de 1990 à 2016) et en fonction des secteurs d'activité.
             Il permet de montrer, à l'échelle mondiale, que les émissions de gaz polluants croissent et augmentent de manière substancielle dans certains secteurs comme celui de l'électricité.
         </p>
         <h3>Diagramme circulaire hiérarchique</h3>
-        <p>
+        <p class="text-justify">
             Le diagramme circulaire hiérarchique présente, dans sa première couronne, les secteurs les plus émetteurs du gaz polluants choisi par l'utilisateur (CO&#8322;, méthane, N&#8322;O  ou à plus généralement tous les gaz à effet de serre). On trouve en deuxième couronne les continents les plus émetteurs pour chaque secteur de la première couronne.
 
             Pour plus de lisibilité, les données sont limitées aux sept secteurs les plus importants dans les émissions de gaz à effet de serre. Nous avons également choisi de regrouper les pays par continents pour obtenir un affichage plus synthétique et lisible, quitte à devoir passer le curseur sur le pays en question pour connaître les pays qui émettent le plus par rapport à la paire (continent, secteur) ciblée.
         </p>
-        <p>
+        <p class="text-justify">
             L'objectif de ce graphique est de pouvoir visualiser, en fonction des années, quel(s) secteur(s) ont une responsabilité prépondérante dans l'émission des gaz considérés, et de quels continents, puis pays, sont issues ces émissions.
 
             Les continents, dans la deuxième couronne, sont désignés par leurs sigles (à défaut de pouvoir les discriminer par une couleur ou une texture) : AS (pour l'Asie), NA/SA (pour l'Amérique, nord et sud compris), AF (pour l'Afrique), OC (pour l'Océanie) et EU (pour l'Europe).
@@ -122,37 +121,37 @@
             À noter que le graphique présente les données fournies par chaque année, de 1990 à 2016, et du coup, c'est possible de bien remarquer l'évolution de chaque secteur et la contribution de chaque continent en utilisant la barre de temps.<p>
         </p>
         <h3>Diagramme de Sankey</h3>
-        <p>
+        <p class="text-justify">
             Le <a href="https://fr.wikipedia.org/wiki/Diagramme_de_Sankey" title="Diagramme de Sankey - Wikipédia">diagramme de Sankey</a>, en tant que diagramme de flux, permet de visualiser efficacement les relations entre continents, secteurs d'activité et types de gaz en matière de quantité de gaz émis. Contrairement au diagramme circulaire hiérarchique, on voit en premier plan l'émission de chaque continent et sa contribution pour les secteurs.
             Ce graphique permet d'obtenir une vue d'ensemble des relations entre les différents paramètres de l'étude (pays - par l'intermédiaire du regroupement par continents -, type de gaz à effet de serre et secteurs d'activité).<br>
             Le détail du volume des flux (i.e. des quantités de gaz émis) peut être obtenu en passant le curseur sur les liens entre les éléments du diagramme.
         </p>
         <h2>Limites du projet</h2>
         <h3>Par rapport aux données</h3>
-		<p>
+		<p class="text-justify">
             Avant 1990 et à partir de 2016, les données étaient incomplètes, ce qui nous a conduit à sélectionner la plage d'années 1990-2016 afin de réaliser des comparaisons plus complètes et intéressantes, tout en gardant la possibilité d'évaluer dans le temps l'évolution des émissions sur la fin du XX<sup>ème</sup> siècle et le début du XXI<sup>ème</sup> siècle.
             <br>
             Cela nous a également permis de limiter le poids de l'archive en ne conservant que des données significatives.
         </p>
-        <p>
-        	<p style="color:red; font-weight:bold">FRENCH CHECK SVP</p>
-        	Il aurait été utile de representer les niveaux d'emissions en échelle logarithmique pour apprécier aussi les petites variations, mais ce n'était pas possible car pleusieurs pays ont des valeurs négatives d'émissions totals. Il est possible que ces pays absorbent plus gaz polluant qu'il n'en émettent, donc ce ne sont pas des données erronées et les supprimer serait imprécis. Pour cette raison, une échelle linéaire est toujours utilisée.
+        <p class="text-justify">
+            Il aurait pu être judicieux de représenter les niveaux d'émissions avec une échelle logarithmique pour également distinguer les variations des pays faiblement émetteurs. Malheureusement, nous n'avons pas pu car plusieurs pays ont des valeurs d'émissions de gaz négatives, dont nous ne sommes pas sûrs d'avoir compris la signification physique.
+            Il est possible que ces pays absorbent plus de gaz polluants qu'ils n'en émettent, auquel cas les supprimer modifierait le sens des données réutilisées. Pour cette raison, nous utilisons simplement une échelle linéaire.
         </p>
-        <p>
+        <p class="text-justify">
             De plus, les données sont intégralement en Anglais alors que notre interface est en Français. Il aurait été judicieux de traduire les données, au moins à l'affichage.
         </p>
         <h3>Contraintes techniques</h3>
-        <p>
+        <p class="text-justify">
             Au niveau technique, si le découpage par fichiers nous a permis de concevoir de manière modulaire nos différents diagrammes et la gestion des événements, il s'avérerait judicieux de regrouper l'ensemble des fichiers <code>.js</code> dans un seul fichier, voire de le minifier, afin de limiter le nombre de requêtes au chargement de la page ainsi que le poids final des scripts dans l'archive.
             Néanmoins, les fichiers Javascript sont laissés comme tels à des fins de lisibilité pour l'examinateur.
         </p>
-        <p>
+        <p class="text-justify">
             Afin de limiter le poids de l'archive du rendu final, les librairies et les données, autant que possible, sont chargées directement depuis Internet, ce qui génère parfois un grand nombre de requêtes dont le nombre aurait pu être limité autrement. Cela a un impact direct sur le temps de chargement de la page.<br>
             Les données sont stockées dans des fichiers Javascript directement dans des variables en tant qu'objets Javascript (donc au format <code>JSON</code>). En effet, les restrictions CORS nous empêchent de charger directement en local un fichier JSON dans nos scripts.
         </p>
         <h3>Choix de conception de la visualisation</h3>
-        <p>
-            À des fins de lisibilité, nous aurions pu définir une vraie <em>tooltip</em> sur le diagramme de Sankey pour afficher les données relatives aux liens entre les éléments. Toujours dans une recherche de lisibilité, il aurait été judicieux de traduire l'ensemble des données (notamment les noms de pays) afin d'avoir un affichage parfaitement cohérent.<br>
+        <p class="text-justify">
+            Pour améliorer la lisibilité, nous aurions pu définir une vraie <em>tooltip</em> sur le diagramme de Sankey pour afficher les données relatives aux liens entre les éléments. Toujours dans une recherche de lisibilité, il aurait été judicieux de traduire l'ensemble des données (notamment les noms de pays) afin d'avoir un affichage parfaitement cohérent.<br>
             Sur le diagramme circulaire hiérarchique, nous avons choisi de colorer la sélection courante en <strong>bleu clair</strong>. Il est possible que ce ne soit pas le plus judicieux, dans le sens où cela peut porter confusion avec les différents secteurs angulaires (considérés par rapport au premier anneau) déjà eux-mêmes différenciés par leur couleur. Nous aurions également aimé utiliser des textures pour différencier les continents dans le second anneau du diagramme, mais nous n'avons pas trouvé d'option pour le faire avec la librairie <em>FusionCharts</em>.
         </p>
 	</main>
