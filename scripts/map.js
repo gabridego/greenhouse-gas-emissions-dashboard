@@ -384,10 +384,10 @@ function update_map(year, currentFilter) {
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
                 d3.select("#tooltip-gas-emission").text(get_string_emissions(e.detail, currentFilter, c_code));
-                reset_bars();
-
-                if (get_string_emissions(year, currentFilter, c_code) !== "Données non fournies.") {
+                if (get_string_emissions(e.detail, currentFilter, c_code) !== "Données non fournies.") {
                     update_bar_chart(e.detail, c_code, currentFilter);
+                } else {
+                    reset_bars();
                 }
             });
         })
