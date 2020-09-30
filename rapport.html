@@ -51,7 +51,7 @@
 		<ul>
 			<li>des <a href="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions" title="https://ourworldindata.org/co2-and-other-greenhouse-gas-emissions">données sur les émissions de gaz à effet de serre par pays et secteur d'activité ces dernières décennies</a>, partagées sous <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="CC BY 4.0">licence CC BY 4.0</a> par Hannah Ritchie et Max Roser ;</li>
 			<li>un <a href="https://gist.githubusercontent.com/djdmsr/c8ed350bc46ae193767c4591bc133e0b/raw/4e94db2536d4008c72fb24fa3b244d77a5f1f17b/world-countries-no-antartica.json" title="world-countries-no-antartica.json">fichier <code>JSON</code></a> permettant de tracer la carte du monde avec tous les pays, partagée sous <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr" title="CC0 1.0">licence CC0 1.0</a>, c'est-à-dire un transfert dans le domaine public (voir <a href="https://www.datavis.fr" title="Datavis">https://www.datavis.fr</a>).</li>
-			<li>un <a href="https://www.kaggle.com/statchaitya/country-to-continent" title="countryContinent"> fichier <code>CSV</code></a> pour rapporter chaque pays à son continent.</li>
+			<li>un <a href="https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv" title="countryContinent"> fichier <code>CSV</code></a> pour rapporter chaque pays à son continent, partagé sous <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" title="CC BY 4.0">licence CC BY 4.0</a>.</li>
 		</ul>
 		<h2>Librairies utilisées</h2>
 		<p>
@@ -63,8 +63,8 @@
 		<h2>Traitement des données</h2>
 		<p>
 			<!--Les données bruts ont été récuperés en format <em>csv</em> et traités avec le support des outils du software <em>LibreOffice</em>.-->
-			<!--Corrigez mon français SVP :D-->
-			Les données bruts sont fornis par <em>Our World in Data</em> dans pleusieurs fichiers CSV, une pour chaque gaz. Des scripts Python (avec la librairie <a href="https://pandas.pydata.org/" title="pandas">pandas</a>) ont été developpés pour les fusionner en un seul fichier CSV et ajouter les continents, en supprimant quelques colonnes inutiles pour le projet et des pays peu informatifs ou avec mauvaise information. En plus, les données ont été triés pour les années 1990 - 2016 (les années avec les plus d'information pour tous les pays et tous les gaz polluants).
+			<p style="color:red; font-weight:bold">FRENCH CHECK SVP</p>
+			Les données bruts sont fornis par <em>Our World in Data</em> dans pleusieurs fichiers CSV, une pour chaque gaz. Des scripts Python (avec la librairie <a href="https://pandas.pydata.org/" title="pandas">pandas</a>) ont été developpés pour les fusionner en un seul fichier CSV et ajouter les continents, en supprimant quelques colonnes inutiles pour le projet et des pays peu informatifs ou avec mauvaise information. En plus, les données ont été triés pour les années 1990 - 2016 (les années avec les plus d'information pour tous les pays et tous les gaz polluants). Ensuite, c'était nécessaire d'ajouter le code <a href="https://fr.wikipedia.org/wiki/ISO_3166" title="ISO_3166">ISO 3166</a> à deux lettres pour chaque pays, pour mettre en relation les données avec la carte.
 			<!--Quelques colonnes inutiles pour le projet ont été supprimées ainsi que les données ont été triés pour les années 1990 - 2016 (les années avec les plus d'information pour tous les pays).-->
         </p>
         <p>
@@ -133,6 +133,10 @@
             Avant 1990 et à partir de 2016, les données étaient incomplètes, ce qui nous a conduit à sélectionner la plage d'années 1990-2016 afin de réaliser des comparaisons plus complètes et intéressantes, tout en gardant la possibilité d'évaluer dans le temps l'évolution des émissions sur la fin du XX<sup>ème</sup> siècle et le début du XXI<sup>ème</sup> siècle.
             <br>
             Cela nous a également permis de limiter le poids de l'archive en ne conservant que des données significatives.
+        </p>
+        <p>
+        	<p style="color:red; font-weight:bold">FRENCH CHECK SVP</p>
+        	Il aurait été utile de representer les niveaux d'emissions en échelle logarithmique pour apprécier aussi les petites variations, mais ce n'était pas possible car pleusieurs pays ont des valeurs négatives d'émissions totals. Il est possible que ces pays absorbent plus gaz polluant qu'il n'en émettent, donc ce ne sont pas des données erronées et les supprimer serait imprécis. Pour cette raison, une échelle linéaire est toujours utilisée.
         </p>
         <p>
             De plus, les données sont intégralement en Anglais alors que notre interface est en Français. Il aurait été judicieux de traduire les données, au moins à l'affichage.
