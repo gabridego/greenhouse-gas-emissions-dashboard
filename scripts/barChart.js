@@ -383,3 +383,13 @@ function update_bar_chart(year, country_code, filter){
 	})
 
 }
+
+
+
+function reset_bars() {
+    Object.keys(initData).forEach(index =>{
+        d3.select("#bar"+ initData[index].sector.slice(0,4))
+            .attr("height", 0)
+            .attr("class", "bar");
+    })
+}
