@@ -13,10 +13,24 @@ const zoom = d3.zoom()
 const width = 995;
 const height = 610;
 const legendCellSize = 20;
-const colors = ['#d4eac7', '#c6e3b5', '#b7dda2', '#a9d68f', '#9bcf7d', '#8cc86a', '#7ec157', '#77be4e', '#70ba45', '#65a83e', '#599537', '#4e8230', '#437029', '#385d22', '#2d4a1c', '#223815']
+
+function coloriation(index) {
+
+  return "rgb(144," +(238-7*index)+ ",144)";
+
+}
+
+// const colors = [coloriation(0), coloriation(1), coloriation(2),coloriation(3), coloriation(4), coloriation(5), coloriation(6), coloriation(7), coloriation(8), coloriation(9), coloriation(10), coloriation(11), coloriation(12), coloriation(13), coloriation(14), coloriation(15)]
+const colors = [];
+var colorlength = 25;
+for (var i = 0; i < 25; i++) {
+  colors[i] = coloriation(i);
+}
 
 const width_tooltip = 375;
 const height_tooltip = 350;
+
+const viewbox_width = 120;
 
 // bounds of the map (for clipping)
 // const boundsMap = [90, 60]
@@ -145,7 +159,13 @@ function init_map(currentFilter) {
 
             g.on("mousemove", function() {
                 var mouse = d3.pointer(event);
-                tooltip.attr("transform", "translate(" + Math.min(width-width_tooltip, mouse[0] + 75) + "," + Math.min(mouse[1] - 75, height-height_tooltip) + ")");
+                if(mouse[0] + 75 > width-width_tooltip){
+                  tooltip.attr("transform", "translate(" + (mouse[0] - width/2) + "," + Math.min(mouse[1] - 75, height-height_tooltip) + ")");
+                } else if(mouse[1] - 75 > height-height_tooltip) {
+                  tooltip.attr("transform", "translate(" + Math.min(width-width_tooltip, mouse[0] + 75) + "," + (mouse[1] - height/2)+ ")");
+                } else {
+                  tooltip.attr("transform", "translate(" + Math.min(width-width_tooltip, mouse[0] + 75) + "," + Math.min(mouse[1] - 75, height-height_tooltip) + ")");
+                }
             })
 
             Object.keys(full_data).forEach(countryCode => {
@@ -221,10 +241,9 @@ function zoomed(event) {
 * Init legend
 */
 function init_legend(currentFilter) {
-
     let svg = d3.select("#legend").append("svg")
         .attr("id", "svg_zone_legend")
-        .attr("viewBox", [0, 0, 95, 16 * legendCellSize + 20])
+        .attr("viewBox", [0, 0, viewbox_width, colorlength * legendCellSize + 20])
         .attr("width", "100%")
         .attr("height", "100%")
         .style("background-color", "white")
@@ -234,7 +253,6 @@ function init_legend(currentFilter) {
     // translation to set the legend on the outside
     // of the drawn map
     var legend = svg.append('g')
-    .attr('transform', 'translate(65, 0)')
     .attr("id", "legend");
 
     let legendScale = d3.scaleLinear().domain([full_data["global"][currentFilter + '_min'], full_data["global"][currentFilter + '_max']])
@@ -251,10 +269,18 @@ function init_legend(currentFilter) {
     .enter().append('svg:rect')
     .attr('height', legendCellSize + 'px')
     .attr('width', legendCellSize + 'px')
-    .attr('x', 5)
+    .attr('x', viewbox_width - legendCellSize)
     .attr('y', d => d * legendCellSize)
     .style("fill", d => colors[d]);
 
+    legend.append("text")
+    .attr('transform', "rotate(-90)")
+    .append("tspan")
+    .attr('x', -375)
+    .attr('y', 25)
+    .attr("id", "legend_mesure")
+    .style("font-weight", "600")
+    .style("font-size", "20px").text(" en millions de tonnes éq. CO₂ ");
 
 
     svg = d3.select("#legend_bottom").append("svg")
@@ -294,7 +320,9 @@ function update_legend(currentFilter) {
     let legendScale = d3.scaleLinear().domain([full_data["global"][currentFilter + '_min'], full_data["global"][currentFilter + '_max']])
     .range([0, colors.length * legendCellSize]);
 
-    legendAxis.attr("class", "axis").call(d3.axisLeft(legendScale));
+    legendAxis.attr("class", "axis")
+    .attr("transform", "translate(" + (viewbox_width - legendCellSize - 5)  + ", 0)")
+    .call(d3.axisLeft(legendScale));
 }
 
 /**
@@ -310,9 +338,11 @@ function get_string_emissions(year, filter, c_code) {
         qte_emissions = Math.round(full_data[c_code][year][filter] * 100) / 100;
         return qte_emissions + " millions de tonnes éq. CO₂";
     } else {
-        "Données non fournies."
+        return "Données non fournies."
     }
 }
+
+
 
 /**
 * Updates map data according to the year.
@@ -329,9 +359,8 @@ function update_map(year, currentFilter) {
         //console.log(d3.select(idCode));
         var color = "#999";
         if (full_data[c_code] && full_data[c_code][year] && full_data[c_code][year][currentFilter]) {
-            color = colors[Math.floor(colors.length * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"]))];
+            color = colors[Math.floor((colors.length - 1) * (full_data[c_code][year][currentFilter] - full_data["global"][currentFilter+"_min"])/(full_data["global"][currentFilter+"_max"] - full_data["global"][currentFilter+"_min"] ))];
         }
-
         d3.select(idCode)
         .attr("fill", color);
         var country_path = d3.select(idCode);
@@ -344,14 +373,19 @@ function update_map(year, currentFilter) {
             .text(realname_gas(currentFilter, true) + " : ")
             tooltip.select("#tooltip-gas-emission")
             .text(get_string_emissions(year, currentFilter, c_code));
-            update_bar_chart(year, c_code, currentFilter);
+            if(get_string_emissions(year, currentFilter, c_code) !== "Données non fournies." ){
+              update_bar_chart(year, c_code, currentFilter);
+            }else {
+              d3.select("#svgBarchart")
+                .attr("fill", "black");
+            }
             //Event listener
             var toolgazemi = tooltip.select("#tooltip-gas-emission");
             toolgazemi.on('dataUpdateEvent', function(e) {
                 d3.select("#tooltip-gas-emission").text(get_string_emissions(e.detail, currentFilter, c_code));
                 update_bar_chart(e.detail, c_code, currentFilter);
             });
-        });
+        })
 
     })
 
