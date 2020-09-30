@@ -123,10 +123,6 @@ function getBarChartCO2(country_code, year) {
 	var retrieved = full_data[country_code][year];
 	var data = [
 		{
-			sector: "Land-Use and forestry",
-			emissions: retrieved["Land-Use Change and Forestry (CO2)"]
-		},
-		{
 			//sector: "Manufacturing/Construction energy",
 			sector: "Manufacturing/Construction",
 			emissions: retrieved["Manufacturing & Construction (CO2)"]
@@ -328,12 +324,13 @@ function reset_bars() {
 
 
 
+
 /**
 * Updates bar chart data according to the year and country and filter.
 * @param {*} year
 * @param {*} country_code
 */
-function update_bar_chart(year, country_code, filter) {
+function update_bar_chart(year, country_code, filter){
 
     // retireve data
     if (filter === "methane"){data = getBarChartCH4(country_code, year);}
