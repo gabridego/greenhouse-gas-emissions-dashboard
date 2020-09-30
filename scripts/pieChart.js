@@ -59,7 +59,7 @@ function get_data(year, filter) {
 
     return {
         "chart": {
-            "subcaption": "Unité : million de tonnes éq. CO₂",
+            "subcaption": "Unité : Pourcentage des emissions totales",
             "subcaptionFontSize": "16",
             "subcaptionFontColor": "#000000",
             "showPlotBorder": "1",
