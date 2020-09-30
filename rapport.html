@@ -79,20 +79,28 @@
 			La carte montre tous les pays avec une couleur verte qui varie son intensité selon son niveau d'émission de gaz polluant.
 			</p><p>
 			D'une façon dynamique, les pays de la carte peuvent être déplacés, proximés et, en passant le curseur sur un pays, un graphique en barre est présenté. Le graphique en barre contient les émissions en millions de tonnes de son pays selon les secteurs répresentés par des barres.</p>
-			<h3>Le graphique de lignes</h3><p>
-			Le graphique de lignes presente, par le gaz polluant sélectionné, l'évolution du numéro total d'émission de tous les secteurs selon le temps, entre 1990 et 2016.
-			Ce graphique est important car il permet de montrer, d'une façon mondiale, que les émissions de gaz polluant continuent très nocives pour la planète et ont même augmentés selon quelques secteurs comme celui de l'lectricité.</p>
-			<h3>Le graphique rond multi niveaux</h3><p>
-			Le graphique rond multi niveaux contient, dans son premier niveau, les secteurs les plus émetteurs du gaz poluant choisi par l'utilisateur (CO&#8322;, methane, N&#8322;O  ou à effet de serre),
-			mais, pour que ça soit plus lisible, ce diagramme ne montre plus que 7 secteurs différents à la fois.
-			</p><p>
-			Dans son deuxième niveau, il est présenté, pour chaque secteur, les 5 continents selon leurs percentages de contribution et,
-			les continents qui émittent les plus, ont leurs sigles affichées : AS (Asia), NA/SA (América du nord, centrale et du sud), AF (Africa), OC (Océania) et EU (Europe).
+            <h3>Courbes d'émissions de gaz suivant les secteurs</h3>
+            <p>
+			    Le graphique de lignes presente, par le gaz polluant sélectionné, l'évolution du numéro total d'émission de tous les secteurs selon le temps, entre 1990 et 2016.
+                Ce graphique est important car il permet de montrer, d'une façon mondiale, que les émissions de gaz polluant continuent très nocives pour la planète et ont même augmentés selon quelques secteurs comme celui de l'lectricité.
+            </p>
+            <h3>Diagramme circulaire hiérarchique</h3>
+            <p>
+            Le diagramme circulaire hiérarchique présente, dans sa première couronne, les secteurs les plus émetteurs du gaz polluants choisi par l'utilisateur (CO&#8322;, méthane, N&#8322;O  ou à plus généralement tous les gaz à effet de serre). On trouve en deuxième couronne les continents les plus émetteurs pour chaque secteur de la première couronne.
+
+			Pour plus de lisibilité, les données sont limitées aux sept secteurs les plus importants dans les émissions de gaz à effet de serre. Nous avons également choisi de regrouper les pays par continents pour obtenir un affichage plus synthétique et lisible, quitte à devoir passer le curseur sur le pays en question pour connaître les pays qui émettent le plus par rapport à la paire (continent, secteur) ciblée.
+            </p>
+            <p>
+            L'objectif de ce graphique est de pouvoir visualiser, en fonction des années, quel(s) secteur(s) ont une responsabilité prépondérante dans l'émission des gaz considérés, et de quels continents, puis pays, sont issues ces émissions.
+
+            les continents qui émittent les plus, ont leurs sigles affichées : AS (Asia), NA/SA (América du nord, centrale et du sud), AF (Africa), OC (Océania) et EU (Europe).
 			 En passant le curseur sur chaque continent, c'est possible aussi d'otenir le nom du continent, la percentage de son émission selon le secteur ainsi que les 3 pays les plus polluants dans le continent et pour le secteur.
-			 </p><p>
-			 À noter que le graphique présente les données fournies par chaque année, de 1990 à 2016, et du coup, c'est possible de bien remarquer l'évolution de chaque secteur et la contribution de chaque continent en utilisant la barre de temps.<p>
-			<h3>Le diagramme de Sankey</h3>
-			<p>Le diagramme de Sankey est aussi un graphique séparé par secteur et continent, mais contrairemment au graphique rond multi niveaux, on voit en premier plan l'émission de chaque continent et sa contribution pour les secteurs.
+			</p><p>
+            <p class="alert alert-info">
+                À noter que le graphique présente les données fournies par chaque année, de 1990 à 2016, et du coup, c'est possible de bien remarquer l'évolution de chaque secteur et la contribution de chaque continent en utilisant la barre de temps.<p>
+            </p>
+            <h3>Diagramme de Sankey</h3>
+			<p>Le <a href="https://fr.wikipedia.org/wiki/Diagramme_de_Sankey" title="Diagramme de Sankey - Wikipédia">diagramme de Sankey</a>, en tant que diagramme de flux, permet de visualiser efficacement  mais contrairemment au graphique rond multi niveaux, on voit en premier plan l'émission de chaque continent et sa contribution pour les secteurs.
 			En fin, on voit aussi la contribution des secteurs pour chaque gaz polluant.
 			Ce graphique permet une vision d'ensemble et très instantanée de la situation globale.</p>
 		<h2>Architecture du projet</h2>
@@ -106,12 +114,30 @@
 			<li><code>scripts/</code> : contient les scripts permettant la récupération des données ainsi que la génération des graphiques interactifs.</li>
 			<li><code>styles/</code> : contient les feuilles de styles CSS complémentaires permettant d'améliorer la mise en forme de l'application.</li>
 		</ul>
-		<h2>Limites du projet</h2>
+        <h2>Limites du projet</h2>
+        <h3>Par rapport aux données</h3>
 		<p>
-			Le jeu de données présente une limitation autour de laquelle nous avons dû concevoir l'outil de visualisation: les données sont remplies de façon massive suelement entre les années 1990 et 2016.
-		</p><p>
-			Avant 1990 et à partir de 2016, seulement quelques pays ont des informations disponibles et, du coup, nous ne pourrions pas faire une comparaison réaliste.
-		</p>
+            Avant 1990 et à partir de 2016, les données étaient incomplètes, ce qui nous a conduit à sélectionner la plage d'années 1990-2016 afin de réaliser des comparaisons plus complètes et intéressantes, tout en gardant la possibilité d'évaluer dans le temps l'évolution des émissions sur la fin du XX<sup>ème</sup> siècle et le début du XXI<sup>ème</sup> siècle.
+            <br>
+            Cela nous a également permis de limiter le poids de l'archive en ne conservant que des données significatives.
+        </p>
+        <p>
+            De plus, les données sont intégralement en Anglais alors que notre interface est en Français. Il aurait été judicieux de traduire les données, au moins à l'affichage.
+        </p>
+        <h3>Contraintes techniques</h3>
+        <p>
+            Au niveau technique, si le découpage par fichiers nous a permis de concevoir de manière modulaire nos différents diagrammes et la gestion des événements, il s'avérerait judicieux de regrouper l'ensemble des fichiers <code>.js</code> dans un seul fichier, voire de le minifier, afin de limiter le nombre de requêtes au chargement de la page ainsi que le poids final des scripts dans l'archive.
+            Néanmoins, les fichiers Javascript sont laissés comme tels à des fins de lisibilité pour l'examinateur.
+        </p>
+        <p>
+            Afin de limiter le poids de l'archive du rendu final, les librairies et les données, autant que possible, sont chargées directement depuis Internet, ce qui génère parfois un grand nombre de requêtes dont le nombre aurait pu être limité autrement. Cela a un impact direct sur le temps de chargement de la page.<br>
+            Les données sont stockées dans des fichiers Javascript directement dans des variables en tant qu'objets Javascript (donc au format <code>JSON</code>). En effet, les restrictions CORS nous empêchent de charger directement en local un fichier JSON dans nos scripts.
+        </p>
+        <h3>Choix de conception de la visualisation</h3>
+        <p>
+            À des fins de lisibilité, nous aurions pu définir une vraie <em>tooltip</em> sur le diagramme de Sankey pour afficher les données relatives aux liens entre les éléments. Toujours dans une recherche de lisibilité, il aurait été judicieux de traduire l'ensemble des données (notamment les noms de pays) afin d'avoir un affichage parfaitement cohérent.<br>
+            Sur le diagramme circulaire hiérarchique, nous avons choisi de colorer la sélection courante en <strong>bleu clair</strong>. Il est possible que ce ne soit pas le plus judicieux, dans le sens où cela peut porter confusion avec les différents secteurs angulaires (considérés par rapport au premier anneau) déjà eux-mêmes différenciés par leur couleur. Nous aurions également aimé utiliser des textures pour différencier les continents dans le second anneau du diagramme, mais nous n'avons pas trouvé d'option pour le faire avec la librairie <em>FusionCharts</em>.
+        </p>
 	</main>
 	<footer class="footer mt-auto py-3">
 		<div class="container">

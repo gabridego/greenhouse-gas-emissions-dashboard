@@ -18,7 +18,7 @@ function get_data(year, filter) {
     //add information for each sector
 	for(i = 0; i < 7 && i < Object.keys(labels[filter]).length; i++) {
         let info = [];
-        
+
         //add information for each continent
         for(let cont of ["Europe","Africa","Asia","Americas","Oceania"]) {
             tooltext = cont + ", $percentValue{br}";
@@ -59,7 +59,7 @@ function get_data(year, filter) {
 
     return {
         "chart": {
-            "subcaption": "Valeurs : Millions des tonnes/"+ filter.toString(),
+            "subcaption": "Unité : million de tonnes éq. CO₂",
             "subcaptionFontSize": "16",
             "subcaptionFontColor": "#000000",
             "showPlotBorder": "1",

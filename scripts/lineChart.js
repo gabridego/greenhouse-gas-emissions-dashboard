@@ -4,8 +4,7 @@ let myChart;
   {
     return dataSource = {
         chart: {
-          yaxisname: "Total emission",
-          subcaption: "1990-2016",
+          yaxisname: "Émissions de gaz (en tonnes éq. CO₂)",
           showhovereffect: "1",
           numbersuffix: " M",
           drawcrossline: "1",
@@ -52,7 +51,7 @@ let myChart;
 
             let arraySectors = [];
             let i = 0;
-            
+
             for (const key in full_camembert[1990][gas]) {
             	let c;
             	if(col_graphs[gas][key])
@@ -70,7 +69,7 @@ let myChart;
             for (i = 1990; i < 2017; i++) {
 
                 let obj = full_camembert[i][gas]
-                
+
                 for(let j = 0; j < Object.keys(obj).length; j++) {
                     let tot = 0.0;
                     for(let cont in obj[Object.keys(obj)[j]])
@@ -82,7 +81,7 @@ let myChart;
             }
 
             return arraySectors;
-        })() 
+        })()
       };
   }
 
